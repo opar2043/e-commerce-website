@@ -1,0 +1,89 @@
+[
+  {
+    "id": 1,
+    "name": "Diamond Ring",
+    "category": "diamond",
+    "shortDescription": "Elegant diamond ring with platinum finish.",
+    "description": "Nunc vehicula quam semper odio varius tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.",
+    "isAvailable": true,
+    "images": [
+      "diamond-ring1.jpg",
+      "diamond-ring2.jpg",
+      "diamond-ring3.jpg"
+    ],
+    "prices": [
+      { "price": 700, "offerPrice": 400 },
+      { "price": 650, "offerPrice": 380 }
+    ],
+    "sizes": ["S", "M", "L"]
+  },
+  {
+    "id": 2,
+    "name": "Gold Plated Necklace",
+    "category": "gold",
+    "shortDescription": "Stylish gold plated necklace for all occasions.",
+    "description": "This necklace is crafted with precision, offering a luxurious look while being affordable. Perfect for weddings and parties.",
+    "isAvailable": true,
+    "images": [
+      "gold-necklace1.jpg",
+      "gold-necklace2.jpg"
+    ],
+    "prices": [
+      { "price": 500, "offerPrice": 350 },
+      { "price": 480, "offerPrice": 320 }
+    ],
+    "sizes": ["M", "L"]
+  },
+  {
+    "id": 3,
+    "name": "Silver Bracelet",
+    "category": "silver",
+    "shortDescription": "Classic silver bracelet with modern touch.",
+    "description": "Made of high-quality sterling silver. Lightweight and perfect for everyday wear.",
+    "isAvailable": false,
+    "images": [
+      "silver-bracelet1.jpg",
+      "silver-bracelet2.jpg"
+    ],
+    "prices": [
+      { "price": 250, "offerPrice": 180 },
+      { "price": 230, "offerPrice": 160 }
+    ],
+    "sizes": ["S", "M"]
+  },
+  {
+    "id": 4,
+    "name": "Platinum Earrings",
+    "category": "diamond",
+    "shortDescription": "Premium diamond-studded platinum earrings.",
+    "description": "Designed with high-grade platinum and natural diamonds. Adds elegance to any outfit.",
+    "isAvailable": true,
+    "images": [
+      "platinum-earrings1.jpg",
+      "platinum-earrings2.jpg"
+    ],
+    "prices": [
+      { "price": 900, "offerPrice": 650 },
+      { "price": 850, "offerPrice": 600 }
+    ],
+    "sizes": ["S", "M", "L"]
+  },
+  {
+    "id": 5,
+    "name": "Gold Chain",
+    "category": "gold",
+    "shortDescription": "Durable gold chain with elegant shine.",
+    "description": "Crafted from pure gold with a polished finish. Suitable for both men and women.",
+    "isAvailable": true,
+    "images": [
+      "gold-chain1.jpg",
+      "gold-chain2.jpg",
+      "gold-chain3.jpg"
+    ],
+    "prices": [
+      { "price": 1200, "offerPrice": 950 },
+      { "price": 1150, "offerPrice": 900 }
+    ],
+    "sizes": ["M", "L", "XL"]
+  }
+]
