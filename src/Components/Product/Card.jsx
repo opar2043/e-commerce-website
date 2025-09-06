@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Card = ({ product }) => {
   const { name, price, description, category, images, _id } = product;
-  const firstImage = images?.[0]?.img;
+  const firstImage = images?.[0];
   const firstPrice = images?.[0]?.price;
 
   return (

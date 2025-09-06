@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import Title from '../Shared/Title'
-import Card from './Card';
+import React, { useEffect, useState } from "react";
+import Title from "../Shared/Title";
+import Card from "./Card";
 
 const Product = () => {
-    const [products , setProducts] = useState([]);
-    useEffect(()=>{
-        fetch('/product.json')
-        .then(res => res.json())
-        .then(data => setProducts(data))
-    },[])
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("/product.json")
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
+  }, []);
+
   return (
-    <div>
-        <Title head={"Product"} head2={"Details"} para={"Explore the details of the selected product"}></Title>
+    <div className="py-10 bg-gray-50">
+      {/* Section Title */}
+      <Title
+        head={"Product"}
+        head2={"Details"}
+        para={"Explore the details of the selected product"}
+      />
 
-
-        <div>
-         {
-            products.map(product => <div key={product.id} className='text-center mb-10'>
-               <Card product={product} />
-            </div>)
-         }
-        </div>
+      {/* Product Grid */}
+      <div className="max-w-7xl mx-auto grid gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
+        {products.slice(0, 3).map((product) => (
+          <div key={product.id} className="flex justify-center">
+            <Card product={product} />
+          </div>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

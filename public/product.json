@@ -7,9 +7,9 @@
     "description": "Nunc vehicula quam semper odio varius tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.",
     "isAvailable": true,
     "images": [
-      "diamond-ring1.jpg",
-      "diamond-ring2.jpg",
-      "diamond-ring3.jpg"
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
     "prices": [
       { "price": 700, "offerPrice": 400 },
@@ -25,8 +25,8 @@
     "description": "This necklace is crafted with precision, offering a luxurious look while being affordable. Perfect for weddings and parties.",
     "isAvailable": true,
     "images": [
-      "gold-necklace1.jpg",
-      "gold-necklace2.jpg"
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
     "prices": [
       { "price": 500, "offerPrice": 350 },
@@ -42,8 +42,8 @@
     "description": "Made of high-quality sterling silver. Lightweight and perfect for everyday wear.",
     "isAvailable": false,
     "images": [
-      "silver-bracelet1.jpg",
-      "silver-bracelet2.jpg"
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
     "prices": [
       { "price": 250, "offerPrice": 180 },
@@ -59,8 +59,8 @@
     "description": "Designed with high-grade platinum and natural diamonds. Adds elegance to any outfit.",
     "isAvailable": true,
     "images": [
-      "platinum-earrings1.jpg",
-      "platinum-earrings2.jpg"
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
     "prices": [
       { "price": 900, "offerPrice": 650 },
@@ -76,9 +76,9 @@
     "description": "Crafted from pure gold with a polished finish. Suitable for both men and women.",
     "isAvailable": true,
     "images": [
-      "gold-chain1.jpg",
-      "gold-chain2.jpg",
-      "gold-chain3.jpg"
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+      "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
     "prices": [
       { "price": 1200, "offerPrice": 950 },
