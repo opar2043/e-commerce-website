@@ -13,6 +13,7 @@ import Register from './Components/Firebase/Register';
 import Login from './Components/Firebase/Login';
 import AllProduct from './Components/Product/AllProduct';
 import About from './Components/About/About';
+import Contact from './Components/About/Contact';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: '/about',
         element: <About></About>
+      },
+      {
+        path: '/contact',
+        element: <Contact></Contact>
       },
     ]
   },
