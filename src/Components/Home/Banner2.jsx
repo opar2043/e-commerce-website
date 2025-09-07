@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Banner from "../../assets/banner2.webp";
+import { FaGem } from "react-icons/fa";
 
 const Banner2 = () => {
   const [loaded, setLoaded] = useState(false);
@@ -30,20 +31,33 @@ const Banner2 = () => {
         {/* Decorative Diamond */}
         <div className="absolute w-20 h-20 bg-gradient-to-br from-transparent via-white/30 to-transparent rotate-45 right-10 bottom-10 opacity-70 animate-pulse"></div>
         
-        <div className={`relative z-10 max-w-md transition-all duration-700 ease-out ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">Trending Collection</h1>
-          <h2 className="text-2xl md:text-3xl font-medium text-amber-900 mb-4 italic">Looking For the Latest</h2>
-          <p className="text-lg text-amber-950 mb-8 leading-relaxed">
-            Discover our exquisite summer jewelry collection, designed to add a touch of elegance to your warm-weather style. Handcrafted with precision and care.
-          </p>
-          <button 
+        <div className={`relative z-10 w-full transition-all duration-700 ease-out ${loaded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
+          {/* Content and price in a row */}
+          <div className="flex flex-col md:flex-row justify-between items-start w-full mb-6">
+            <div className="flex-1 max-w-md">
+              <h2 className="text-lg md:text-xl font-medium text-amber-900 mb-4 italic">Looking For the Latest</h2>
+              <h3 className="text-xl md:text-4xl font-semibold text-gray-900 mb-2">Trending Collection</h3>
+              <p className="text-lg text-amber-950 mb-8 leading-relaxed">
+                Discover our exquisite summer jewelry collection, designed to add a touch of elegance to your warm-weather style. Handcrafted with precision and care.
+              </p>
+            </div>
+
+            {/* Price Circle - positioned to the right on desktop */}
+            <div className="flex flex-col items-center justify-center rounded-full bg-[#181818] text-white p-4 w-24 h-24 md:w-28 md:h-28 md:ml-6">
+              <FaGem className="text-amber-300 mb-1 text-sm md:text-base" />
+              <p className="text-xs md:text-sm">Start From</p>
+              <p className="text-xl md:text-2xl font-bold">$200</p>
+            </div>
+          </div>
+          
+          {/* Button positioned below the content */}
+          <button
             onClick={handleShopNow}
-            className="flex items-center gap-2 px-8 py-3 bg-gray-900 text-white text-lg font-medium rounded-full transition-all duration-300 hover:bg-amber-800 hover:shadow-lg hover:-translate-y-0.5"
+            className={`px-6 py-2 border border-slate-950 text-slate-950 font-semibold hover:bg-white hover:text-black transition-all duration-300 ${
+              loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
+            }`}
           >
-            Shop Now
-            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            MAKE ORDER    
           </button>
         </div>
       </div>

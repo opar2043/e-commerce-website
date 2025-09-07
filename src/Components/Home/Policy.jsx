@@ -33,16 +33,16 @@ const Policy = () => {
   ];
 
   return (
-    <div className="py-16 px-4 bg-gray-100">
-      <Title head={"Our"} head2={"Policy"} para={"We prioritize your satisfaction and security"}></Title>
+    <div className=" px-4 bg-transparent">
+      {/* <Title head={"Our"} head2={"Policy"} para={"We prioritize your satisfaction and security"}></Title> */}
       <div className="max-w-8xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {policies.map((policy, index) => (
             <div 
               key={index} 
-              className="bg-white hover:bg-[#fad3a7] p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center"
+              className="bg-transparent border-r border-gray-300 p-6  hover:shadow-md transition-all duration-300 flex flex-col items-center text-center"
             >
-              <div className="text-blue-600 mb-6">
+              <div className="text-slate-900 mb-6">
                 {policy.icon}
               </div>
               <h3 className="text-xl font-bold mb-4 text-gray-800">{policy.title}</h3>

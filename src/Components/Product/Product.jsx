@@ -14,15 +14,15 @@ const Product = () => {
   return (
     <div className="py-10 bg-gray-50">
       {/* Section Title */}
-      <Title
+      {/* <Title
         head={"Product"}
         head2={"Details"}
         para={"Explore the details of the selected product"}
-      />
+      /> */}
 
       {/* Product Grid */}
-      <div className="max-w-7xl mx-auto grid gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
-        {products.slice(0, 3).map((product) => (
+      <div className="max-w-7xl mx-auto grid gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
+        {products.slice(0, 4).map((product) => (
           <div key={product.id} className="flex justify-center">
             <Card product={product} />
           </div>

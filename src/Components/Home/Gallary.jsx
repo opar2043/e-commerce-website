@@ -18,13 +18,13 @@ const Gallery = () => {
   ];
 
   return (
-    <div className="  min-h-screen my-10">
+    <div className="  min-h-screen mt-10">
 
    <Title head={"Our"} head2={"Collection"} para={"Explore our exquisite collection of gold items"}></Title>
 
       {/* Gallery Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full ">
-        {goldItems.map((item) => (
+        {goldItems.slice(0,3).map((item) => (
           <div key={item.id} className="group relative overflow-hidden aspect-square">
             {/* Replace the gradient with your actual images */}
             <div 
@@ -33,14 +33,14 @@ const Gallery = () => {
             ></div>
             
             {/* Overlay content */}
-            <div className="relative h-full flex items-end p-5 bg-gradient-to-t from-black via-transparent to-transparent">
+            {/* <div className="relative h-full flex items-end p-5 bg-gradient-to-t from-black via-transparent to-transparent">
               <div>
                 <h3 className="text-xl font-semibold text-yellow-200">{item.title}</h3>
                 <p className="text-gray-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {item.description}
                 </p>
               </div>
-            </div>
+            </div> */}
             
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">

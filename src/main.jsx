@@ -11,6 +11,8 @@ import Error from './Components/Root/Error';
 import Home from './Components/Home/Home';
 import Register from './Components/Firebase/Register';
 import Login from './Components/Firebase/Login';
+import AllProduct from './Components/Product/AllProduct';
+import About from './Components/About/About';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/collection',
+        element: <AllProduct></AllProduct>
+      },
+      {
+        path: '/about',
+        element: <About></About>
       },
     ]
   },
