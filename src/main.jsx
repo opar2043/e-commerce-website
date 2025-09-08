@@ -14,6 +14,12 @@ import Login from './Components/Firebase/Login';
 import AllProduct from './Components/Product/AllProduct';
 import About from './Components/About/About';
 import Contact from './Components/About/Contact';
+import ViewCard from './Components/Product/ViewCard';
+import Dashboard from './Components/Dashboard/Dashboard';
+import AddProduct from './Components/Dashboard/AddProduct';
+import AllProductAdmin from './Components/Dashboard/AllProductAdmin';
+import User from './Components/Dashboard/User/User';
+import AdminDashboard from './Components/Dashboard/AdminPanel/AdminDashboard';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -46,18 +52,38 @@ const router = createBrowserRouter([
         path: '/contact',
         element: <Contact></Contact>
       },
+      {
+        path: '/product/:id',
+        element: <ViewCard></ViewCard>
+      },
     ]
   },
-// {
-//     path: '/dashboard',
-//     element: <Dashboard></Dashboard>,
-//     children: [
-//     {
-//       path: "/dashboard",
-//       element: <Dashboard></Dashboard>
-//     }
-//   ]
-//   }
+{
+    path: '/dashboard',
+    element: <Dashboard></Dashboard>,
+    children: [
+    {
+      path: "/dashboard/allproduct",
+      element: <AllProductAdmin></AllProductAdmin>
+    },
+    {
+      path: "/dashboard/addproducts",
+      element: <AddProduct></AddProduct>
+    },
+    {
+      path: "/dashboard/order",
+      element: <AddProduct></AddProduct>
+    },
+    {
+      path: "/dashboard/user",
+      element: <User></User>
+    },
+    {
+      path: "/dashboard/admin",
+      element: <AdminDashboard></AdminDashboard>
+    },
+  ]
+  }
 ]);
 
 

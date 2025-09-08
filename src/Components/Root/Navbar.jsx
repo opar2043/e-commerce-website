@@ -29,7 +29,13 @@ const Navbar = () => {
         <li className="py-2">
           <span>Contact</span>
         </li>
+      </NavLink> 
+      <NavLink to={"/dashboard"} onClick={() => setIsMenuOpen(false)}>
+        <li className="py-2">
+          <span>Dashboard</span>
+        </li>
       </NavLink>
+
     </>
   );
 
@@ -38,7 +44,7 @@ const Navbar = () => {
       {/* Upper Navbar - Metal Prices */}
       <div className="bg-[#FEB564] py-2 px-4 md:px-8 flex flex-col lg:flex-row justify-between items-center text-slate-950">
         {/* Left Side - Logo and Website Name */}
-        <div className="flex items-center justify-start gap-3 w-full lg:w-auto justify-between lg:justify-start">
+        <div className="flex items-center  gap-3 w-full lg:w-auto justify-between lg:justify-start">
           <div className="flex items-center gap-3">
             <img src={'gold1'} alt="Logo" className="w-6 md:w-8" />
             <p className="text-slate-950 text-xl md:text-3xl font-extrabold tracking-wide">
@@ -156,6 +162,7 @@ const Navbar = () => {
               <NavLink to={"/collection"}><li><span>Collection</span></li></NavLink>
               <NavLink to={"/about"}><li><span>About</span></li></NavLink>
               <NavLink to={"/contact"}><li><span>Contact</span></li></NavLink>
+              <NavLink to={"/dashboard"}><li><span>Dashboard</span></li></NavLink>
             </ul>
           </div>
 

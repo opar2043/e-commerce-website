@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "68b9271768077f07bdd2248d",
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "role": "customer",
+    "status": null
+  },
+  {
+    "_id": "68b9271768077f07bdd2248e",
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "role": "customer",
+    "status": null
+  },
+  {
+    "_id": "68b9271768077f07bdd2248f",
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "role": "customer",
+    "status": null
+  },
+  {
+    "_id": "68b96d5f40856b6eb1f8680b",
+    "name": "rijoanrashidopa",
+    "email": "rezoanbids@gmail.com",
+    "pass": "1234567",
+    "role": "admin"
+  },
+  {
+    "_id": "68b9709340856b6eb1f8680c",
+    "name": "Rana",
+    "email": "rana@gmail.com",
+    "pass": "12345678",
+    "role": "customer"
+  },
+  {
+    "_id": "68bad84b944a03f58ca16f54",
+    "name": "Kihu",
+    "email": "kihu@gmail.com",
+    "pass": "12345678",
+    "role": "admin"
+  }
+]

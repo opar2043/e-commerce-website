@@ -1,13 +1,14 @@
 import React from "react";
 import { BsFillEyeFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Card = ({ product }) => {
-  const { name, images, prices, category } = product;
+  const { name, images, prices, category,id } = product;
   const firstImage = images[0];
   const { price, offerPrice } = prices[0];
 
   return (
-    <div className="relative group overflow-hidden rounded shadow cursor-pointer h-fit">
+    <div className="relative border-b border-gray-200 group overflow-hidden rounded  cursor-pointer h-fit">
       {/* Product Image */}
       <img
       src={firstImage}
@@ -24,9 +25,11 @@ const Card = ({ product }) => {
 
       {/* Hover Icon */}
       <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 z-10">
-        <button className="p-3 bg-white rounded-full text-gray-700 shadow-md hover:bg-orange-400 hover:text-white transition duration-300">
-          <BsFillEyeFill size={22} />
-        </button>
+        <Link to={`/product/${product.id}`}>
+          <button className="p-3 bg-white rounded-full text-gray-700 shadow-md hover:bg-orange-400 hover:text-white transition duration-300">
+            <BsFillEyeFill size={22} />
+          </button>
+        </Link>
       </div>
 
       {/* Content (always visible at bottom) */}

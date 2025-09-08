@@ -74,11 +74,12 @@ const AllProduct = () => {
     <div className="py-10 flex flex-col md:flex-row bg-white min-h-screen">
       {/* Sidebar Filters */}
       <div className='flex flex-col w-full md:w-64 p-4 border-r border-gray-200'>
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Filters</h2>
-        
+        <h2 className="text-xl mb-4 text-slate-950 font-light">Filters Products</h2>
+
         {/* Filter by Category */}
         <div className="mb-6">
-          <h3 className="font-semibold text-gray-700 mb-2">Category</h3>
+          <h3 className="font-bold text-slate-950  md:text-xl mb-2">Category</h3>
+          <div className='w-full bg-[#FEB564] h-0.5 my-5'></div>
           <div className="space-y-2">
             {categories.map(category => (
               <div key={category} className="flex items-center">
@@ -101,7 +102,8 @@ const AllProduct = () => {
 
         {/* Filter by Price */}
         <div className="mb-6">
-          <h3 className="font-semibold text-gray-700 mb-2">Price Range</h3>
+          <h3 className="font-bold text-slate-950  md:text-xl mb-2">Price Range</h3>
+          <div className='w-full bg-[#FEB564] h-0.5 my-5'></div>
           <div className="space-y-2">
             <input
               type="range"
@@ -114,7 +116,7 @@ const AllProduct = () => {
             />
             <div className="flex justify-between text-sm text-gray-600">
               <span>$0</span>
-              <span>${priceRange[1]}</span>
+              <span>${priceRange[1]}</span> 
             </div>
           </div>
         </div>
@@ -136,19 +138,18 @@ const AllProduct = () => {
       <div className='flex-1 p-4'>
         {/* Header with item count and sort options */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-          <p className="text-gray-600 mb-2 md:mb-0">
+          <p className="text-gray-600 mb-2 md:mb-0 ">
             Showing {filteredProducts.length} of {products.length} items
           </p>
           
-          <div className="flex items-center">
-            <label htmlFor="sort" className="mr-2 text-gray-700">Sort by:</label>
+          <div className="flex items-center md:px-4">
             <select
               id="sort"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-1 text-white"
+              className="border border-gray-300 bg-[#181818] px-6 py-2 text-white"
             >
-              <option value="default">Default</option>
+              <option value="default">Sort By</option>
               <option value="price-low-high">Price: Low to High</option>
               <option value="price-high-low">Price: High to Low</option>
               <option value="name-asc">Name: A to Z</option>

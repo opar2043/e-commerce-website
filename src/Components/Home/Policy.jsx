@@ -33,7 +33,7 @@ const Policy = () => {
   ];
 
   return (
-    <div className=" px-4 bg-transparent">
+    <div className=" px-4 bg-transparent mb-16">
       {/* <Title head={"Our"} head2={"Policy"} para={"We prioritize your satisfaction and security"}></Title> */}
       <div className="max-w-8xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
