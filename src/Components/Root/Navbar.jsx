@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiSearch, FiChevronUp, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { cart } = useAuth() || {};
   const [metal, setMetal] = useState([]);
   useEffect(()=>{
     fetch('/metal.json')
@@ -217,7 +218,7 @@ const Navbar = () => {
           >
             <FiShoppingCart size={24} />
             <span className="absolute -top-2 -right-3 bg-amber-800 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
-              0
+              {cart?.length || 0}
             </span>
           </NavLink>
         </div>

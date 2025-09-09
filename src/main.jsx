@@ -20,6 +20,7 @@ import AddProduct from './Components/Dashboard/AddProduct';
 import AllProductAdmin from './Components/Dashboard/AllProductAdmin';
 import User from './Components/Dashboard/User/User';
 import AdminDashboard from './Components/Dashboard/AdminPanel/AdminDashboard';
+import AuthProvider from './Components/Firebase/AuthProvider';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -90,7 +91,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
      <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

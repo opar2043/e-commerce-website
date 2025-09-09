@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RiVipCrownLine, RiHeartLine, RiHeartFill, RiShoppingCartLine } from "react-icons/ri";
+import useAuth from '../Hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const ViewCard = () => {
   const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedweight, setSelectedweight] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const [metal, setMetal] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const { cart, setCart } = useAuth();
 
   useEffect(() => {
     fetch('/metal.json')
@@ -27,33 +29,38 @@ const ViewCard = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Safe access to metal prices
-  const goldPrice = metal.find(m => m?.metal === 'Gold')?.price || 0;
-  const silverPrice = metal.find(m => m?.metal === 'Silver')?.price || 0;
-  const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price || 0;
-
   const product = products.find(p => p.id === parseInt(id));
 
+  // Safe access to metal prices
+  const goldPrice = metal.find(m => m?.metal === 'Gold')?.price * product?.weight || 0;
+  const silverPrice = metal.find(m => m?.metal === 'Silver')?.price * product?.weight || 0;
+  const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price * product?.weight || 0;
+  const diamondPrice = metal.find(m => m?.metal === 'Diamond')?.price * product?.weight || 0;
+
+
   // Calculate price based on metal type and weight
-  const calculatePrice = (weight, isOffer = false) => {
+  const calculatePrice = () => {
     if (!product) return 0;
-    
-    const weightOption = product.weights[selectedweight];
-    const weightValue = isOffer ? weightOption.offerweight : weightOption.weight;
     
     switch (product.category) {
       case 'Gold':
-        return (goldPrice * weightValue).toFixed(2);
+        return (goldPrice * product.weight).toFixed(2);
       case 'Silver':
-        return (silverPrice * weightValue).toFixed(2);
+        return (silverPrice * product.weight).toFixed(2);
       case 'Platinum':
-        return (platinumPrice * weightValue).toFixed(2);
+        return (platinumPrice * product.weight).toFixed(2);
       case 'diamond':
-        // For diamond, use the fixed price from the JSON
-        return isOffer ? weightOption.offerweight : weightOption.weight;
+        // For diamond, use a fixed price calculation (you might want to adjust this)
+        return (product.weight * 100).toFixed(2); // Example: $100 per gram for diamonds
       default:
-        return isOffer ? weightOption.offerweight : weightOption.weight;
+        return (product.weight * 10).toFixed(2); // Default price calculation
     }
+  };
+
+  // Calculate total price for display (price × quantity)
+  const calculateTotalPrice = () => {
+    if (!product) return 0;
+    return (parseFloat(calculatePrice()) * quantity).toFixed(2);
   };
 
   if (loading || !product) {
@@ -69,10 +76,6 @@ const ViewCard = () => {
 
   const handleImageSelect = (index) => {
     setSelectedImage(index);
-  };
-
-  const handleweightSelect = (index) => {
-    setSelectedweight(index);
   };
 
   const handleSizeSelect = (size) => {
@@ -92,6 +95,31 @@ const ViewCard = () => {
       setQuantity(prev => prev - 1);
     }
   };
+
+  function handleAddToCart(e) {
+    e.preventDefault();
+    
+    const productToAdd = {
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      image: product.images[0],
+      price: calculatePrice(), // This calculates the price based on weight and metal type
+      weight: product.weight,
+      size: selectedSize,
+      quantity: quantity
+    };
+    
+    setCart((prev) => [...prev, productToAdd]);
+
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Product added to cart!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
@@ -174,37 +202,39 @@ const ViewCard = () => {
               {product.isAvailable ? 'In Stock' : 'Out of Stock'}
             </div>
 
-            {/* Total Gram's */}
+            {/* Product Weight and Price */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Total Gram's</h3>
-              <div className="flex flex-wrap gap-3">
-                {product.weights.map((weightOption, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleweightSelect(index)}
-                    className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                      selectedweight === index
-                        ? 'border-[#D99B55] bg-[#D99B55]/10'
-                        : 'border-gray-200 hover:border-[#D99B55]'
-                    }`}
-                  >
-                    <div className="flex flex-col items-center">
-                      <span className={`text-sm ${
-                        selectedweight === index ? 'text-[#D99B55] font-medium' : 'text-gray-600'
-                      }`}>
-                        Option {index + 1}
-                      </span>
-                      <div className="flex items-baseline mt-1">
-                        <span className="text-lg font-bold text-gray-900">
-                          ${calculatePrice(weightOption.offerweight, true)}
-                        </span>
-                        <span className="ml-2 text-sm text-gray-500 line-through">
-                          ${calculatePrice(weightOption.weight, false)}
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Product Details</h3>
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-gray-600">Weight:</span>
+                  <span className="font-semibold text-black">{product.weight}g</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Price:</span>
+                  <span className="text-lg font-bold text-[#D99B55]">
+                    {
+                      product.category === 'gold' && goldPrice 
+                    }
+
+                    {
+                      product.category === 'silver' && silverPrice 
+                    }
+
+                    {
+                      product.category === 'platinum' && platinumPrice
+                    }
+                    {
+                      product.category === 'diamond' && diamondPrice
+                    }
+                  </span>
+                </div>
+                <div className="mt-2 text-sm text-gray-500">
+                  {product.category === 'diamond' ? 
+                    'Diamond price calculated based on weight and quality' :
+                    `Price calculated based on current ${product.category.toLowerCase()} rate`
+                  }
+                </div>
               </div>
             </div>
 
@@ -243,10 +273,20 @@ const ViewCard = () => {
                   <span className="block text-sm text-gray-600">Total Price</span>
                   <div className="flex items-baseline mt-1">
                     <span className="text-2xl font-bold text-gray-900">
-                      ${(calculatePrice(product.weights[selectedweight].offerweight, true) * quantity).toFixed(2)}
-                    </span>
-                    <span className="ml-2 text-sm text-gray-500 line-through">
-                      ${(calculatePrice(product.weights[selectedweight].weight, false) * quantity).toFixed(2)}
+                       {
+                      product.category === 'gold' && goldPrice 
+                    }
+
+                    {
+                      product.category === 'silver' && silverPrice 
+                    }
+
+                    {
+                      product.category === 'platinum' && platinumPrice
+                    }
+                    {
+                      product.category === 'diamond' && diamondPrice
+                    }
                     </span>
                   </div>
                 </div>
@@ -256,7 +296,7 @@ const ViewCard = () => {
                       className="px-3 py-2 text-gray-600 hover:bg-gray-100"
                       onClick={decreaseQuantity}
                     >-</button>
-                    <span className="px-4 py-2">{quantity}</span>
+                    <span className="px-4 py-2 text-black">{quantity}</span>
                     <button 
                       className="px-3 py-2 text-gray-600 hover:bg-gray-100"
                       onClick={increaseQuantity}
@@ -267,6 +307,7 @@ const ViewCard = () => {
 
               <div className="flex space-x-4">
                 <button 
+                  onClick={handleAddToCart}
                   className="flex-1 bg-[#D99B55] hover:bg-[#C68A4A] text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
                   disabled={!product.isAvailable}
                 >

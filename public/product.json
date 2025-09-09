@@ -11,10 +11,7 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "weights": [
-      { "weight": 700, "offerweight": 400 },
-      { "weight": 650, "offerweight": 380 }
-    ],
+    "weight": 7,
     "sizes": ["S", "M", "L"]
   },
   {
@@ -28,10 +25,7 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "weights": [
-      { "weight": 500, "offerweight": 350 },
-      { "weight": 480, "offerweight": 320 }
-    ],
+    "weight": 5,
     "sizes": ["M", "L"]
   },
   {
@@ -45,10 +39,7 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "weights": [
-      { "weight": 250, "offerweight": 180 },
-      { "weight": 230, "offerweight": 160 }
-    ],
+    "weight": 25,
     "sizes": ["S", "M"]
   },
   {
@@ -62,10 +53,7 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "weights": [
-      { "weight": 900, "offerweight": 650 },
-      { "weight": 850, "offerweight": 600 }
-    ],
+    "weight": 9,
     "sizes": ["S", "M", "L"]
   },
   {
@@ -80,10 +68,7 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "weights": [
-      { "weight": 1200, "offerweight": 950 },
-      { "weight": 1150, "offerweight": 900 }
-    ],
+    "weight": 12,
     "sizes": ["M", "L", "XL"]
   }
 ]

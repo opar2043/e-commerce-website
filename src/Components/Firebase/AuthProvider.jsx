@@ -7,15 +7,9 @@ export const AuthContex = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
-
-
+  const [cart , setCart] = useState([])
 
   const provider = new GoogleAuthProvider()
-
-
-
-
     function handleGoogle() {
     setLoading(true);
     return signInWithPopup(auth, provider);
@@ -23,9 +17,8 @@ const AuthProvider = ({ children }) => {
 
   function handleLogout(){
     setLoading(true);
-    return signOut(auth )
+    return signOut(auth)
   }
-
 
   function handleRegister(email , pass){
       setLoading(true)
@@ -42,7 +35,6 @@ const AuthProvider = ({ children }) => {
        return sendPasswordResetEmail(auth, email)
   }
 
-  
   useEffect(()=>{
      const unsub = onAuthStateChanged(auth , currentUser => {
           if(currentUser){
@@ -66,7 +58,9 @@ const AuthProvider = ({ children }) => {
     handleLogout,
     handleRegister,
     resetPass,
-    handleLogin
+    handleLogin,
+    cart,
+    setCart
   };
 
   return <AuthContex.Provider value={obj}>{children}</AuthContex.Provider>;
