@@ -5,7 +5,7 @@ const AllProduct = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [priceRange, setPriceRange] = useState([0, 2000]);
+  const [weightRange, setweightRange] = useState([0, 2000]);
   const [sortOption, setSortOption] = useState('default');
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const AllProduct = () => {
   // Get unique categories
   const categories = ['all', ...new Set(products.map(product => product.category))];
 
-  // Filter products based on category and price range
+  // Filter products based on category and weight range
   useEffect(() => {
     let filtered = products;
 
@@ -29,26 +29,26 @@ const AllProduct = () => {
       filtered = filtered.filter(product => product.category === selectedCategory);
     }
 
-    // Filter by price range
+    // Filter by weight range
     filtered = filtered.filter(product => {
-      const minPrice = Math.min(...product.prices.map(p => p.offerPrice));
-      return minPrice >= priceRange[0] && minPrice <= priceRange[1];
+      const minweight = Math.min(...product.weights.map(p => p.offerweight));
+      return minweight >= weightRange[0] && minweight <= weightRange[1];
     });
 
     // Sort products
     switch (sortOption) {
-      case 'price-low-high':
+      case 'weight-low-high':
         filtered = [...filtered].sort((a, b) => {
-          const aPrice = Math.min(...a.prices.map(p => p.offerPrice));
-          const bPrice = Math.min(...b.prices.map(p => p.offerPrice));
-          return aPrice - bPrice;
+          const aweight = Math.min(...a.weights.map(p => p.offerweight));
+          const bweight = Math.min(...b.weights.map(p => p.offerweight));
+          return aweight - bweight;
         });
         break;
-      case 'price-high-low':
+      case 'weight-high-low':
         filtered = [...filtered].sort((a, b) => {
-          const aPrice = Math.min(...a.prices.map(p => p.offerPrice));
-          const bPrice = Math.min(...b.prices.map(p => p.offerPrice));
-          return bPrice - aPrice;
+          const aweight = Math.min(...a.weights.map(p => p.offerweight));
+          const bweight = Math.min(...b.weights.map(p => p.offerweight));
+          return bweight - aweight;
         });
         break;
       case 'name-asc':
@@ -63,11 +63,11 @@ const AllProduct = () => {
     }
 
     setFilteredProducts(filtered);
-  }, [products, selectedCategory, priceRange, sortOption]);
+  }, [products, selectedCategory, weightRange, sortOption]);
 
-  const handlePriceRangeChange = (e) => {
+  const handleweightRangeChange = (e) => {
     const value = parseInt(e.target.value);
-    setPriceRange([0, value]);
+    setweightRange([0, value]);
   };
 
   return (
@@ -100,9 +100,9 @@ const AllProduct = () => {
           </div>
         </div>
 
-        {/* Filter by Price */}
+        {/* Filter by weight */}
         <div className="mb-6">
-          <h3 className="font-bold text-slate-950  md:text-xl mb-2">Price Range</h3>
+          <h3 className="font-bold text-slate-950  md:text-xl mb-2">weight Range</h3>
           <div className='w-full bg-[#FEB564] h-0.5 my-5'></div>
           <div className="space-y-2">
             <input
@@ -110,13 +110,13 @@ const AllProduct = () => {
               min="0"
               max="2000"
               step="100"
-              value={priceRange[1]}
-              onChange={handlePriceRangeChange}
+              value={weightRange[1]}
+              onChange={handleweightRangeChange}
               className="w-full"
             />
             <div className="flex justify-between text-sm text-gray-600">
               <span>$0</span>
-              <span>${priceRange[1]}</span> 
+              <span>${weightRange[1]}</span> 
             </div>
           </div>
         </div>
@@ -125,7 +125,7 @@ const AllProduct = () => {
         <button
           onClick={() => {
             setSelectedCategory('all');
-            setPriceRange([0, 2000]);
+            setweightRange([0, 2000]);
             setSortOption('default');
           }}
           className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors"
@@ -150,8 +150,8 @@ const AllProduct = () => {
               className="border border-gray-300 bg-[#181818] px-6 py-2 text-white"
             >
               <option value="default">Sort By</option>
-              <option value="price-low-high">Price: Low to High</option>
-              <option value="price-high-low">Price: High to Low</option>
+              <option value="weight-low-high">weight: Low to High</option>
+              <option value="weight-high-low">weight: High to Low</option>
               <option value="name-asc">Name: A to Z</option>
               <option value="name-desc">Name: Z to A</option>
             </select>
@@ -174,7 +174,7 @@ const AllProduct = () => {
             <button
               onClick={() => {
                 setSelectedCategory('all');
-                setPriceRange([0, 2000]);
+                setweightRange([0, 2000]);
                 setSortOption('default');
               }}
               className="mt-4 bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 transition-colors"

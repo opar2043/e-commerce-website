@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Card = ({ product }) => {
-  const { name, images, prices, category,id } = product;
+  const { name, images, weights, category,id } = product;
   const firstImage = images[0];
-  const { price, offerPrice } = prices[0];
+  const { weight, offerweight } = weights[0];
+
+  const [metal ,setMetal] = useState([])
+    useEffect(() => {
+      fetch('/metal.json')
+        .then(response => response.json())
+        .then(data => setMetal(data))
+        .catch(error => console.error('Error fetching metal data:', error));
+    }, []);
+
+  const goldPrice = metal.find(m => m?.metal === 'Gold')?.price || 0;
+  const silverPrice = metal.find(m => m?.metal === 'Silver')?.price || 0;
+  const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price || 0;
+
+
+
+  console.log(goldPrice, silverPrice, platinumPrice);
+  
 
   return (
     <div className="relative border-b border-gray-200 group overflow-hidden rounded  cursor-pointer h-fit">
@@ -36,8 +53,26 @@ const Card = ({ product }) => {
       <div className="absolute bottom-0 left-0 w-full bg-white text-gray-800 px-4 py-5 z-20 flex flex-col items-center ">
         <h3 className=" font-semibold truncate text-xl hover:text-yellow-500 mb-4">{name}</h3>
         <div className="flex items-center gap-2">
-          <span className="text-sm line-through opacity-70">${price}</span>
-          <span className="text-lg font-bold ">${offerPrice}</span>
+           {/* {category === 'Gold' ? (
+             <>
+               <span className="text-sm line-through opacity-70">${weight * goldPrice}</span>
+               <span className="text-lg font-bold ">${offerweight * goldPrice}</span>
+             </>
+           ) : category === 'Silver' ? (
+             <>
+               <span className="text-sm line-through opacity-70">${weight * silverPrice}</span>
+               <span className="text-lg font-bold ">${offerweight * silverPrice}</span>
+             </>
+           ) : category === 'Platinum' ? (
+             <>
+               <span className="text-sm line-through opacity-70">${weight * platinumPrice}</span>
+               <span className="text-lg font-bold ">${offerweight * platinumPrice}</span>
+             </>
+           ) : null} */}
+
+               {/* <span className="text-sm line-through opacity-70">${weight }gm</span> */}
+               <span className="text-md font-normal text-gray-700">{weight}gm</span>
+
         </div>
       </div>
     </div>

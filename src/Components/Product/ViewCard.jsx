@@ -1,24 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { RiVipCrownLine, RiHeartLine, RiHeartFill, RiStarFill, RiShoppingCartLine } from "react-icons/ri";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { RiVipCrownLine, RiHeartLine, RiHeartFill, RiShoppingCartLine } from "react-icons/ri";
 
 const ViewCard = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [products, setProducts] = useState([]);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedPrice, setSelectedPrice] = useState(0);
+  const [selectedweight, setSelectedweight] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
+  const [metal, setMetal] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    fetch('/metal.json')
+      .then(response => response.json())
+      .then(data => setMetal(data))
+      .catch(error => console.error('Error fetching metal data:', error));
+  }, []);
 
   useEffect(() => {
     fetch("/product.json")
       .then((res) => res.json())
-      .then((data) => setProducts(data));
+      .then((data) => setProducts(data))
+      .finally(() => setLoading(false));
   }, []);
+
+  // Safe access to metal prices
+  const goldPrice = metal.find(m => m?.metal === 'Gold')?.price || 0;
+  const silverPrice = metal.find(m => m?.metal === 'Silver')?.price || 0;
+  const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price || 0;
 
   const product = products.find(p => p.id === parseInt(id));
 
-  if (!product) {
+  // Calculate price based on metal type and weight
+  const calculatePrice = (weight, isOffer = false) => {
+    if (!product) return 0;
+    
+    const weightOption = product.weights[selectedweight];
+    const weightValue = isOffer ? weightOption.offerweight : weightOption.weight;
+    
+    switch (product.category) {
+      case 'Gold':
+        return (goldPrice * weightValue).toFixed(2);
+      case 'Silver':
+        return (silverPrice * weightValue).toFixed(2);
+      case 'Platinum':
+        return (platinumPrice * weightValue).toFixed(2);
+      case 'diamond':
+        // For diamond, use the fixed price from the JSON
+        return isOffer ? weightOption.offerweight : weightOption.weight;
+      default:
+        return isOffer ? weightOption.offerweight : weightOption.weight;
+    }
+  };
+
+  if (loading || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
@@ -33,8 +71,8 @@ const ViewCard = () => {
     setSelectedImage(index);
   };
 
-  const handlePriceSelect = (index) => {
-    setSelectedPrice(index);
+  const handleweightSelect = (index) => {
+    setSelectedweight(index);
   };
 
   const handleSizeSelect = (size) => {
@@ -43,6 +81,16 @@ const ViewCard = () => {
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(prev => prev + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+    }
   };
 
   return (
@@ -114,16 +162,6 @@ const ViewCard = () => {
           <div className="space-y-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
-              <div className="flex items-center mb-4">
-                <div className="flex text-[#D99B55]">
-                  <RiStarFill className="w-5 h-5" />
-                  <RiStarFill className="w-5 h-5" />
-                  <RiStarFill className="w-5 h-5" />
-                  <RiStarFill className="w-5 h-5" />
-                  <RiStarFill className="w-5 h-5 text-gray-300" />
-                </div>
-                <span className="ml-2 text-gray-600">(12 reviews)</span>
-              </div>
               <p className="text-gray-700">{product.shortDescription}</p>
             </div>
 
@@ -136,32 +174,32 @@ const ViewCard = () => {
               {product.isAvailable ? 'In Stock' : 'Out of Stock'}
             </div>
 
-            {/* Price Options */}
+            {/* Total Gram's */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Price Options</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-3">Total Gram's</h3>
               <div className="flex flex-wrap gap-3">
-                {product.prices.map((priceOption, index) => (
+                {product.weights.map((weightOption, index) => (
                   <button
                     key={index}
-                    onClick={() => handlePriceSelect(index)}
+                    onClick={() => handleweightSelect(index)}
                     className={`px-4 py-2 rounded-lg border-2 transition-all ${
-                      selectedPrice === index
+                      selectedweight === index
                         ? 'border-[#D99B55] bg-[#D99B55]/10'
                         : 'border-gray-200 hover:border-[#D99B55]'
                     }`}
                   >
                     <div className="flex flex-col items-center">
                       <span className={`text-sm ${
-                        selectedPrice === index ? 'text-[#D99B55] font-medium' : 'text-gray-600'
+                        selectedweight === index ? 'text-[#D99B55] font-medium' : 'text-gray-600'
                       }`}>
                         Option {index + 1}
                       </span>
                       <div className="flex items-baseline mt-1">
                         <span className="text-lg font-bold text-gray-900">
-                          ${priceOption.offerPrice}
+                          ${calculatePrice(weightOption.offerweight, true)}
                         </span>
                         <span className="ml-2 text-sm text-gray-500 line-through">
-                          ${priceOption.price}
+                          ${calculatePrice(weightOption.weight, false)}
                         </span>
                       </div>
                     </div>
@@ -205,18 +243,24 @@ const ViewCard = () => {
                   <span className="block text-sm text-gray-600">Total Price</span>
                   <div className="flex items-baseline mt-1">
                     <span className="text-2xl font-bold text-gray-900">
-                      ${product.prices[selectedPrice].offerPrice}
+                      ${(calculatePrice(product.weights[selectedweight].offerweight, true) * quantity).toFixed(2)}
                     </span>
                     <span className="ml-2 text-sm text-gray-500 line-through">
-                      ${product.prices[selectedPrice].price}
+                      ${(calculatePrice(product.weights[selectedweight].weight, false) * quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center border border-gray-300 rounded-lg">
-                    <button className="px-3 py-2 text-gray-600 hover:bg-gray-100">-</button>
-                    <span className="px-4 py-2">1</span>
-                    <button className="px-3 py-2 text-gray-600 hover:bg-gray-100">+</button>
+                    <button 
+                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                      onClick={decreaseQuantity}
+                    >-</button>
+                    <span className="px-4 py-2">{quantity}</span>
+                    <button 
+                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                      onClick={increaseQuantity}
+                    >+</button>
                   </div>
                 </div>
               </div>

@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FiShoppingCart, FiUser, FiSearch, FiChevronUp, FiChevronDown, FiMenu, FiX } from "react-icons/fi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [metal, setMetal] = useState([]);
+  useEffect(()=>{
+    fetch('/metal.json')
+      .then(response => response.json())
+      .then(data => setMetal(data))
+      .catch(error => console.error('Error fetching metal data:', error));
+  },[])
+
 
   const NavLinks = (
     <>
@@ -63,8 +72,34 @@ const Navbar = () => {
 
         {/* Middle - Metal Prices - Hidden on mobile */}
         <div className="hidden md:flex flex-col md:flex-row gap-4 md:gap-8 mt-3 lg:mt-0">
+
+         {
+          metal && metal.map(met => (
+            <div key={met.metal} className="flex items-center gap-2 text-center">
+              <span className="text-slate-950 font-bold text-sm md:text-base">
+                {met.metal.toUpperCase()}
+              </span>
+              <span className="text-white text-sm md:text-base">
+                ${met.price.toFixed(2)}
+              </span>
+              <div className="flex flex-col items-center">
+                <FiChevronUp className="text-green-500 text-xs" />
+                <FiChevronDown className="text-gray-500 text-xs opacity-30" />
+              </div>
+              <span className="text-green-600 text-xs md:text-sm">
+                +1.2% (+$24.50)
+              </span>
+            </div>
+          ))
+         }
+
+
+
+
+
+
           {/* Gold Price */}
-          <div className="flex items-center gap-2 text-center">
+          {/* <div className="flex items-center gap-2 text-center">
             <span className="text-[#eb7b04] font-bold text-sm md:text-base">
               GOLD
             </span>
@@ -76,10 +111,10 @@ const Navbar = () => {
             <span className="text-green-600 text-xs md:text-sm">
               +1.2% (+$24.50)
             </span>
-          </div>
+          </div> */}
 
           {/* Silver Price */}
-          <div className="flex items-center gap-2 text-center">
+          {/* <div className="flex items-center gap-2 text-center">
             <span className="text-slate-950 font-bold text-sm md:text-base">
               SILVER
             </span>
@@ -91,10 +126,10 @@ const Navbar = () => {
             <span className="text-red-500 text-xs md:text-sm">
               -0.8% (-$0.19)
             </span>
-          </div>
+          </div> */}
 
           {/* Platinum Price */}
-          <div className="flex items-center gap-2 text-center">
+          {/* <div className="flex items-center gap-2 text-center">
             <span className="text-slate-950 font-bold text-sm md:text-base">
               PLATINUM
             </span>
@@ -106,7 +141,7 @@ const Navbar = () => {
             <span className="text-green-600 text-xs md:text-sm">
               +0.5% (+$4.85)
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Side - User Profile - Hidden on mobile */}

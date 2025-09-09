@@ -11,9 +11,9 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "prices": [
-      { "price": 700, "offerPrice": 400 },
-      { "price": 650, "offerPrice": 380 }
+    "weights": [
+      { "weight": 700, "offerweight": 400 },
+      { "weight": 650, "offerweight": 380 }
     ],
     "sizes": ["S", "M", "L"]
   },
@@ -28,9 +28,9 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "prices": [
-      { "price": 500, "offerPrice": 350 },
-      { "price": 480, "offerPrice": 320 }
+    "weights": [
+      { "weight": 500, "offerweight": 350 },
+      { "weight": 480, "offerweight": 320 }
     ],
     "sizes": ["M", "L"]
   },
@@ -45,9 +45,9 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "prices": [
-      { "price": 250, "offerPrice": 180 },
-      { "price": 230, "offerPrice": 160 }
+    "weights": [
+      { "weight": 250, "offerweight": 180 },
+      { "weight": 230, "offerweight": 160 }
     ],
     "sizes": ["S", "M"]
   },
@@ -62,9 +62,9 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "prices": [
-      { "price": 900, "offerPrice": 650 },
-      { "price": 850, "offerPrice": 600 }
+    "weights": [
+      { "weight": 900, "offerweight": 650 },
+      { "weight": 850, "offerweight": 600 }
     ],
     "sizes": ["S", "M", "L"]
   },
@@ -80,9 +80,9 @@
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
       "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
     ],
-    "prices": [
-      { "price": 1200, "offerPrice": 950 },
-      { "price": 1150, "offerPrice": 900 }
+    "weights": [
+      { "weight": 1200, "offerweight": 950 },
+      { "weight": 1150, "offerweight": 900 }
     ],
     "sizes": ["M", "L", "XL"]
   }

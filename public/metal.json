@@ -1,0 +1,17 @@
+[
+  {
+    "metal": "Gold",
+    "price": 75.50,
+    "currency": "USD"
+  },
+  {
+    "metal": "Silver",
+    "price": 0.95,
+    "currency": "USD"
+  },
+  {
+    "metal": "Platinum",
+    "price": 32.80,
+    "currency": "USD"
+  }
+]

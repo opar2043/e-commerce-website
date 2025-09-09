@@ -23,21 +23,21 @@
   {
     "_id": "68b96d5f40856b6eb1f8680b",
     "name": "rijoanrashidopa",
-    "email": "rezoanbids@gmail.com",
+    "email": "rezoanbids@weightail.com",
     "pass": "1234567",
     "role": "admin"
   },
   {
     "_id": "68b9709340856b6eb1f8680c",
     "name": "Rana",
-    "email": "rana@gmail.com",
+    "email": "rana@weightail.com",
     "pass": "12345678",
     "role": "customer"
   },
   {
     "_id": "68bad84b944a03f58ca16f54",
     "name": "Kihu",
-    "email": "kihu@gmail.com",
+    "email": "kihu@weightail.com",
     "pass": "12345678",
     "role": "admin"
   }

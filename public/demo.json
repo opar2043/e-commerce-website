@@ -1,0 +1,91 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Diamond Ring",
+      "category": "diamond",
+      "shortDescription": "Elegant diamond ring with platinum finish.",
+      "description": "Nunc vehicula quam semper odio varius tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.",
+      "isAvailable": true,
+      "images": [
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
+      ],
+      "weights": [
+        { "weight": 700, "offerweight": 400 },
+        { "weight": 650, "offerweight": 380 }
+      ],
+      "sizes": ["S", "M", "L"]
+    },
+    {
+      "id": 2,
+      "name": "Gold Plated Necklace",
+      "category": "gold",
+      "shortDescription": "Stylish gold plated necklace for all occasions.",
+      "description": "This necklace is crafted with precision, offering a luxurious look while being affordable. Perfect for weddings and parties.",
+      "isAvailable": true,
+      "images": [
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
+      ],
+      "weights": [
+        { "weight": 500, "offerweight": 350 },
+        { "weight": 480, "offerweight": 320 }
+      ],
+      "sizes": ["M", "L"]
+    },
+    {
+      "id": 3,
+      "name": "Silver Bracelet",
+      "category": "silver",
+      "shortDescription": "Classic silver bracelet with modern touch.",
+      "description": "Made of high-quality sterling silver. Lightweight and perfect for everyday wear.",
+      "isAvailable": false,
+      "images": [
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
+      ],
+      "weights": [
+        { "weight": 250, "offerweight": 180 },
+        { "weight": 230, "offerweight": 160 }
+      ],
+      "sizes": ["S", "M"]
+    },
+    {
+      "id": 4,
+      "name": "Platinum Earrings",
+      "category": "diamond",
+      "shortDescription": "Premium diamond-studded platinum earrings.",
+      "description": "Designed with high-grade platinum and natural diamonds. Adds elegance to any outfit.",
+      "isAvailable": true,
+      "images": [
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
+      ],
+      "weights": [
+        { "weight": 900, "offerweight": 650 },
+        { "weight": 850, "offerweight": 600 }
+      ],
+      "sizes": ["S", "M", "L"]
+    },
+    {
+      "id": 5,
+      "name": "Gold Chain",
+      "category": "gold",
+      "shortDescription": "Durable gold chain with elegant shine.",
+      "description": "Crafted from pure gold with a polished finish. Suitable for both men and women.",
+      "isAvailable": true,
+      "images": [
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp",
+        "https://i.ibb.co.com/XZwxvdpF/gold5.webp"
+      ],
+      "weights": [
+        { "weight": 1200, "offerweight": 950 },
+        { "weight": 1150, "offerweight": 900 }
+      ],
+      "sizes": ["M", "L", "XL"]
+    }
+  ]
+}
