@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { RiVipCrownLine, RiHeartLine, RiHeartFill, RiShoppingCartLine } from "react-icons/ri";
 import useAuth from '../Hooks/useAuth';
 import Swal from 'sweetalert2';
+import Loading from '../Shared/Loading';
 
 const ViewCard = () => {
   const { id } = useParams();
@@ -14,6 +15,7 @@ const ViewCard = () => {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const { cart, setCart } = useAuth();
+  const [price , setPrice] = useState(0);
 
   useEffect(() => {
     fetch('/metal.json')
@@ -37,44 +39,32 @@ const ViewCard = () => {
   const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price * product?.weight || 0;
   const diamondPrice = metal.find(m => m?.metal === 'Diamond')?.price * product?.weight || 0;
 
-
-  // Calculate price based on metal type and weight
-  const calculatePrice = () => {
-    if (!product) return 0;
-    
-    switch (product.category) {
-      case 'Gold':
-        return (goldPrice * product.weight).toFixed(2);
-      case 'Silver':
-        return (silverPrice * product.weight).toFixed(2);
-      case 'Platinum':
-        return (platinumPrice * product.weight).toFixed(2);
-      case 'diamond':
-        // For diamond, use a fixed price calculation (you might want to adjust this)
-        return (product.weight * 100).toFixed(2); // Example: $100 per gram for diamonds
-      default:
-        return (product.weight * 10).toFixed(2); // Default price calculation
+  useEffect(()=>{
+    if(product?.category === 'gold'){
+      setPrice(goldPrice)
+    } else if(product?.category === 'silver'){
+      setPrice(silverPrice)
+    } else if(product?.category === 'platinum'){
+      setPrice(platinumPrice)
+    } else if(product?.category === 'diamond'){
+      setPrice(diamondPrice)
     }
-  };
+  },[product?.category , goldPrice, silverPrice, platinumPrice, diamondPrice]);
 
-  // Calculate total price for display (price × quantity)
-  const calculateTotalPrice = () => {
-    if (!product) return 0;
-    return (parseFloat(calculatePrice()) * quantity).toFixed(2);
-  };
+  // console.log(price , product?.category , 'its my price');
+  
+
+    const totalPrice = price * quantity;
 
   if (loading || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D99B55] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading product details...</p>
-        </div>
+         <Loading></Loading>
       </div>
     );
   }
 
-  const handleImageSelect = (index) => {
+const handleImageSelect = (index) => {
     setSelectedImage(index);
   };
 
@@ -104,9 +94,9 @@ const ViewCard = () => {
       name: product.name,
       category: product.category,
       image: product.images[0],
-      price: calculatePrice(), // This calculates the price based on weight and metal type
+      price: totalPrice, // This calculates the price based on weight and metal type
       weight: product.weight,
-      size: selectedSize,
+      // size: selectedSize,
       quantity: quantity
     };
     
@@ -120,6 +110,9 @@ const ViewCard = () => {
       timer: 1500
     });
   }
+
+
+  console.log(cart);
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
@@ -273,20 +266,7 @@ const ViewCard = () => {
                   <span className="block text-sm text-gray-600">Total Price</span>
                   <div className="flex items-baseline mt-1">
                     <span className="text-2xl font-bold text-gray-900">
-                       {
-                      product.category === 'gold' && goldPrice 
-                    }
-
-                    {
-                      product.category === 'silver' && silverPrice 
-                    }
-
-                    {
-                      product.category === 'platinum' && platinumPrice
-                    }
-                    {
-                      product.category === 'diamond' && diamondPrice
-                    }
+                      {totalPrice.toFixed(2)}
                     </span>
                   </div>
                 </div>

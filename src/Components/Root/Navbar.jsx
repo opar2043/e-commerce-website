@@ -94,55 +94,6 @@ const Navbar = () => {
           ))
          }
 
-
-
-
-
-
-          {/* Gold Price */}
-          {/* <div className="flex items-center gap-2 text-center">
-            <span className="text-[#eb7b04] font-bold text-sm md:text-base">
-              GOLD
-            </span>
-            <span className="text-white text-sm md:text-base">$2,045.50</span>
-            <div className="flex flex-col items-center">
-              <FiChevronUp className="text-green-500 text-xs" />
-              <FiChevronDown className="text-gray-500 text-xs opacity-30" />
-            </div>
-            <span className="text-green-600 text-xs md:text-sm">
-              +1.2% (+$24.50)
-            </span>
-          </div> */}
-
-          {/* Silver Price */}
-          {/* <div className="flex items-center gap-2 text-center">
-            <span className="text-slate-950 font-bold text-sm md:text-base">
-              SILVER
-            </span>
-            <span className="text-white text-sm md:text-base">$23.85</span>
-            <div className="flex flex-col items-center">
-              <FiChevronUp className="text-gray-500 text-xs opacity-30" />
-              <FiChevronDown className="text-red-500 text-xs" />
-            </div>
-            <span className="text-red-500 text-xs md:text-sm">
-              -0.8% (-$0.19)
-            </span>
-          </div> */}
-
-          {/* Platinum Price */}
-          {/* <div className="flex items-center gap-2 text-center">
-            <span className="text-slate-950 font-bold text-sm md:text-base">
-              PLATINUM
-            </span>
-            <span className="text-white text-sm md:text-base">$978.30</span>
-            <div className="flex flex-col items-center">
-              <FiChevronUp className="text-green-600 text-xs" />
-              <FiChevronDown className="text-gray-500 text-xs opacity-30" />
-            </div>
-            <span className="text-green-600 text-xs md:text-sm">
-              +0.5% (+$4.85)
-            </span>
-          </div> */}
         </div>
 
         {/* Right Side - User Profile - Hidden on mobile */}

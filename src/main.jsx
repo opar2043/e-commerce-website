@@ -21,6 +21,9 @@ import AllProductAdmin from './Components/Dashboard/AllProductAdmin';
 import User from './Components/Dashboard/User/User';
 import AdminDashboard from './Components/Dashboard/AdminPanel/AdminDashboard';
 import AuthProvider from './Components/Firebase/AuthProvider';
+import Cart from './Components/ProductCart/Cart';
+import UpdatePrice from './Components/Dashboard/UpdatePrice/UpdatePrice';
+import Order from './Components/Dashboard/Order/Order';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -54,6 +57,10 @@ const router = createBrowserRouter([
         element: <Contact></Contact>
       },
       {
+        path: '/cart',
+        element: <Cart></Cart>
+      },
+      {
         path: '/product/:id',
         element: <ViewCard></ViewCard>
       },
@@ -73,7 +80,7 @@ const router = createBrowserRouter([
     },
     {
       path: "/dashboard/order",
-      element: <AddProduct></AddProduct>
+      element: <Order></Order>
     },
     {
       path: "/dashboard/user",
@@ -83,10 +90,13 @@ const router = createBrowserRouter([
       path: "/dashboard/admin",
       element: <AdminDashboard></AdminDashboard>
     },
+    {
+      path: "/dashboard/updateprice",
+      element: <UpdatePrice></UpdatePrice>
+    },
   ]
   }
 ]);
-
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

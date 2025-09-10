@@ -70,7 +70,7 @@ const AdminDashboard = () => {
                 <p className="text-2xl font-bold text-slate-800 mt-2">{stat.value}</p>
               </div>
               <div className={`p-3 rounded-full ${stat.color} bg-opacity-10`}>
-                <span className={stat.textColor}>{stat.icon}</span>
+                <span className={stat?.textColor}>{stat.icon}</span>
               </div>
             </div>
           </div>
