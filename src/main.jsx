@@ -24,6 +24,8 @@ import AuthProvider from './Components/Firebase/AuthProvider';
 import Cart from './Components/ProductCart/Cart';
 import UpdatePrice from './Components/Dashboard/UpdatePrice/UpdatePrice';
 import Order from './Components/Dashboard/Order/Order';
+import EditProduct from './Components/Dashboard/EditProduct';
+import Update from './Components/Dashboard/UpdatePrice/Update';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -90,9 +92,20 @@ const router = createBrowserRouter([
       path: "/dashboard/admin",
       element: <AdminDashboard></AdminDashboard>
     },
+{
+  path: "/dashboard/updateprice",
+  element: <UpdatePrice></UpdatePrice>,
+  children: [
     {
-      path: "/dashboard/updateprice",
-      element: <UpdatePrice></UpdatePrice>
+      path: "/dashboard/updateprice/:id",
+      element: <Update></Update>
+    }
+  ]
+},
+
+    {
+      path: "/dashboard/editproducts/:id",
+      element: <EditProduct></EditProduct>
     },
   ]
   }

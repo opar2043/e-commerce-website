@@ -1,26 +1,5 @@
 [
   {
-    "_id": "68b9271768077f07bdd2248d",
-    "name": "John Doe",
-    "email": "john.doe@example.com",
-    "role": "customer",
-    "status": null
-  },
-  {
-    "_id": "68b9271768077f07bdd2248e",
-    "name": "Jane Smith",
-    "email": "jane.smith@example.com",
-    "role": "customer",
-    "status": null
-  },
-  {
-    "_id": "68b9271768077f07bdd2248f",
-    "name": "Admin User",
-    "email": "admin@example.com",
-    "role": "customer",
-    "status": null
-  },
-  {
     "_id": "68b96d5f40856b6eb1f8680b",
     "name": "rijoanrashidopa",
     "email": "rezoanbids@weightail.com",

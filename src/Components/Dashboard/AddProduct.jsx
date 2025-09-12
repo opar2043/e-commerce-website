@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { RiAddLine, RiCloseLine, RiImageAddLine } from "react-icons/ri";
+import { RiAddLine, RiCloseLine } from "react-icons/ri";
+import useAxios from "../Hooks/useAxios";
+import Swal from "sweetalert2";
+
+const img_hosting = "f00f7709983a82bfc1ca5153ef794386";
+const img_api_key = `https://api.imgbb.com/1/upload?key=${img_hosting}`;
 
 const AddProduct = () => {
   const [formData, setFormData] = useState({
@@ -13,8 +18,10 @@ const AddProduct = () => {
     sizes: [],
   });
 
-  const [imageUrls, setImageUrls] = useState([""]);
+  const [imageUrls, setImageUrls] = useState([null]);
   const [sizeInput, setSizeInput] = useState("");
+
+  const axiosSecure = useAxios();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -24,85 +31,78 @@ const AddProduct = () => {
     }));
   };
 
-  const handleImageUrlChange = (index, value) => {
+  const handleImageUrlChange = (index, file) => {
     const newImageUrls = [...imageUrls];
-    newImageUrls[index] = value;
+    newImageUrls[index] = file;
     setImageUrls(newImageUrls);
-
-    // Update form data with non-empty URLs
-    setFormData((prev) => ({
-      ...prev,
-      images: newImageUrls.filter((url) => url.trim() !== ""),
-    }));
   };
 
   const addImageField = () => {
-    setImageUrls([...imageUrls, ""]);
+    setImageUrls([...imageUrls, null]);
   };
 
   const removeImageField = (index) => {
     if (imageUrls.length > 1) {
       const newImageUrls = imageUrls.filter((_, i) => i !== index);
       setImageUrls(newImageUrls);
-
-      setFormData((prev) => ({
-        ...prev,
-        images: newImageUrls.filter((url) => url.trim() !== ""),
-      }));
     }
   };
 
-  const handleWeightChange = (index, field, value) => {
-    const newWeights = [...formData.weights];
-    newWeights[index][field] = value;
-    setFormData((prev) => ({
-      ...prev,
-      weights: newWeights,
-    }));
-  };
-
-  const addWeightField = () => {
-    setFormData((prev) => ({
-      ...prev,
-      weights: [...prev.weights, { weight: "", offerweight: "" }],
-    }));
-  };
-
-  const removeWeightField = (index) => {
-    if (formData.weights.length > 1) {
-      setFormData((prev) => ({
-        ...prev,
-        weights: prev.weights.filter((_, i) => i !== index),
-      }));
-    }
-  };
-
-  const handleSizeChange = (e) => {
-    setSizeInput(e.target.value);
-  };
-
-  const addSize = () => {
-    if (sizeInput.trim() && !formData.sizes.includes(sizeInput.trim())) {
-      setFormData((prev) => ({
-        ...prev,
-        sizes: [...prev.sizes, sizeInput.trim()],
-      }));
-      setSizeInput("");
-    }
-  };
-
-  const removeSize = (sizeToRemove) => {
-    setFormData((prev) => ({
-      ...prev,
-      sizes: prev.sizes.filter((size) => size !== sizeToRemove),
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your Supabase backend
-    console.log("Product Data:", formData);
-    
+    const frm = e.target;
+    const name = frm.name.value;
+    const category = frm.category.value;
+    const shortDescription = frm.shortDescription.value;
+    const description = frm.description.value;
+    const isAvailable = frm.isAvailable.value === "true";
+    const weight = frm.weight.value;
+
+    try {
+      // 1. Upload all selected files to imgbb
+      const uploadedUrls = await Promise.all(
+        imageUrls.map(async (file) => {
+          if (!file) return null;
+          const data = new FormData();
+          data.append("image", file);
+          const res = await fetch(img_api_key, {
+            method: "POST",
+            body: data,
+          });
+          const imgData = await res.json();
+          return imgData?.data?.url || null;
+        })
+      );
+
+      const cleanUrls = uploadedUrls.filter(Boolean);
+
+      // 2. Final product payload
+      const productData = {
+        name,
+        category,
+        shortDescription,
+        description,
+        isAvailable,
+        weight,
+        images: cleanUrls, // ✅ imgbb URLs, not File objects
+      };
+     console.log(productData);
+      // 3. Save product in backend
+      const { data } = await axiosSecure.post("/products", productData);
+
+      Swal.fire({
+        title: "Product Added!",
+        text: "Your product was successfully added.",
+        icon: "success",
+      });
+      console.log("Saved Product:", data.data);
+    } catch (err) {
+      console.error(err);
+      Swal.fire({
+        title: "Something Went Wrong",
+        icon: "error",
+      });
+    }
   };
 
   return (
@@ -117,6 +117,7 @@ const AddProduct = () => {
           className="bg-gray-100 p-6 rounded-lg shadow-md "
         >
           {/* Product Name */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="mb-6">
             <label
               htmlFor="name"
@@ -131,14 +132,35 @@ const AddProduct = () => {
               value={formData.name}
               placeholder="Enter product name"
               onChange={handleInputChange}
-              className="w-full  text-black placeholder:text-white px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
               required
             />
           </div>
 
-          {/* Category */}
+                    {/* Weight */}
+          <div className="mb-6">
+            <label
+              htmlFor="weight"
+              className="block text-sm font-medium text-gray-900 mb-2"
+            >
+              Product Weight (in grams)
+            </label>
+            <input
+              type="number"
+              id="weight"
+              name="weight"
+              value={formData.weight}
+              onChange={handleInputChange}
+              placeholder="Enter product weight"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
+              required
+            />
+          </div>
+          </div>
+
+          {/* Category & Availability */}
           <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="mb-6">
+            <div>
               <label
                 htmlFor="category"
                 className="block text-sm font-medium text-gray-900 mb-2"
@@ -157,12 +179,11 @@ const AddProduct = () => {
                 <option value="Gold">Gold</option>
                 <option value="Silver">Silver</option>
                 <option value="Platinum">Platinum</option>
-                <option value="diamond">Diamond</option>
+                <option value="Diamond">Diamond</option>
               </select>
             </div>
 
-            {/* Availability */}
-            <div className="">
+            <div>
               <label
                 htmlFor="isAvailable"
                 className="block mb-2 text-sm text-gray-900 "
@@ -200,10 +221,10 @@ const AddProduct = () => {
             <input
               type="text"
               id="shortDescription"
-              placeholder="Enter short description"
               name="shortDescription"
               value={formData.shortDescription}
               onChange={handleInputChange}
+              placeholder="Enter short description"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
               required
             />
@@ -220,159 +241,53 @@ const AddProduct = () => {
             <textarea
               id="description"
               name="description"
-              placeholder="Enter product Brief description"
               value={formData.description}
               onChange={handleInputChange}
               rows={4}
+              placeholder="Enter product description"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
               required
             />
           </div>
 
-          {/* Image URLs */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-900 mb-2">
-                Image URLs
-              </label>
-              {imageUrls.map((url, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <input
-                    type="file"
-                    placeholder="https://example.com/image.jpg"
-                    value={url}
-                    onChange={(e) =>
-                      handleImageUrlChange(index, e.target.value)
-                    }
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
-                  />
-                  {imageUrls.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeImageField(index)}
-                      className="ml-2 p-2 text-red-500 hover:bg-red-100 rounded-full"
-                    >
-                      <RiCloseLine className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={addImageField}
-                className="mt-2 flex items-center text-[#D99B55] hover:text-[#C68A4A]"
-              >
-                <RiAddLine className="w-5 h-5 mr-1" />
-                Add another image URL
-              </button>
-            </div>
-
-            {/* Sizes */}
-            <div className="">
-              <label className="block text-sm font-medium text-gray-900 mb-2">
-                Sizes
-              </label>
-              <div className="flex mb-2">
-                <input
-                  type="text"
-                  placeholder="Add a size (e.g., S, M, L)"
-                  value={sizeInput}
-                  onChange={handleSizeChange}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
-                />
-                <button
-                  type="button"
-                  onClick={addSize}
-                  className="ml-2 px-4 py-2 bg-[#D99B55] text-white rounded-md hover:bg-[#C68A4A]"
-                >
-                  Add
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {formData.sizes.map((size, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center px-3 py-1 bg-[#D99B55]/10 text-[#D99B55] rounded-full"
-                  >
-                    {size}
-                    <button
-                      type="button"
-                      onClick={() => removeSize(size)}
-                      className="ml-1 text-[#D99B55] hover:text-[#C68A4A]"
-                    >
-                      <RiCloseLine className="w-4 h-4" />
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Weights */}
+          {/* Images */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-white mb-2">
-              Weight Options (in grams)
+            <label className="block text-sm font-medium text-gray-900 mb-2">
+              Product Images
             </label>
-            {formData.weights.map((weight, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3"
-              >
-                <div>
-                  <label className="block text-xs text-gray-900 mb-1">
-                    Original Weight
-                  </label>
-                  <input
-                    type="number"
-                    placeholder="Original weight"
-                    value={weight.weight}
-                    onChange={(e) =>
-                      handleWeightChange(index, "weight", e.target.value)
-                    }
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
-                    required
-                  />
-                </div>
-                <div className="flex items-end">
-                  <div className="flex-1">
-                    <label className="block text-xs text-gray-900 mb-1">
-                      Offer Weight
-                    </label>
-                    <input
-                      type="number"
-                      placeholder="Offer weight"
-                      value={weight.offerweight}
-                      onChange={(e) =>
-                        handleWeightChange(index, "offerweight", e.target.value)
-                      }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
-                      required
-                    />
-                  </div>
-                  {formData.weights.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => removeWeightField(index)}
-                      className="ml-2 p-2 text-red-500 hover:bg-red-100 rounded-full"
-                    >
-                      <RiCloseLine className="w-5 h-5" />
-                    </button>
-                  )}
-                </div>
+            {imageUrls.map((url, index) => (
+              <div key={index} className="flex items-center mb-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUrlChange(index, e.target.files[0])}
+                  className="flex-1 px-4 py-2 border text-gray-800 border-gray-300 rounded-md focus:ring-[#D99B55] focus:border-[#D99B55]"
+                />
+                {imageUrls.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeImageField(index)}
+                    className="ml-2 p-2 text-red-500 hover:bg-red-100 rounded-full"
+                  >
+                    <RiCloseLine className="w-5 h-5" />
+                  </button>
+                )}
               </div>
             ))}
             <button
               type="button"
-              onClick={addWeightField}
+              onClick={addImageField}
               className="mt-2 flex items-center text-[#D99B55] hover:text-[#C68A4A]"
             >
               <RiAddLine className="w-5 h-5 mr-1" />
-              Add another weight option
+              Add another image
             </button>
           </div>
 
-          {/* Submit Button */}
-          <div className="">
+
+
+          {/* Submit */}
+          <div>
             <button
               type="submit"
               className="w-full bg-[#D99B55] hover:bg-[#C68A4A] text-white font-medium py-3 px-6 rounded-lg transition-colors"

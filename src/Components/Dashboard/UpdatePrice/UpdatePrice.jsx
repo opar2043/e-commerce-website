@@ -7,45 +7,19 @@ import {
   FiSave,
 } from "react-icons/fi";
 import Loading from "../../Shared/Loading";
+import useAxios from "../../Hooks/useAxios";
+import Swal from "sweetalert2";
+import useMetal from "../../Hooks/useMetal";
+import { Link, Outlet } from "react-router-dom";
 
 const UpdatePrice = () => {
-  const [metal, setMetal] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [metal, isLoading , refetch] = useMetal([])
   const [lastUpdated, setLastUpdated] = useState("");
+  const axiosSecure = useAxios()
 
-  useEffect(() => {
-    // Simulate API loading
-    setIsLoading(true);
-    setTimeout(() => {
-      fetch("/metal.json")
-        .then((response) => response.json())
-        .then((data) => {
-          setMetal(data);
-          setLastUpdated(new Date().toLocaleTimeString());
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching metal data:", error);
-          setIsLoading(false);
-        });
-    }, 1000);
-  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your form submission logic here
-    alert("Prices updated successfully!");
-  };
 
-  // Function to determine if price increased or decreased (for demo purposes)
-  const getTrend = () => {
-    return Math.random() > 0.5 ? "up" : "down";
-  };
 
-  // Function to generate random change percentage (for demo purposes)
-  const getChangePercent = () => {
-    return (Math.random() * 3).toFixed(2);
-  };
 
   // 🔹 Show full-page loader until data is fetched
   if (isLoading) {
@@ -62,22 +36,10 @@ const UpdatePrice = () => {
               Precious Metal Tracker
             </h2>
             <p className="text-slate-600 mt-2">
-              Monitor and update metal prices in real-time
+              Click The Metal Box for update metal prices in real-time
             </p>
           </div>
-          <div className="flex items-center mt-4 md:mt-0">
-            {lastUpdated && (
-              <p className="text-sm text-slate-500 mr-3">
-                Last updated: {lastUpdated}
-              </p>
-            )}
-            <button
-              onClick={() => window.location.reload()}
-              className="flex items-center text-sm bg-slate-800 text-white py-2 px-4 rounded-lg hover:bg-slate-700 transition"
-            >
-              <FiRefreshCw className="mr-1" /> Refresh
-            </button>
-          </div>
+
         </div>
 
         {/* Current Metal Prices Section */}
@@ -90,12 +52,11 @@ const UpdatePrice = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {metal.map((m) => {
-              const trend = getTrend();
-              const changePercent = getChangePercent();
+            {metal.map((m, idx) => {
 
               return (
-                <div
+              <Link to={`/dashboard/updateprice/${m?._id}`}>
+               <div
                   key={m.metal}
                   className="bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:shadow-lg transition"
                 >
@@ -103,24 +64,13 @@ const UpdatePrice = () => {
                     <h3 className="text-xl font-semibold text-slate-800">
                       {m.metal}
                     </h3>
-                    <span
-                      className={`flex items-center text-sm font-medium ${
-                        trend === "up" ? "text-green-600" : "text-red-600"
-                      }`}
-                    >
-                      {trend === "up" ? (
-                        <FiTrendingUp className="mr-1" />
-                      ) : (
-                        <FiTrendingDown className="mr-1" />
-                      )}
-                      {changePercent}%
-                    </span>
                   </div>
                   <p className="text-3xl font-bold text-[#FEB564]">
                     ${m.price.toFixed(2)}
                   </p>
                   <p className="text-slate-600 mt-2">per gram</p>
                 </div>
+              </Link>
               );
             })}
           </div>
@@ -129,7 +79,7 @@ const UpdatePrice = () => {
         <div className="border-t border-slate-200 my-8"></div>
 
         {/* Update Metal Prices Section */}
-        <div>
+        {/* <div>
           <div className="flex items-center mb-6">
             <FiSave className="text-2xl text-[#FEB564] mr-2" />
             <h3 className="text-2xl font-bold text-slate-700">
@@ -138,11 +88,11 @@ const UpdatePrice = () => {
           </div>
 
           <form
-            onSubmit={handleSubmit}
+            // onSubmit={editProduct}
             className="bg-white p-6 rounded-xl shadow-md border border-slate-200"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-              {metal.map((m) => (
+              {metal.map((m , idx) => (
                 <div key={m.metal} className="flex flex-col">
                   <label className="text-lg font-medium text-slate-700 mb-2">
                     {m.metal}
@@ -152,6 +102,7 @@ const UpdatePrice = () => {
                     <input
                       type="number"
                       step="0.01"
+                      name={`${m.metal}_${idx}`}
                       defaultValue={m.price}
                       className="w-full border border-slate-300 rounded-lg p-2 pl-7 focus:ring-2 focus:ring-[#FEB564] focus:border-transparent"
                     />
@@ -170,7 +121,9 @@ const UpdatePrice = () => {
               </button>
             </div>
           </form>
-        </div>
+        </div> */}
+
+        <Outlet></Outlet>
       </div>
     </div>
   );

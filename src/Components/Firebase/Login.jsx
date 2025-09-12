@@ -1,104 +1,107 @@
 import { FcGoogle } from "react-icons/fc";
 import { RiVipCrownLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/footer.webp"
+import Swal from "sweetalert2";
+import { useRef } from "react";
+import useAuth from "../Hooks/useAuth";
 
 const Login = () => {
 
-   // const { handleLogin, handleGoogle, resetPass } = useAuth();
-  // const navigate = useNavigate();
-  // const emailRef = useRef();
+   const { resetPass, handleLogin , handleGoogle } = useAuth();
+  const navigate = useNavigate();
+  const emailRef = useRef();
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   const email = e.target.email.value;
-  //   const pass = e.target.pass.value;
+  function handleSubmit(e) {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const pass = e.target.pass.value;
 
-  //   handleLogin(email, pass)
-  //     .then(() => {
-  //       Swal.fire({ 
-  //         title: "Logged In Successfully!", 
-  //         text: "Welcome back to Tannous Jewelry",
-  //         icon: "success",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //       navigate("/");
-  //       return;
-  //     })
-  //     .catch(() => {
-  //       Swal.fire({ 
-  //         title: "Authentication Failed", 
-  //         text: "Please check your credentials",
-  //         icon: "error",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //       return ;
-  //     });
-  // }
+    handleLogin(email, pass)
+      .then(() => {
+        Swal.fire({ 
+          title: "Logged In Successfully!", 
+          text: "Welcome back to Tannous Jewelry",
+          icon: "success",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+        navigate("/");
+        return;
+      })
+      .catch(() => {
+        Swal.fire({ 
+          title: "Authentication Failed", 
+          text: "Please check your credentials",
+          icon: "error",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+        return ;
+      });
+  }
 
-  // function handleForget() {
-  //   const email = emailRef.current.value;
-  //   if (!email) {
-  //     Swal.fire({ 
-  //       title: "Please enter your email address", 
-  //       icon: "warning",
-  //       background: "#1a1a1a",
-  //       color: "#fff",
-  //       confirmButtonColor: "#d4af37"
-  //     });
-  //     return;
-  //   }
-  //   resetPass(email)
-  //     .then(() => {
-  //       Swal.fire({ 
-  //         title: "Password Reset Sent", 
-  //         text: "Please check your email for reset instructions",
-  //         icon: "success",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       Swal.fire({ 
-  //         title: "Error Sending Reset", 
-  //         text: error.message,
-  //         icon: "error",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //     });
-  // }
+  function handleForget() {
+    const email = emailRef.current.value;
+    if (!email) {
+      Swal.fire({ 
+        title: "Please enter your email address", 
+        icon: "warning",
+        background: "#1a1a1a",
+        color: "#fff",
+        confirmButtonColor: "#d4af37"
+      });
+      return;
+    }
+    resetPass(email)
+      .then(() => {
+        Swal.fire({ 
+          title: "Password Reset Sent", 
+          text: "Please check your email for reset instructions",
+          icon: "success",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+      })
+      .catch((error) => {
+        Swal.fire({ 
+          title: "Error Sending Reset", 
+          text: error.message,
+          icon: "error",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+      });
+  }
 
-  // function handleGoogleLogin() {
-  //   handleGoogle()
-  //     .then(() => {
-  //       Swal.fire({ 
-  //         title: "Logged In Successfully!", 
-  //         text: "Welcome to Tannous Jewelry",
-  //         icon: "success",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //       navigate("/");
-  //     })
-  //     .catch(() => {
-  //       Swal.fire({ 
-  //         title: "Google Sign-in Failed", 
-  //         text: "Please try again",
-  //         icon: "error",
-  //         background: "#1a1a1a",
-  //         color: "#fff",
-  //         confirmButtonColor: "#d4af37"
-  //       });
-  //     });
-  // }
+  function handleGoogleLogin() {
+    handleGoogle()
+      .then(() => {
+        Swal.fire({ 
+          title: "Logged In Successfully!", 
+          text: "Welcome to Tannous Jewelry",
+          icon: "success",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+        navigate("/");
+      })
+      .catch(() => {
+        Swal.fire({ 
+          title: "Google Sign-in Failed", 
+          text: "Please try again",
+          icon: "error",
+          background: "#1a1a1a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+      });
+  }
 
 
   return (
@@ -117,7 +120,9 @@ const Login = () => {
           
           <h2 className="text-2xl font-semibold text-gray-900 mb-6 tracking-tight">Welcome Back</h2>
 
-          <form className="space-y-5">
+          <form
+          onSubmit={handleSubmit}
+          className="space-y-5">
             <div>
               <label className="block text-gray-700 text-sm mb-2 font-medium">Email</label>
               <input
@@ -142,6 +147,7 @@ const Login = () => {
 
             <div className="flex justify-between items-center">
               <button
+              onClick={handleForget}
                 type="button"
                 className="text-sm text-gray-600 hover:text-gray-900 transition-colors font-medium"
               >
