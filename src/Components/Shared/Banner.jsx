@@ -3,42 +3,43 @@ import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
-import banner1 from "../../assets/banner.webp";
-import banner2 from "../../assets/banner2.webp";
-import banner3 from "../../assets/banner.webp";
-import banner4 from "../../assets/banner2.webp";
+import banner1 from "../../assets/banner.jpg";
+import banner2 from "../../assets/banner2.jpg";
+import banner3 from "../../assets/banner3.jpg";
+import banner4 from "../../assets/banner4.jpg";
 
 const Banner = () => {
-  const slides = [
-    {
-      img: banner1,
-      title: "JEWELLERY FOR THE FEMININE IN YOU",
-      description: "Take a moment and cherish the grand collection",
-      button: "MAKE ORDER",
-      link: "/order",
-    },
-    {
-      img: banner2,
-      title: "EXPLORE OUR GOLD COLLECTION",
-      description: "Finest handcrafted jewellery for every occasion",
-      button: "VIEW COLLECTION",
-      link: "/collection",
-    },
-    {
-      img: banner3,
-      title: "DIAMONDS THAT DEFINE ELEGANCE",
-      description: "Shine bright with timeless diamond pieces",
-      button: "SHOP NOW",
-      link: "/shop",
-    },
-    {
-      img: banner4,
-      title: "SILVER THAT SPARKS STYLE",
-      description: "Trendy designs made with sterling silver",
-      button: "DISCOVER",
-      link: "/discover",
-    },
-  ];
+const slides = [
+  {
+    img: banner1,
+    title: "Jewellery For The Feminine in You",
+    description: "Take a moment and cherish the grand collection",
+    button: "MAKE ORDER",
+    link: "/order",
+  },
+  {
+    img: banner2,
+    title: "Explore Our Gold Collection",
+    description: "Finest handcrafted jewellery for every occasion",
+    button: "VIEW COLLECTION",
+    link: "/collection",
+  },
+  {
+    img: banner3,
+    title: "Diamonds That Define Elegance",
+    description: "Shine bright with timeless diamond pieces",
+    button: "SHOP NOW",
+    link: "/shop",
+  },
+  {
+    img: banner4,
+    title: "Silver That Sparks Style",
+    description: "Trendy designs made with sterling silver",
+    button: "DISCOVER",
+    link: "/discover",
+  },
+];
+
 
   return (
     <section className="relative ">
@@ -57,7 +58,7 @@ const Banner = () => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className="relative rounded-md w-full h-[95vh] flex items-center justify-center text-center"
+            className="relative rounded-md w-full h-[60vh] md:h-[95vh] flex items-center justify-center text-center"
           >
             {/* Background Image */}
             <img
@@ -71,17 +72,23 @@ const Banner = () => {
 
             {/* Text + Button */}
             <div className="relative z-10 max-w-2xl px-6">
-              <h2 className="text-xl md:text-4xl text-orange-400 drop-shadow-md mb-4">
-                {slide.title}
-              </h2>
+<h2 className="text-xl md:text-4xl font-semibold text-[#E4C496] 
+               [text-shadow:_0_2px_8px_rgb(254_202_162_/_50%)]
+                transition-all duration-300 mb-4">
+  {slide.title}
+</h2>
               <p className="text-lg sm:text-xl text-gray-200 mb-6 font-light">
                 {slide.description}
               </p>
-              <Link to={"/collection"}>
-                <button className="px-8 py-3 border border-white text-white font-semibold text-lg hover:border-orange-400 hover:text-orange-400 transition-all duration-300 ">
-                  VIEW COLLECTION
-                </button>
-              </Link>
+<Link to={"/collection"}>
+  <button className="px-9 py-4 border border-transparent text-slate-900/90 font-semibold text-sm 
+                     bg-gradient-to-r from-[#D9AF7F] to-[#ECD4AA]
+                     hover:from-[#E5C191] hover:to-[#F5E0BF] 
+                     hover:shadow-lg hover:shadow-amber-200/50 
+                     transition-all duration-300 rounded-3xl">
+    VIEW COLLECTION
+  </button>
+</Link>
             </div>
           </div>
         ))}

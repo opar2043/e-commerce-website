@@ -14,7 +14,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Sidebar */}
-      <div className="h-[100vh] w-full md:w-64 bg-white p-6 space-y-6 shadow-lg border-r border-gray-200">
+      <div className="h-[100vh] w-full md:w-72 bg-white p-6 space-y-6 shadow-lg border-r border-gray-200">
         {/* Brand Header */}
         <div className="flex items-center justify-center gap-2 mb-3">
           <RiVipCrownLine className="text-3xl text-[#D99B55]" />

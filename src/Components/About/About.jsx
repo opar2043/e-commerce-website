@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaGem, FaAward, FaUsers, FaHandHoldingHeart, FaShippingFast, FaHeadset } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
@@ -162,9 +163,11 @@ const About = () => {
         <div className="max-w-3xl mx-auto px-4 md:px-8">
           <h2 className="text-3xl font-serif font-bold mb-6">Experience the Tannous Difference</h2>
           <p className="text-xl mb-8 text-slate-700">Visit our store or browse our collections to discover jewelry that tells your story.</p>
-          <button className="bg-gray-700 text-white px-8 py-3 rounded-md font-semibold hover:bg-gray-600 transition-colors duration-300">
+           <Link to={'/collection'}>
+            <button className="bg-gray-700 text-white px-8 py-3 rounded-md font-semibold hover:bg-gray-600 transition-colors duration-300">
             Explore Collections
           </button>
+           </Link>
         </div>
       </section>
     </div>

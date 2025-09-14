@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Banner from "../../assets/banner2.webp";
+import Banner from "../../assets/banner5.jpg";
 import { FaGem } from "react-icons/fa";
 
 const Banner2 = () => {
@@ -19,7 +19,7 @@ const Banner2 = () => {
     <div className="flex flex-col md:flex-row w-full min-h-[350px] overflow-hidden font-['Cormorant_Garamond'] mb-6 md:mb-12">
       {/* Content Section */}
       <div 
-        className="relative flex-1 bg-[#FEB564] p-8 md:p-12 flex flex-col justify-center items-start overflow-hidden min-h-[400px]"
+        className="relative flex-1 bg-[#FEB564] p-8 md:p-12 flex flex-col justify-center items-start overflow-hidden min-h-[300px]"
         style={{
           backgroundImage: "radial-gradient(circle at 20% 70%, rgba(255,255,255,0.2) 0%, transparent 40%)",
         }}
@@ -63,7 +63,7 @@ const Banner2 = () => {
       </div>
 
       {/* Image Section */}
-      <div className="relative flex-1 min-h-[400px]">
+      <div className="relative flex-1 min-h-[300px]">
         <img 
           src={Banner} 
           alt="Elegant jewelry collection" 

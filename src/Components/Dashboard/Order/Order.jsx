@@ -1,316 +1,364 @@
-import React, { useEffect, useState } from "react";
-import {
-  FiSearch,
-  FiDollarSign,
-  FiPieChart,
-  FiShoppingCart,
-  FiFilter,
-} from "react-icons/fi";
-import Loading from "../../Shared/Loading";
+import React, { useState, useMemo } from 'react';
+import { Search, Filter, Eye, CheckCircle, Clock, XCircle } from 'lucide-react';
+import useOrder from '../../Hooks/useOrder';
+import useAxios from '../../Hooks/useAxios';
+import Swal from 'sweetalert2';
+
+const Loading = () => (
+  <div className="flex items-center justify-center h-64">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 const Order = () => {
-  const [cart, setCart] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredCart, setFilteredCart] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [loading, setLoading] = useState(true);
+  const [order, isLoading, refetch] = useOrder();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const axiosSecure = useAxios();
 
-  useEffect(() => {
-    // Simulating API call with your data structure
-    const mockCartData = [
-      {
-        category: "gold",
-        id: 1,
-        image: "https://1.ibb.co.com/XZnewqBf/gold5.webp",
-        name: "Gold Plated Necklace",
-        price: 377.5,
-        quantity: 1,
-        weight: 3,
-      },
-      {
-        id: 2,
-        name: "Gold Plated Mecklace",
-        category: "gold",
-        image: "https://1.ibb.co.com/XZnewqBf/gold5.webp",
-        price: 795,
-        quantity: 2,
-        weight: 5,
-      },
-      {
-        id: 3,
-        name: "Platinum Earrings",
-        category: "platinum",
-        image: "https://1.ibb.co.com/XZnewqBf/gold5.webp",
-        price: 295.2,
-        quantity: 1,
-        weight: 2,
-      },
-    ];
-
-    setTimeout(() => {
-      setCart(mockCartData);
-      setFilteredCart(mockCartData);
-      setLoading(false);
-    }, 1000); // simulate API delay
-  }, []);
-
-  // Calculate total revenue
-  const calculateTotalRevenue = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Function to toggle order status
+  const handleStatusToggle = (id, currentStatus) => {
+    const newStatus = currentStatus === "pending" ? "confirmed" : "pending";
+    
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Change status to ${newStatus}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch(`/order/${id}`, { status: newStatus })
+          .then(() => {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: `Order status updated to ${newStatus}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            
+            // Refetch data to update the UI
+            refetch();
+          })
+          .catch((error) => {
+            console.error("Error updating order status:", error);
+            Swal.fire({
+              title: "Something went wrong",
+              text: "Failed to update order status",
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
-  // Calculate total profit (30% profit margin)
-  const calculateTotalProfit = () => {
-    return cart.reduce((total, item) => total + item.price * 0.3 * item.quantity, 0);
-  };
+  // Filter and search orders
+  const filteredOrders = useMemo(() => {
+    if (!order || order.length === 0) return [];
+    
+    return order.filter(orderItem => {
+      const matchesSearch = 
+        orderItem.userEmail?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (orderItem.userName && orderItem.userName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        orderItem.items.some(item => 
+          item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      
+      const matchesStatus = statusFilter === 'all' || orderItem.status === statusFilter;
+      
+      return matchesSearch && matchesStatus;
+    });
+  }, [order, searchTerm, statusFilter]);
 
-  // Calculate total items
-  const calculateTotalItems = () => {
-    return cart.reduce((total, item) => total + item.quantity, 0);
-  };
-
-  // Handle search
-  const handleSearch = (e) => {
-    const term = e.target.value.toLowerCase();
-    setSearchTerm(term);
-
-    const filtered = cart.filter(
-      (item) =>
-        item.name.toLowerCase().includes(term) ||
-        item.category.toLowerCase().includes(term)
-    );
-
-    if (selectedCategory !== "all") {
-      setFilteredCart(filtered.filter((item) => item.category === selectedCategory));
-    } else {
-      setFilteredCart(filtered);
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'confirmed':
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case 'pending':
+        return <Clock className="h-4 w-4 text-yellow-500" />;
+      case 'cancelled':
+        return <XCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <Clock className="h-4 w-4 text-gray-500" />;
     }
   };
 
-  // Handle category filter
-  const handleCategoryFilter = (category) => {
-    setSelectedCategory(category);
-
-    if (category === "all") {
-      setFilteredCart(
-        searchTerm
-          ? cart.filter(
-              (item) =>
-                item.name.toLowerCase().includes(searchTerm) ||
-                item.category.toLowerCase().includes(searchTerm)
-            )
-          : cart
-      );
-    } else {
-      setFilteredCart(
-        cart.filter(
-          (item) =>
-            item.category === category &&
-            (item.name.toLowerCase().includes(searchTerm) ||
-              item.category.toLowerCase().includes(searchTerm))
-        )
-      );
+  const getStatusBadge = (status) => {
+    const baseClasses = "px-2 py-1 rounded-full text-xs font-medium cursor-pointer";
+    switch (status) {
+      case 'confirmed':
+        return `${baseClasses} bg-green-100 text-green-800 hover:bg-green-200`;
+      case 'pending':
+        return `${baseClasses} bg-yellow-100 text-yellow-800 hover:bg-yellow-200`;
+      case 'cancelled':
+        return `${baseClasses} bg-red-100 text-red-800 hover:bg-red-200`;
+      default:
+        return `${baseClasses} bg-gray-100 text-gray-800 hover:bg-gray-200`;
     }
   };
 
-  // Get unique categories
-  const getCategories = () => {
-    const categories = cart.map((item) => item.category);
-    return ["all", ...new Set(categories)];
-  };
-
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">
-          Order Management
-        </h1>
-        <p className="text-slate-600 mb-8">
-          Track and manage your orders and profits
-        </p>
-
-        {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Total Items */}
-          <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-blue-100 mr-4">
-                <FiShoppingCart className="text-2xl text-blue-600" />
-              </div>
-              <div>
-                <p className="text-slate-600">Total Items</p>
-                <h3 className="text-2xl font-bold text-slate-800">
-                  {calculateTotalItems()}
-                </h3>
-              </div>
-            </div>
-          </div>
-
-          {/* Total Revenue */}
-          <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-green-100 mr-4">
-                <FiDollarSign className="text-2xl text-green-600" />
-              </div>
-              <div>
-                <p className="text-slate-600">Total Revenue</p>
-                <h3 className="text-2xl font-bold text-slate-800">
-                  ${calculateTotalRevenue().toFixed(2)}
-                </h3>
-              </div>
-            </div>
-          </div>
-
-          {/* Total Profit */}
-          {/* <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-            <div className="flex items-center">
-              <div className="p-3 rounded-lg bg-amber-100 mr-4">
-                <FiPieChart className="text-2xl text-amber-600" />
-              </div>
-              <div>
-                <p className="text-slate-600">Total Profit</p>
-                <h3 className="text-2xl font-bold text-slate-800">
-                  ${calculateTotalProfit().toFixed(2)}
-                </h3>
-              </div>
-            </div>
-          </div> */}
+    <div className="text-black p-6 bg-gray-50 min-h-screen">
+      <div className="max-w-7xl   mx-auto">
+        {/* Header */}
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Order Management</h1>
+          <p className="text-gray-600">Manage and track all customer orders</p>
         </div>
 
-        {/* Search and Filter Section */}
-        <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="relative flex-grow">
-              <FiSearch className="absolute left-3 top-3 text-slate-400" />
+        {/* Summary Stats */}
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="flex items-center">
+              <Clock className="h-8 w-8 text-yellow-500" />
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-500">Pending Orders</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {order ? order.filter(o => o.status === 'pending').length : 0}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="flex items-center">
+              <CheckCircle className="h-8 w-8 text-green-500" />
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-500">Confirmed Orders</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {order ? order.filter(o => o.status === 'confirmed').length : 0}
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-lg shadow-sm p-4">
+            <div className="flex items-center">
+              <div className="h-8 w-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">$</span>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-500">Total Revenue</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ${order ? order.reduce((sum, o) => sum + o.price, 0).toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Search and Filter Controls */}
+        <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <input
                 type="text"
-                placeholder="Search by product name or category..."
-                className="w-full border border-slate-300 rounded-lg pl-10 pr-4 py-2 focus:ring-2 focus:ring-[#FEB564] focus:border-transparent"
+                placeholder="Search by email, name, product, or category..."
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={searchTerm}
-                onChange={handleSearch}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-
-            <div className="flex items-center">
-              <FiFilter className="text-slate-400 mr-2" />
+            
+            {/* Status Filter */}
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <select
-                className="border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-[#FEB564] focus:border-transparent"
-                value={selectedCategory}
-                onChange={(e) => handleCategoryFilter(e.target.value)}
+                className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
               >
-                {getCategories().map((category) => (
-                  <option key={category} value={category}>
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </option>
-                ))}
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
               </select>
             </div>
           </div>
         </div>
 
         {/* Orders Table */}
-        <div className="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-slate-50">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Product
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Order ID
                   </th>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Category
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Customer
                   </th>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Price
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Items
                   </th>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Quantity
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Categories
                   </th>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Weight
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Total Price
                   </th>
-                  <th className="py-4 px-6 text-left text-slate-600 font-semibold">
-                    Revenue
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
-                {filteredCart.length > 0 ? (
-                  filteredCart.map((item, index) => {
-
-                    return (
-                      <tr
-                        key={`${item.id}-${index}`}
-                        className="hover:bg-slate-50"
-                      >
-                        <td className="py-4 px-6">
-                          <div className="flex items-center">
-                            <span className="font-medium text-slate-800">
-                              {item.name}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-4 px-6">
-                          <span className="inline-block px-3 py-1 bg-slate-100 text-slate-800 rounded-full text-sm capitalize">
-                            {item.category}
-                          </span>
-                        </td>
-                        <td className="py-4 px-6 text-slate-800">
-                          ${item.price.toFixed(2)}
-                        </td>
-                        <td className="py-4 px-6 text-slate-800">
-                          {item.quantity}
-                        </td>
-                        <td className="py-4 px-6 text-slate-800">
-                          {item.weight}g
-                        </td>
-                        <td className="py-4 px-6 text-slate-800 font-medium">
-                          ${(item.price * item.quantity).toFixed(2)}
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
+              <tbody className="bg-white divide-y divide-gray-200">
+                {!order || filteredOrders.length === 0 ? (
                   <tr>
-                    <td
-                      colSpan="7"
-                      className="py-8 px-6 text-center text-slate-500"
-                    >
-                      No orders found matching your search criteria.
+                    <td colSpan="7" className="px-6 py-12 text-center text-gray-500">
+                      <div className="flex flex-col items-center">
+                        <Search className="h-12 w-12 text-gray-300 mb-4" />
+                        <p className="text-lg font-medium">No orders found</p>
+                        <p className="text-sm">Try adjusting your search or filter criteria</p>
+                      </div>
                     </td>
                   </tr>
+                ) : (
+                  filteredOrders.map((orderItem, idx) => (
+                    <tr key={orderItem._id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                        {idx + 1}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div>
+
+                          <div className="text-sm text-gray-500">{orderItem.userEmail}</div>
+                        </div>
+                      </td>
+                      <td className="px-3 py-4">
+                        <div className="max-w-xs">
+                          {orderItem.items.slice(0, 2).map((item, index) => (
+                            <div key={item._id} className="text-sm text-gray-900 truncate">
+                              • {item.name} (Qty: {item.quantity})
+                            </div>
+                          ))}
+                          {orderItem.items.length > 2 && (
+                            <div className="text-sm text-gray-500">
+                              +{orderItem.items.length - 2} more items
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex flex-wrap gap-1">
+                          {[...new Set(orderItem.items.map(item => item.category))].map((category) => (
+                            <span 
+                              key={category}
+                              className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                            >
+                              {category}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        ${orderItem.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <span
+                            onClick={() => handleStatusToggle(orderItem._id, orderItem.status)}
+                            className={getStatusBadge(orderItem.status)}
+                          >
+                            {orderItem.status.charAt(0).toUpperCase() + orderItem.status.slice(1)}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button
+                          onClick={() => setSelectedOrder(orderItem)}
+                          className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                        >
+                          <Eye className="h-4 w-4" />
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))
                 )}
               </tbody>
-
-              {filteredCart.length > 0 && (
-                <tfoot className="bg-slate-50">
-                  <tr>
-                    <td
-                      colSpan="5"
-                      className="py-4 px-6 text-right font-semibold text-slate-800"
-                    >
-                      Totals:
-                    </td>
-                    <td className="py-4 px-6 font-semibold text-slate-800">
-                      $
-                      {filteredCart
-                        .reduce(
-                          (total, item) => total + item.price * item.quantity,
-                          0
-                        )
-                        .toFixed(2)}
-                    </td>
-
-                  </tr>
-                </tfoot>
-              )}
             </table>
           </div>
         </div>
+
+        {/* Order Details Modal */}
+        {selectedOrder && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">Order Details</h2>
+                  <button
+                    onClick={() => setSelectedOrder(null)}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    ✕
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Order ID</p>
+                      <p className="font-mono">#{selectedOrder._id.slice(-8).toUpperCase()}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Status</p>
+                      <span className={getStatusBadge(selectedOrder.status)}>
+                        {selectedOrder.status.charAt(0).toUpperCase() + selectedOrder.status.slice(1)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Customer</p>
+                      <p>{selectedOrder.userName || 'N/A'}</p>
+                      <p className="text-sm text-gray-500">{selectedOrder.userEmail}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500">Total Price</p>
+                      <p className="text-lg font-bold">${selectedOrder.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 mb-2">Items Ordered</p>
+                    <div className="space-y-2">
+                      {selectedOrder.items.map((item) => (
+                        <div key={item._id} className="border rounded-lg p-3">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <h4 className="font-medium">{item.name}</h4>
+                              <p className="text-sm text-gray-500">Category: {item.category}</p>
+                              {item.weight && <p className="text-sm text-gray-500">Weight: {item.weight}g</p>}
+                              <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-medium">${item.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

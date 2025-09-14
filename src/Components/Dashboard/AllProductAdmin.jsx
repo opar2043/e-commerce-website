@@ -4,6 +4,7 @@ import useProducts from "../Hooks/useProducts";
 import Swal from "sweetalert2";
 import useAxios from "../Hooks/useAxios";
 import { Link } from "react-router-dom";
+import Loading from "../Shared/Loading";
 
 const AllProductAdmin = () => {
   const [products,isLoading , refetch] = useProducts([]);
@@ -49,6 +50,10 @@ const AllProductAdmin = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6 text-slate-950">All Products</h2>
 
+
+      {
+        isLoading ? <Loading></Loading>
+        :
       <div className="overflow-x-auto bg-white rounded-lg shadow">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -118,6 +123,9 @@ const AllProductAdmin = () => {
           </tbody>
         </table>
       </div>
+      }
+
+
     </div>
   );
 };

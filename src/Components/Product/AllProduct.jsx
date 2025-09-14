@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Card from './Card';
+import useProducts from '../Hooks/useProducts';
+import useMetal from '../Hooks/useMetal';
 
 const AllProduct = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [weightRange, setWeightRange] = useState([0, 2000]);
   const [sortOption, setSortOption] = useState('default');
+  const [products] = useProducts([]);
+  const [metal] = useMetal([]);
+  console.log(metal);
+  const goldRate = metal.find((m) => m?.metal === "Gold")?.price || 0;
+  const silverRate = metal.find((m) => m?.metal === "Silver")?.price || 0;
+  const platinumRate = metal.find((m) => m?.metal === "Coins")?.price || 0;
+  const diamondRate = metal.find((m) => m?.metal === "Diamond")?.price || 0;
 
-  useEffect(() => {
-    fetch("/product.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setFilteredProducts(data);
-      });
-  }, []);
+  
+
+
+  
 
   // Get unique categories
   const categories = ['all', ...new Set(products.map(product => product.category))];

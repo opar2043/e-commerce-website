@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import useAxios from "../../Hooks/useAxios";
 import useUser from "../../Hooks/useUser";
 import { useState, useEffect } from "react";
+import Loading from "../../Shared/Loading";
 
 const User = () => {
   const axiosSecure = useAxios();
@@ -30,7 +31,7 @@ const User = () => {
       if (result.isConfirmed) {
         axiosSecure
           .patch(`/users/${id}`, { role: newRole })
-          .then((res) => {
+          .then(() => {
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -54,6 +55,11 @@ const User = () => {
           });
       }
     });
+  }
+
+  // ✅ FIXED: Proper loading state return
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (

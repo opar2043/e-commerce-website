@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Title from "../Shared/Title";
 import Card from "./Card";
+import useProducts from "../Hooks/useProducts";
 
 const Product = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
+  const [products] = useProducts([]);
 
-  useEffect(() => {
-    fetch("/product.json")
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/product.json")
+  //     .then((res) => res.json())
+  //     .then((data) => setProducts(data));
+  // }, []);
 
   return (
     <div className="py-10 bg-gray-50">

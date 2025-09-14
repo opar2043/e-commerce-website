@@ -26,6 +26,9 @@ import UpdatePrice from './Components/Dashboard/UpdatePrice/UpdatePrice';
 import Order from './Components/Dashboard/Order/Order';
 import EditProduct from './Components/Dashboard/EditProduct';
 import Update from './Components/Dashboard/UpdatePrice/Update';
+import Wishlist from './Components/Wishlist/Wishlist';
+import Cart2 from './Components/ProductCart/Cart2';
+import Payment from './Components/ProductCart/Payment';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -60,7 +63,15 @@ const router = createBrowserRouter([
       },
       {
         path: '/cart',
-        element: <Cart></Cart>
+        element: <Cart2></Cart2>
+      },
+      {
+        path: '/wish',
+        element: <Wishlist></Wishlist>
+      },
+      {
+        path: '/payment',
+        element: <Payment></Payment>
       },
       {
         path: '/product/:id',

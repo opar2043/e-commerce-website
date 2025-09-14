@@ -7,7 +7,8 @@ export const AuthContex = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [cart , setCart] = useState([])
+  const [cart , setCart] = useState([]);
+  const [wish , setWish] = useState([]);
 
   const provider = new GoogleAuthProvider()
     function handleGoogle() {
@@ -60,7 +61,9 @@ const AuthProvider = ({ children }) => {
     resetPass,
     handleLogin,
     cart,
-    setCart
+    setCart,
+    setWish,
+    wish
   };
 
   return <AuthContex.Provider value={obj}>{children}</AuthContex.Provider>;

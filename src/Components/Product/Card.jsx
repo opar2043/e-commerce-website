@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { BsFillEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import useMetal from "../Hooks/useMetal";
+import useProducts from "../Hooks/useProducts";
 
 const Card = ({ product }) => {
-  const { id, name, images, weight, category } = product;
+  const { _id, name, images, weight, category } = product;
   const firstImage = images[0];
 
-  const [metal, setMetal] = useState([]);
+  // const [metal, setMetal] = useState([]);
+  const [metal, isLoading, refetch] = useMetal([]);
+  const [products] = useProducts([]);
 
-  useEffect(() => {
-    fetch("/metal.json")
-      .then((response) => response.json())
-      .then((data) => setMetal(data))
-      .catch((error) => console.error("Error fetching metal data:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/metal.json")
+  //     .then((response) => response.json())
+  //     .then((data) => setMetal(data))
+  //     .catch((error) => console.error("Error fetching metal data:", error));
+  // }, []);
 
   const goldPrice = metal.find((m) => m?.metal === "Gold")?.price || 0;
   const silverPrice = metal.find((m) => m?.metal === "Silver")?.price || 0;
@@ -25,12 +29,17 @@ const Card = ({ product }) => {
     price = weight * goldPrice;
   } else if (category.toLowerCase() === "silver") {
     price = weight * silverPrice;
-  } else if (category.toLowerCase() === "diamond" || category.toLowerCase() === "platinum") {
+  } else if (
+    category.toLowerCase() === "diamond" ||
+    category.toLowerCase() === "platinum"
+  ) {
     price = weight * platinumPrice;
   }
 
   return (
-    <div className="relative border-b border-gray-200 group overflow-hidden rounded cursor-pointer h-fit">
+        <Link to={`/product/${_id}`}>
+
+    <div className="relative border-4 border-[#ce7613] group overflow-hidden rounded cursor-pointer h-fit">
       {/* Product Image */}
       <img
         src={firstImage}
@@ -47,11 +56,10 @@ const Card = ({ product }) => {
 
       {/* Hover Icon */}
       <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 z-10">
-        <Link to={`/product/${id}`}>
-          <button className="p-3 bg-white rounded-full text-gray-700 shadow-md hover:bg-orange-400 hover:text-white transition duration-300">
+          {/* <button className="p-3 bg-white rounded-full text-gray-700 shadow-md hover:bg-orange-400 hover:text-white transition duration-300">
             <BsFillEyeFill size={22} />
-          </button>
-        </Link>
+          </button> */}
+       
       </div>
 
       {/* Content (bottom info) */}
@@ -60,17 +68,16 @@ const Card = ({ product }) => {
           {name}
         </h3>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-light text-gray-700">
-            {weight} gm
-          </span>
+          <span className="text-sm font-light text-gray-700">{weight} gm</span>
           {price > 0 && (
-            <span className="text-lg font-thin text-yellow-600">
+            <span className="text-lg font-light text-slate-950">
               ${price.toFixed(2)}
             </span>
           )}
         </div>
       </div>
     </div>
+     </Link>
   );
 };
 
