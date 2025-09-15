@@ -73,7 +73,10 @@ const BlogBanner = () => {
               </p>
 
               <button className="">
-                <Link to={"/collection"} className="px-4 py-2 border border-gray-800 text-gray-800 font-medium text-sm hover:bg-gray-800 hover:text-white transition-all duration-300 flex items-center">
+                <Link
+                  to={"/collection"}
+                  className="px-4 py-2 border border-gray-800 text-gray-800 font-medium text-sm hover:bg-gray-800 hover:text-white transition-all duration-300 flex items-center"
+                >
                   View Collection <FaArrowRight className="ml-2" />
                 </Link>
               </button>
@@ -93,8 +96,13 @@ const BlogBanner = () => {
         <div className="relative z-10 text-center text-white p-8 max-w-md">
           <h2 className="text-6xl font-serif mb-2 italic">Arrabic Style</h2>
           <p className="text-3xl font-light mb-8 italic">Antique Jewellery</p>
-          <button className="px-8 py-3 border-2 border-white text-white font-semibold text-lg hover:bg-white hover:text-gray-800 transition-all duration-300">
-            VIEW COLLECTION
+          <button className="">
+            <Link
+              to={"/collection"}
+              className="px-8 py-3 border-2 border-white text-white font-semibold text-lg hover:bg-white hover:text-gray-800 transition-all duration-300 flex items-center"
+            >
+              View Collection <FaArrowRight className="ml-2" />
+            </Link>
           </button>
         </div>
       </div>

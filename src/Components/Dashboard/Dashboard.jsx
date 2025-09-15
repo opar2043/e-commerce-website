@@ -40,7 +40,7 @@ const Dashboard = () => {
             <li>
               <Link
                 to="/dashboard/addproducts"
-                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-2 transition-all duration-200"
+                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-3 transition-all duration-200"
               >
                 <MdAddBox size={20} /> Add Products
               </Link>
@@ -48,7 +48,7 @@ const Dashboard = () => {
             <li>
               <Link
                 to="/dashboard/updateprice"
-                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-2 transition-all duration-200"
+                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-3 transition-all duration-200"
               >
                 <FaCoins size={20} /> Update Price
               </Link>
@@ -56,7 +56,7 @@ const Dashboard = () => {
             <li>
               <Link
                 to="/dashboard/allproduct"
-                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-2 transition-all duration-200"
+                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-3 transition-all duration-200"
               >
                 <MdLibraryBooks size={20} /> All Products
               </Link>
@@ -65,11 +65,11 @@ const Dashboard = () => {
         </div>
 
         {/* Management */}
-        <div className="space-y-2 ">
+        <div className="space-y-3 ">
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider pl-3 mb-2">
             Management
           </h3>
-          <ul className="space-y-1">
+          <ul className="space-y-2">
             <li>
               <Link
                 to="/dashboard/user"

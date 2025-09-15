@@ -2,16 +2,15 @@ import React, { useEffect, useState } from "react";
 import Title from "../Shared/Title";
 import Card from "./Card";
 import useProducts from "../Hooks/useProducts";
+import Loading from "../Shared/Loading";
 
 const Product = () => {
   // const [products, setProducts] = useState([]);
-  const [products] = useProducts([]);
+  const [products , isLoading , refetch] = useProducts([]);
 
-  // useEffect(() => {
-  //   fetch("/product.json")
-  //     .then((res) => res.json())
-  //     .then((data) => setProducts(data));
-  // }, []);
+  if (isLoading) {
+    return <Loading></Loading>
+  }
 
   return (
     <div className="py-10 bg-gray-50">

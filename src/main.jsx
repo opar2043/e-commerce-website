@@ -21,7 +21,6 @@ import AllProductAdmin from './Components/Dashboard/AllProductAdmin';
 import User from './Components/Dashboard/User/User';
 import AdminDashboard from './Components/Dashboard/AdminPanel/AdminDashboard';
 import AuthProvider from './Components/Firebase/AuthProvider';
-import Cart from './Components/ProductCart/Cart';
 import UpdatePrice from './Components/Dashboard/UpdatePrice/UpdatePrice';
 import Order from './Components/Dashboard/Order/Order';
 import EditProduct from './Components/Dashboard/EditProduct';
@@ -29,6 +28,7 @@ import Update from './Components/Dashboard/UpdatePrice/Update';
 import Wishlist from './Components/Wishlist/Wishlist';
 import Cart2 from './Components/ProductCart/Cart2';
 import Payment from './Components/ProductCart/Payment';
+import Confirm from './Components/ProductCart/Confirm';
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
@@ -72,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: '/payment',
         element: <Payment></Payment>
+      },
+      {
+        path: '/confirm',
+        element: <Confirm></Confirm>
       },
       {
         path: '/product/:id',

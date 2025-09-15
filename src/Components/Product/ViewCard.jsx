@@ -13,6 +13,7 @@ import useMetal from "../Hooks/useMetal";
 import useProducts from "../Hooks/useProducts";
 import { FaHeart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
+import useAxios from "../Hooks/useAxios";
 
 const ViewCard = () => {
   const { id } = useParams();
@@ -24,7 +25,7 @@ const ViewCard = () => {
   const [price, setPrice] = useState(0);
   const [metal, isLoading] = useMetal([]);
   const [products] = useProducts([]);
-
+  const axiosSecure = useAxios()
   // Find the product
   const product = products.find((p) => p._id === id);
 
@@ -99,11 +100,12 @@ const ViewCard = () => {
 
     setCart((prev) => [...prev, productToAdd]);
 
-  fetch("http://localhost:5000/cart", {
+  fetch("https://gold-web-server.vercel.app/cart", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(productToAdd),
   })
+
     .then((res) => res.json())
     .then((data) => {
       if (data.insertedId) {
@@ -122,7 +124,7 @@ const ViewCard = () => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong while adding to wishlist!",
+        text: "Something went wrong while add to cart!",
       });
     });
   }
@@ -142,7 +144,7 @@ function handleWish(product) {
     
   };
 
-  fetch("http://localhost:5000/wish", {
+  fetch("https://gold-web-server.vercel.app/wish", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(productToWish),
@@ -366,14 +368,30 @@ function handleCart(product) {
               </div>
 
               <div className="flex space-x-4">
-                <button
+                {/* <button
                   onClick={handleAddToCart}
                   className="flex-1 bg-[#D99B55] hover:bg-[#C68A4A] text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
                   disabled={!product.isAvailable}
                 >
                   <RiShoppingCartLine className="w-5 h-5 mr-2" />
                   Add to Cart
-                </button>
+                </button> */}
+
+
+                <button
+  onClick={handleAddToCart}
+  className={`flex-1 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center
+    ${
+      product.isAvailable
+        ? "bg-[#D99B55] hover:bg-[#C68A4A] text-white"
+        : "bg-gray-400 cursor-not-allowed text-gray-100"
+    }`}
+  disabled={!product.isAvailable}
+>
+  <RiShoppingCartLine className="w-5 h-5 mr-2" />
+  {product.isAvailable ? "Add to Cart" : "Stock Out"}
+</button>
+
                   <button
                   onClick={()=>handleWish(product)}
                   className="px-4 py-3 border-2 border-[#D99B55] text-[#D99B55] font-medium rounded-lg hover:bg-[#D99B55]/10 transition-colors">

@@ -8,21 +8,23 @@ import {
   FiChevronDown,
   FiMenu,
   FiX,
-  FiLogOut
+  FiLogOut,
 } from "react-icons/fi";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import useMetal from "../Hooks/useMetal";
 import useAdmin from "../Hooks/useAdmin";
 import { FaHeart } from "react-icons/fa";
-import logo from "../../assets/tannous.jpg"
+import logo from "../../assets/tannous.jpg";
 import useWish from "../Hooks/useWish";
+import useCart from "../Hooks/useCart";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cart, handleLogout, user  } = useAuth() || {};
-  const [wish] = useWish([])
+  const {  handleLogout, user } = useAuth() || {};
+  const [wish] = useWish([]);
   const [metal, isLoading, refetch] = useMetal([]);
-  const {admin}= useAdmin()
+  const { admin } = useAdmin();
+  const [cart ] = useCart();
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -44,43 +46,47 @@ const Navbar = () => {
 
   const NavLinks = (
     <>
-<NavLink to={"/"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/"} onClick={() => setIsMenuOpen(false)}>
         <li className="py-2 ">
           <span>Home</span>
         </li>
       </NavLink>
 
-      <NavLink to={"/collection"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/collection"} onClick={() => setIsMenuOpen(false)}>
         <li className="py-2 ">
           <span>Collection</span>
         </li>
       </NavLink>
 
-      <NavLink to={"/about"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/about"} onClick={() => setIsMenuOpen(false)}>
         <li className="py-2 ">
           <span>About</span>
         </li>
       </NavLink>
-      
-      <NavLink to={"/contact"} onClick={() => setIsMenuOpen(false)}>
+
+      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/contact"} onClick={() => setIsMenuOpen(false)}>
         <li className="py-2">
           <span>Conatct</span>
         </li>
-      </NavLink> 
-          <NavLink
-            to="/wish"
-            className="relative flex items-center text-white hover:text-amber-700 transition-colors duration-200"
-          >
-            Wish List
-            <span className="absolute top-1 -right-3 bg-amber-800 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
-              {wish?.length || 0}
-            </span>
-          </NavLink>
- {  admin &&    <NavLink to={"/dashboard"} onClick={() => setIsMenuOpen(false)}>
-        <li className="py-2">
-          <span>Dashboard</span>
-        </li>
-      </NavLink>}
+      </NavLink>
+      <NavLink
+        to="/wish"
+        className="relative ml-3 md:ml-0 flex items-center 
+         className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute  before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize md:mr-1'
+        "
+      >
+        Wish List
+        <span className="absolute hidden  md:top-1 md:-right-3 bg-amber-800 text-white text-xs font-bold rounded-full w-5 h-5 md:flex items-center justify-center shadow">
+          {wish?.length || 0}
+        </span>
+      </NavLink>
+      {admin && (
+        <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize' to={"/dashboard"} onClick={() => setIsMenuOpen(false)}>
+          <li className="py-2">
+            <span>Dashboard</span>
+          </li>
+        </NavLink>
+      )}
     </>
   );
 
@@ -92,7 +98,9 @@ const Navbar = () => {
         <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="w-6 md:w-8 rounded-full" />
-            <p className="text-slate-950 text-xl md:text-3xl  tracking-wide">Tannous Jewelry</p>
+            <p className="text-slate-950 text-xl md:text-3xl  tracking-wide">
+              Tannous Jewelry
+            </p>
           </div>
 
           {/* Mobile menu button */}
@@ -106,17 +114,25 @@ const Navbar = () => {
 
         {/* Metal Prices */}
         <div className="hidden md:flex flex-col md:flex-row gap-4 md:gap-8 mt-3 lg:mt-0">
-          {metal && metal.map((met) => (
-            <div key={met.metal} className="flex items-center gap-2 text-center text-xs">
-              <span className="text-slate-950 font-semibold text-xs ">{met.metal.toUpperCase()}</span>
-              <span className="text-white text-xs ">${met.price.toFixed(2)}</span>
-              <div className="flex flex-col items-center">
-                <FiChevronUp className="text-green-500 text-xs" />
-                <FiChevronDown className="text-gray-500 text-xs opacity-30" />
+          {metal &&
+            metal.map((met) => (
+              <div
+                key={met.metal}
+                className="flex items-center gap-2 text-center text-xs"
+              >
+                <span className="text-slate-950 font-semibold text-xs ">
+                  {met.metal.toUpperCase()}
+                </span>
+                <span className="text-white text-xs ">
+                  ${met.price.toFixed(2)}
+                </span>
+                <div className="flex flex-col items-center">
+                  <FiChevronUp className="text-green-500 text-xs" />
+                  <FiChevronDown className="text-gray-500 text-xs opacity-30" />
+                </div>
+                <span className="text-green-600 text-xs ">+1.2% (+$24.50)</span>
               </div>
-              <span className="text-green-600 text-xs ">+1.2% (+$24.50)</span>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Desktop Logout/Login */}
@@ -133,7 +149,6 @@ const Navbar = () => {
             <NavLink to="/login">
               <button className="flex items-center gap-2 p-3 border border-black rounded-full hover:border-white hover:text-white transition-colors duration-200">
                 <FiUser size={20} />
-                
               </button>
             </NavLink>
           )}
@@ -152,7 +167,10 @@ const Navbar = () => {
               className="absolute top-0 left-0 w-64 h-full bg-black p-6"
               onClick={(e) => e.stopPropagation()}
             >
-              <button className="absolute top-4 right-4 text-white" onClick={() => setIsMenuOpen(false)}>
+              <button
+                className="absolute top-4 right-4 text-white"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 <FiX size={24} />
               </button>
               <ul className="menu text-white text-sm mt-10">{NavLinks}</ul>
@@ -186,16 +204,21 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search jewelry..."
-              className="pl-10 pr-4 py-2 text-lg bg-transparent border-b border-amber-700 focus:outline-none focus:border-amber-900 w-48 md:w-72 text-white placeholder-amber-900"
+              className="pl-10 pr-4 py-2 text-sm bg-transparent border-b border-amber-700 focus:outline-none focus:border-amber-900 w-48 md:w-72 text-white placeholder-amber-900"
             />
-            <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-700" size={20} />
+            <FiSearch
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-700"
+              size={18}
+            />
           </div>
         </div>
 
         {/* Right Side - Desktop Links + Cart */}
         <div className="navbar-end flex items-center gap-4 md:gap-8">
           <div className="hidden lg:flex">
-            <ul className="menu menu-horizontal text-sm text-white/90 gap-2">{NavLinks}</ul>
+            <ul className="menu menu-horizontal text-sm text-white/90 gap-2">
+              {NavLinks}
+            </ul>
           </div>
 
           {/* Cart Icon */}
@@ -208,7 +231,6 @@ const Navbar = () => {
               {cart?.length || 0}
             </span>
           </NavLink>
-
         </div>
       </div>
     </div>

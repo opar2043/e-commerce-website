@@ -67,8 +67,6 @@ const handleRemove = async (id) => {
 };
 
 
-
-
   return (
     <div className="min-h-screen bg-white py-8 px-4">
       <div className="max-w-6xl mx-auto">
@@ -85,7 +83,9 @@ const handleRemove = async (id) => {
                 <FiShoppingCart className="text-5xl mx-auto text-slate-400 mb-4" />
                 <p className="text-slate-600 text-lg">Your cart is empty.</p>
                 <button className="mt-4 bg-[#f8992d] text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500 transition">
-                  Continue Shopping
+                  <Link to='/collection'>
+                   Continue Shopping
+                  </Link>
                 </button>
               </div>
             ) : (
@@ -163,7 +163,9 @@ const handleRemove = async (id) => {
             
             {cart.length > 0 && (
               <button className="w-full mt-4 border border-slate-300 text-slate-700 py-3 rounded-lg font-medium hover:bg-slate-50 transition">
-                Continue Shopping
+                <Link className="/collection">
+                 Continue Shopping
+                </Link>
               </button>
             )}
           </div>

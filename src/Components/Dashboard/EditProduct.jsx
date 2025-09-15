@@ -6,6 +6,7 @@ import useProducts from "../Hooks/useProducts";
 import Swal from "sweetalert2";
 import Loading from "../Shared/Loading";
 
+
 const img_hosting = "f00f7709983a82bfc1ca5153ef794386";
 const img_api_key = `https://api.imgbb.com/1/upload?key=${img_hosting}`;
 
@@ -173,6 +174,10 @@ const handleSubmit = async (e) => {
     );
   }
 
+  if(isLoading){
+    return <Loading></Loading>
+  }
+
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
@@ -246,8 +251,9 @@ const handleSubmit = async (e) => {
                 <option value="">Select a category</option>
                 <option value="Gold">Gold</option>
                 <option value="Silver">Silver</option>
-                <option value="Platinum">Platinum</option>
-                <option value="Diamond">Diamond</option>
+                <option value="Coins">Coins</option>
+                <option value="Gold">Yellow Gold Women</option>
+                <option value="Gold">Men’s Yellow Gold</option>
               </select>
             </div>
 

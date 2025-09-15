@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import useProducts from '../Hooks/useProducts';
 import useMetal from '../Hooks/useMetal';
+import Loading from '../Shared/Loading';
 
 const AllProduct = () => {
   // const [products, setProducts] = useState([]);
@@ -9,7 +10,7 @@ const AllProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [weightRange, setWeightRange] = useState([0, 2000]);
   const [sortOption, setSortOption] = useState('default');
-  const [products] = useProducts([]);
+  const [products , isLoading , refetch] = useProducts([]);
   const [metal] = useMetal([]);
   console.log(metal);
   const goldRate = metal.find((m) => m?.metal === "Gold")?.price || 0;
@@ -65,6 +66,12 @@ const AllProduct = () => {
     setWeightRange([0, value]);
   };
 
+  
+  if (isLoading) {
+    return <Loading></Loading>
+  }
+
+
   return (
     <div className="py-10 flex flex-col md:flex-row bg-white min-h-screen">
       {/* Sidebar Filters */}
@@ -96,6 +103,7 @@ const AllProduct = () => {
         </div>
 
         {/* Filter by Weight */}
+        {/* Just change this function . i want to change the price range from both left and right side . */}
         <div className="mb-6">
           <h3 className="font-bold text-slate-950 md:text-xl mb-2">Weight Range</h3>
           <div className='w-full bg-[#FEB564] h-0.5 my-5'></div>

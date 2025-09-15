@@ -3,12 +3,9 @@ import { Search, Filter, Eye, CheckCircle, Clock, XCircle } from 'lucide-react';
 import useOrder from '../../Hooks/useOrder';
 import useAxios from '../../Hooks/useAxios';
 import Swal from 'sweetalert2';
+import Loading from '../../Shared/Loading';
 
-const Loading = () => (
-  <div className="flex items-center justify-center h-64">
-    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-  </div>
-);
+
 
 const Order = () => {
   const [order, isLoading, refetch] = useOrder();
@@ -104,7 +101,7 @@ const Order = () => {
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading></Loading>
   }
 
   return (
@@ -195,7 +192,7 @@ const Order = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Order ID
+                    #
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Customer
@@ -231,10 +228,10 @@ const Order = () => {
                 ) : (
                   filteredOrders.map((orderItem, idx) => (
                     <tr key={orderItem._id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                      <td className="p-3 whitespace-nowrap text-sm font-mono text-gray-900">
                         {idx + 1}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="py-3 px-5 whitespace-nowrap">
                         <div>
 
                           <div className="text-sm text-gray-500">{orderItem.userEmail}</div>
@@ -266,7 +263,7 @@ const Order = () => {
                           ))}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="p-3 whitespace-nowrap text-sm font-medium text-gray-900">
                         ${orderItem.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -279,13 +276,13 @@ const Order = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="p-3 whitespace-nowrap text-sm font-medium">
                         <button
                           onClick={() => setSelectedOrder(orderItem)}
                           className="text-blue-600 hover:text-blue-900 flex items-center gap-1"
                         >
                           <Eye className="h-4 w-4" />
-                          View Details
+                          Details
                         </button>
                       </td>
                     </tr>
