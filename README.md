@@ -1,19 +1,64 @@
-# e-commerce web
+# 🛍️ Tannous Jewelry
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An elegant **MERN stack e-commerce web application** for jewelry shopping.  
+The platform includes a full-featured **admin dashboard** for managing products and orders, and a **customer-facing storefront** with a dynamic cart and secure checkout via **Stripe**.  
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [Tannous Jewelry Frontend](https://charming-marshmallow-c237cd.netlify.app/)  
+🔗 **Backend API:** [Tannous Jewelry Backend](https://gold-web-server.vercel.app/)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📖 Table of Contents
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Environment Variables](#-environment-variables)
+- [Screenshots](#-screenshots)
+- [Troubleshooting](#-troubleshooting)
+- [Contributors](#-contributors)
+- [License](#-license)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check 
-Mashallah2043@ out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
 
+## ✨ Features
 
-https://charming-marshmallow-c237cd.netlify.app/
+### User Features
+- 🛒 Browse jewelry products with responsive UI  
+- 🔍 Product details page  
+- 🛍️ Dynamic shopping cart  
+- 💳 Secure Stripe checkout  
+- 🔐 User login/logout  
 
-https://gold-web-server.vercel.app/
+### Admin Features
+- 📦 Add new products  
+- ✏️ Edit product details  
+- 🗑️ Delete products  
+- 📊 Admin dashboard for product & order management  
+- 👨‍💼 Admin authentication & access control  
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend**
+- React (Vite)  
+- Tailwind CSS  
+- JavaScript  
+
+**Backend**
+- Node.js  
+- Express.js  
+- MongoDB  
+- Stripe Payment Gateway  
+
+---
+
+## ⚙️ Installation
+
+Clone the repo:
+
+```bash
+git clone https://github.com/your-username/tannous-jewlary.git
+cd tannous-jewlary
 
