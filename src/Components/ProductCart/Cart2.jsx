@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const Cart2 = () => {
-//   const { cart, setCart } = useAuth();
-const [cart , isLoading , refetch] = useCart([])
+  //   const { cart, setCart } = useAuth();
+  const [cart, isLoading, refetch] = useCart([]);
   const axiosSecure = useAxios();
-  const [order , setOrder] = useState([]);
-
+  const [order, setOrder] = useState([]);
+  const { user } = useAuth();
 
   // ✅ Subtotal = sum of (price × quantity)
   const subtotal = cart
@@ -25,47 +25,45 @@ const [cart , isLoading , refetch] = useCart([])
   const tax = (parseFloat(subtotal) * 0.08).toFixed(2);
 
   // ✅ Total = subtotal + shipping + tax
-  const total = (parseFloat(subtotal) + shipping + parseFloat(tax)).toFixed(2);
+  // const total = (parseFloat(subtotal) + shipping + parseFloat(tax)).toFixed(2);
+  const total = (parseFloat(subtotal)  + parseFloat(tax)).toFixed(2);
 
+  const handleRemove = async (id) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, remove it!",
+      });
 
+      if (result.isConfirmed) {
+        const response = await axiosSecure.delete(`/cart/${id}`);
 
-const handleRemove = async (id) => {
-  try {
-    const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, remove it!",
-    });
+        if (response.data.deletedCount > 0) {
+          Swal.fire(
+            "Removed!",
+            "Item has been removed from your cartlist.",
+            "success"
+          );
 
-    if (result.isConfirmed) {
-      const response = await axiosSecure.delete(`/cart/${id}`);
-
-      if (response.data.deletedCount > 0) {
-        Swal.fire(
-          "Removed!",
-          "Item has been removed from your cartlist.",
-          "success"
-        );
-
-        refetch(); // ✅ reload cart data
-      } else {
-        Swal.fire("Error!", "Failed to remove item from cartlist.", "error");
+          refetch(); // ✅ reload cart data
+        } else {
+          Swal.fire("Error!", "Failed to remove item from cartlist.", "error");
+        }
       }
+    } catch (error) {
+      console.error("Error removing item from cartlist:", error);
+      Swal.fire(
+        "Error!",
+        "An error occurred while removing the item.",
+        "error"
+      );
     }
-  } catch (error) {
-    console.error("Error removing item from cartlist:", error);
-    Swal.fire(
-      "Error!",
-      "An error occurred while removing the item.",
-      "error"
-    );
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen bg-white py-8 px-4">
@@ -83,9 +81,7 @@ const handleRemove = async (id) => {
                 <FiShoppingCart className="text-5xl mx-auto text-slate-400 mb-4" />
                 <p className="text-slate-600 text-lg">Your cart is empty.</p>
                 <button className="mt-4 bg-[#f8992d] text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500 transition">
-                  <Link to='/collection'>
-                   Continue Shopping
-                  </Link>
+                  <Link to="/collection">Continue Shopping</Link>
                 </button>
               </div>
             ) : (
@@ -101,9 +97,15 @@ const handleRemove = async (id) => {
                       className="w-24 h-24 object-cover rounded-xl"
                     />
                     <div>
-                      <h3 className="font-semibold text-lg text-slate-800">{item.name}</h3>
-                      <p className="text-[#f8992d] font-medium">${item.price.toFixed(2)}</p>
-                      <p className="text-slate-600 mt-1">Quantity: {item.quantity}</p>
+                      <h3 className="font-semibold text-lg text-slate-800">
+                        {item.name}
+                      </h3>
+                      <p className="text-[#f8992d] font-medium">
+                        ${item.price.toFixed(2)}
+                      </p>
+                      <p className="text-slate-600 mt-1">
+                        Quantity: {item.quantity}
+                      </p>
                     </div>
                   </div>
 
@@ -134,10 +136,12 @@ const handleRemove = async (id) => {
                 <span className="font-medium text-slate-800">${subtotal}</span>
               </div>
 
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <span className="text-slate-600">Shipping</span>
-                <span className="font-medium text-slate-800">${shipping.toFixed(2)}</span>
-              </div>
+                <span className="font-medium text-slate-800">
+                  ${shipping.toFixed(2)}
+                </span>
+              </div> */}
 
               <div className="flex justify-between">
                 <span className="text-slate-600">Tax (8%)</span>
@@ -152,20 +156,29 @@ const handleRemove = async (id) => {
               </div>
             </div>
 
-          <Link to={'/payment'} >
-                         <button 
-              className="w-full bg-[#f8992d] text-white py-3 rounded-lg font-semibold hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={cart.length === 0}
-            >
-              Proceed to Checkout
-            </button>
-          </Link>
-            
+            {user ? (
+              <Link to={"/payment"}>
+                <button
+                  className="w-full bg-[#f8992d] text-white py-3 rounded-lg font-semibold hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={cart.length === 0}
+                >
+                  Proceed to Checkout
+                </button>
+              </Link>
+            ) : (
+              <Link to={"/payment"}>
+                <button
+                  className="w-full bg-[#f8992d] text-white py-3 rounded-lg font-semibold hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!user}
+                >
+                  Log In to Checkout
+                </button>
+              </Link>
+            )}
+
             {cart.length > 0 && (
               <button className="w-full mt-4 border border-slate-300 text-slate-700 py-3 rounded-lg font-medium hover:bg-slate-50 transition">
-                <Link className="/collection">
-                 Continue Shopping
-                </Link>
+                <Link className="/collection">Continue Shopping</Link>
               </button>
             )}
           </div>

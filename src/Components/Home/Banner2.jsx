@@ -16,10 +16,10 @@ const Banner2 = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-[350px] overflow-hidden font-['Cormorant_Garamond'] mb-6 md:mb-12">
+    <div className="flex flex-col md:flex-row w-full min-h-[350px] overflow-hidden font-['Cormorant_Garamond'] my-6 md:mb-12">
       {/* Content Section */}
       <div 
-        className="relative flex-1 bg-[#FEB564] p-8 md:p-12 flex flex-col justify-center items-start overflow-hidden min-h-[300px]"
+        className="relative flex-1 bg-[#fca94b] p-8 md:p-12 flex flex-col justify-center items-start overflow-hidden min-h-[300px]"
         style={{
           backgroundImage: "radial-gradient(circle at 20% 70%, rgba(255,255,255,0.2) 0%, transparent 40%)",
         }}
@@ -35,7 +35,7 @@ const Banner2 = () => {
           {/* Content and price in a row */}
           <div className="flex flex-col md:flex-row justify-between items-start w-full mb-6">
             <div className="flex-1 max-w-md">
-              <h2 className="text-lg md:text-xl font-medium text-amber-900 mb-4 italic">Looking For the Latest</h2>
+              <h2 className="text-lg md:text-xl font-medium text-amber-900 mb-4 italic">Looking For the Latest </h2>
               <h3 className="text-xl md:text-4xl font-semibold text-gray-900 mb-2">Trending Collection</h3>
               <p className="text-lg text-amber-950 mb-8 leading-relaxed">
                 Discover our exquisite summer jewelry collection, designed to add a touch of elegance to your warm-weather style. Handcrafted with precision and care.

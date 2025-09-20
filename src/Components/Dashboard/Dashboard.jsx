@@ -17,9 +17,9 @@ const Dashboard = () => {
       <div className="h-[100vh] w-full md:w-72 bg-white p-6 space-y-6 shadow-lg border-r border-gray-200">
         {/* Brand Header */}
         <div className="flex items-center justify-center gap-2 mb-3">
-          <RiVipCrownLine className="text-3xl text-[#D99B55]" />
-          <h2 className="text-2xl font-bold text-gray-800">
-            Tannous Jewelry
+          <RiVipCrownLine className="text-xl text-[#D99B55]" />
+          <h2 className="text-xl font-bold text-gray-800">
+            Tannous Jewelry 
           </h2>
         </div>
 
@@ -29,14 +29,7 @@ const Dashboard = () => {
             Main Menu
           </h3>
           <ul className="">
-            {/* <li>
-              <Link
-                to="/dashboard/admin"
-                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-2 transition-all duration-200"
-              >
-                <MdDashboard size={20} /> Dashboard
-              </Link>
-            </li> */}
+
             <li>
               <Link
                 to="/dashboard/addproducts"
@@ -50,7 +43,7 @@ const Dashboard = () => {
                 to="/dashboard/updateprice"
                 className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-3 transition-all duration-200"
               >
-                <FaCoins size={20} /> Update Price
+                <FaCoins size={20} /> Metal Price
               </Link>
             </li>
             <li>

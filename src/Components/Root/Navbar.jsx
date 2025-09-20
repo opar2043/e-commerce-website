@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   FiShoppingCart,
   FiUser,
@@ -20,11 +20,11 @@ import useWish from "../Hooks/useWish";
 import useCart from "../Hooks/useCart";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const {  handleLogout, user } = useAuth() || {};
+  const { handleLogout, user } = useAuth() || {};
   const [wish] = useWish([]);
   const [metal, isLoading, refetch] = useMetal([]);
   const { admin } = useAdmin();
-  const [cart ] = useCart();
+  const [cart] = useCart();
   const navigate = useNavigate();
 
   const logOut = () => {
@@ -46,25 +46,41 @@ const Navbar = () => {
 
   const NavLinks = (
     <>
-      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink
+        className="before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize "
+        to={"/"}
+        onClick={() => setIsMenuOpen(false)}
+      >
         <li className="py-2 ">
           <span>Home</span>
         </li>
       </NavLink>
 
-      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/collection"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink
+        className="before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize "
+        to={"/collection"}
+        onClick={() => setIsMenuOpen(false)}
+      >
         <li className="py-2 ">
           <span>Collection</span>
         </li>
       </NavLink>
 
-      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/about"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink
+        className="before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize "
+        to={"/about"}
+        onClick={() => setIsMenuOpen(false)}
+      >
         <li className="py-2 ">
           <span>About</span>
         </li>
       </NavLink>
 
-      <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize ' to={"/contact"} onClick={() => setIsMenuOpen(false)}>
+      <NavLink
+        className="before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize "
+        to={"/contact"}
+        onClick={() => setIsMenuOpen(false)}
+      >
         <li className="py-2">
           <span>Conatct</span>
         </li>
@@ -81,7 +97,11 @@ const Navbar = () => {
         </span>
       </NavLink>
       {admin && (
-        <NavLink className='before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize' to={"/dashboard"} onClick={() => setIsMenuOpen(false)}>
+        <NavLink
+          className="before:w-0  hover:before:w-full before:bg-[#FEB564] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px]  hover:text-[#FEB564] transition-all duration-300 before:left-0 cursor-pointer capitalize"
+          to={"/dashboard"}
+          onClick={() => setIsMenuOpen(false)}
+        >
           <li className="py-2">
             <span>Dashboard</span>
           </li>
@@ -93,13 +113,13 @@ const Navbar = () => {
   return (
     <div>
       {/* Upper Navbar */}
-      <div className="bg-[#FEB564] py-2 px-4 md:px-8 flex flex-col lg:flex-row justify-between items-center text-slate-950">
+      <div className="bg-[#faac54] py-2 px-4 md:px-8 flex flex-col lg:flex-row justify-between items-center text-slate-950">
         {/* Logo */}
         <div className="flex items-center gap-3 w-full lg:w-auto justify-between lg:justify-start">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="w-6 md:w-8 rounded-full" />
             <p className="text-slate-950 text-xl md:text-3xl  tracking-wide">
-              Tannous Jewelry
+              <Link to={"/"}>Tannous Jewelry</Link>
             </p>
           </div>
 
@@ -199,7 +219,7 @@ const Navbar = () => {
         )}
 
         {/* Search Bar */}
-        <div className="navbar-start">
+        {/* <div className="navbar-start">
           <div className="relative">
             <input
               type="text"
@@ -210,6 +230,13 @@ const Navbar = () => {
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-700"
               size={18}
             />
+          </div>
+        </div> */}
+
+        <div className="navbar-start  text-white/90 text-sm">
+          <div className="flex flex-col gap-1">
+            <p>📞 (504) 252-1732</p>
+            <p>📍 Terrytown, Louisiana</p>
           </div>
         </div>
 

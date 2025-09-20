@@ -172,12 +172,12 @@ const Login = () => {
             </div>
           </div>
 
-          <button
+          {/* <button
             className="w-full bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 rounded-md transition-all flex items-center justify-center gap-2 border border-gray-300 shadow-sm"
           >
             <FcGoogle className="text-lg" />
             Sign in with Google
-          </button>
+          </button> */}
 
           <p className="text-center text-gray-600 mt-6 font-medium">
             Don't have an account?{" "}

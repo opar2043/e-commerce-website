@@ -23,9 +23,10 @@ const Cart = () => {
     .reduce((total, item) => {
       const itemPrice = parseFloat(item.price) || 0;
       const itemQuantity = parseInt(item.quantity) || 1;
-      return total + (itemPrice * itemQuantity);
-    }, 0)
+      return total + itemPrice  }, 0)
     .toFixed(2);
+
+    
 
   // ✅ Shipping = flat $10 (can change to weight-based if needed)
   const shipping = cart.length === 0 ? 0 : 10.0;
@@ -34,7 +35,11 @@ const Cart = () => {
   const tax = (parseFloat(subtotal) * 0.08).toFixed(2);
 
   // ✅ Total = subtotal + shipping + tax
-  const totalPrice = (parseFloat(subtotal) + parseFloat(shipping) + parseFloat(tax)).toFixed(2);
+  const totalPrice = (
+    parseFloat(subtotal) +
+    parseFloat(shipping) +
+    parseFloat(tax)
+  ).toFixed(2);
   const total = parseFloat(totalPrice);
 
   console.log("Cart items:", cart);
@@ -48,27 +53,32 @@ const Cart = () => {
 
   // Create payment intent when total changes
   useEffect(() => {
-    console.log("UseEffect triggered - Cart length:", cart.length, "Total:", total);
+    console.log(
+      "UseEffect triggered - Cart length:",
+      cart.length,
+      "Total:",
+      total
+    );
 
     if (cart.length > 0 && total > 0) {
       setPaymentLoading(true);
       console.log("Creating payment intent for total:", total);
 
-      fetch('https://gold-web-server.vercel.app/create-payment-intent', {
+      fetch("https://gold-web-server.vercel.app/create-payment-intent", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ total })
+        body: JSON.stringify({ total }),
       })
-        .then(res => {
+        .then((res) => {
           console.log("Response status:", res.status);
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
           }
           return res.json();
         })
-        .then(data => {
+        .then((data) => {
           console.log("Payment intent response:", data);
           if (data.clientSecret) {
             setClientSecret(data.clientSecret);
@@ -76,7 +86,7 @@ const Cart = () => {
             console.error("No clientSecret in response:", data);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error("Error creating payment intent:", err);
           Swal.fire({
             title: "Error",
@@ -92,7 +102,7 @@ const Cart = () => {
     }
   }, [total, cart.length]);
 
-  console.log("Client Secret:", clientSecret);
+  // console.log("Client Secret:", clientSecret);
 
   const appearance = {
     theme: "stripe",
@@ -121,7 +131,7 @@ const Cart = () => {
 
       return response.data;
     } catch (err) {
-      console.error("Error submitting cart:", err);
+      // console.error("Error submitting cart:", err);
       Swal.fire({
         title: "Something Went Wrong",
         text: "Failed to process your order. Please contact support.",
@@ -170,10 +180,10 @@ const Cart = () => {
               <div className="bg-slate-100 rounded-xl p-8 text-center">
                 <FiShoppingCart className="text-5xl mx-auto text-slate-400 mb-4" />
                 <p className="text-slate-600 text-lg">Your cart is empty.</p>
-                <Link to={'/collection'}>
-                                <button className="mt-4 bg-[#f8992d] text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500 transition">
-                  Continue Shopping
-                </button>
+                <Link to={"/collection"}>
+                  <button className="mt-4 bg-[#f8992d] text-white font-semibold py-2 px-6 rounded-lg hover:bg-amber-500 transition">
+                    Continue Shopping
+                  </button>
                 </Link>
               </div>
             ) : (
@@ -189,11 +199,21 @@ const Cart = () => {
                       className="w-24 h-24 object-cover rounded-xl"
                     />
                     <div>
-                      <h3 className="font-semibold text-lg text-slate-800">{item.name}</h3>
-                      <p className="text-[#f8992d] font-medium">${parseFloat(item.price || 0).toFixed(2)}</p>
-                      <p className="text-slate-600 mt-1">Quantity: {item.quantity || 1}</p>
+                      <h3 className="font-semibold text-lg text-slate-800">
+                        {item.name}
+                      </h3>
+                      <p className="text-[#f8992d] font-medium">
+                        ${parseFloat(item.price || 0).toFixed(2)}
+                      </p>
+                      <p className="text-slate-600 mt-1">
+                        Quantity: {item.quantity || 1}
+                      </p>
                       <p className="text-slate-800 font-medium mt-1">
-                        Subtotal: ${((parseFloat(item.price || 0)) * (parseInt(item.quantity || 1))).toFixed(2)}
+                        Subtotal: $
+                        {(
+                          parseFloat(item.price || 0) *
+                          parseInt(item.quantity || 1)
+                        ).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -227,7 +247,9 @@ const Cart = () => {
 
               <div className="flex justify-between">
                 <span className="text-slate-600">Shipping</span>
-                <span className="font-medium text-slate-800">${shipping.toFixed(2)}</span>
+                <span className="font-medium text-slate-800">
+                  ${shipping.toFixed(2)}
+                </span>
               </div>
 
               <div className="flex justify-between">
@@ -248,12 +270,14 @@ const Cart = () => {
               className="w-full bg-[#f8992d] text-white py-3 rounded-lg font-semibold hover:bg-amber-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={cart.length === 0 || paymentLoading}
             >
-              {paymentLoading ? "Initializing Payment..." : "Proceed to Checkout"}
+              {paymentLoading
+                ? "Initializing Payment..."
+                : "Proceed to Checkout"}
             </button>
 
             {cart.length > 0 && (
               <button className="w-full mt-4 border border-slate-300 text-slate-700 py-3 rounded-lg font-medium hover:bg-slate-50 transition">
-                Continue Shopping
+                Continue Shopping 
               </button>
             )}
 
@@ -262,8 +286,10 @@ const Cart = () => {
               <p>Debug Info:</p>
               <p>Cart Length: {cart.length}</p>
               <p>Total: {total}</p>
-              <p>Client Secret: {clientSecret ? 'Available' : 'Not Available'}</p>
-              <p>Payment Loading: {paymentLoading ? 'Yes' : 'No'}</p>
+              <p>
+                Client Secret: {clientSecret ? "Available" : "Not Available"}
+              </p>
+              <p>Payment Loading: {paymentLoading ? "Yes" : "No"}</p>
             </div>
 
             {/* Modal */}
