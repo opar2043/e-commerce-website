@@ -129,27 +129,11 @@ const Footer = () => {
                     <FaMapMarkerAlt className="text-amber-400 text-xs mt-1" />
                     <span>1180 Terry Pkwy Suite A<br />Terrytown, LA 70056</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FaEnvelope className="text-amber-400 text-xs" />
-                    <span>tannousjewelryla@gmail.com</span>
-                  </div>
+
                 </div>
               </div>
 
-              {/* Houston Location */}
-              <div className="mb-6 p-4 bg-gray-800 rounded-lg">
-                <h4 className="font-semibold text-amber-300 mb-3">Houston Store</h4>
-                <div className="space-y-2 text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <FaPhone className="text-amber-400 text-xs" />
-                    <span>(713) 448-9916</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <FaMapMarkerAlt className="text-amber-400 text-xs mt-1" />
-                    <span>12121 Westheimer Rd<br />Houston, TX 77077</span>
-                  </div>
-                </div>
-              </div>
+
 
               {/* Business Hours */}
               <div className="space-y-2 text-sm text-gray-300">
@@ -216,33 +200,7 @@ const Footer = () => {
                 </li>
               </ul>
 
-              <h3 className="text-xl font-bold mb-4 mt-8 text-amber-400">Collections</h3>
-              <ul className="space-y-3 text-sm text-gray-300">
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    22K Gold Necklaces
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Traditional Lebanese Jewelry
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Islamic Calligraphy Pieces
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Bridal Gold Sets
-                  </a>
-                </li>
-              </ul>
+
             </div>
 
             {/* Company & Social Media */}
@@ -337,12 +295,7 @@ const Footer = () => {
           {/* Bottom Section */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div className="flex items-center gap-2">
-                <FaHeart className="text-red-400" />
-                <p className="text-sm text-gray-400">
-                  Made with love for the Arabic jewelry tradition
-                </p>
-              </div>
+
 
               <div className="text-center lg:text-left">
                 <p className="text-sm text-gray-400 mb-2">
@@ -396,7 +349,7 @@ const Footer = () => {
             </div>
             
             <div className="text-xs text-gray-500">
-              Licensed Jewelry Dealer • Louisiana License #JD-2024-001
+              Powered By
             </div>
           </div>
         </div>

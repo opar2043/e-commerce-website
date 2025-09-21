@@ -57,7 +57,7 @@ const Wishlist = () => {
 
   return (
     <div className="">
-      <div className="w-2/3 mx-auto px-3 py-6">
+      <div className="w-full md:w-2/3 mx-auto px-3 py-6">
         <h2 className="text-2xl font-semibold text-black mb-7">My Wish List</h2>
 
         {isLoading ? (

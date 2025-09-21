@@ -78,30 +78,7 @@ const Login = () => {
       });
   }
 
-  function handleGoogleLogin() {
-    handleGoogle()
-      .then(() => {
-        Swal.fire({ 
-          title: "Logged In Successfully!", 
-          text: "Welcome to Tannous Jewelry",
-          icon: "success",
-          background: "#1a1a1a",
-          color: "#fff",
-          confirmButtonColor: "#d4af37"
-        });
-        navigate("/");
-      })
-      .catch(() => {
-        Swal.fire({ 
-          title: "Google Sign-in Failed", 
-          text: "Please try again",
-          icon: "error",
-          background: "#1a1a1a",
-          color: "#fff",
-          confirmButtonColor: "#d4af37"
-        });
-      });
-  }
+
 
 
   return (

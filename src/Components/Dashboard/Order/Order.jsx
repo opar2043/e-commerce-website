@@ -322,7 +322,7 @@ const Order = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-500">Customer</p>
-                      <p>{selectedOrder?.userEmail ? selectedOrder.userEmail.split("@")[0] : "N/A"}</p>
+                      <p>{selectedOrder?.name || selectedOrder.userEmail.split("@")[0] }</p>
 
                       <p className="text-sm text-gray-500">{selectedOrder.userEmail}</p>
                     </div>

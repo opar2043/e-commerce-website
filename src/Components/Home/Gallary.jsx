@@ -221,9 +221,7 @@ const Gallery = () => {
 
       {/* Featured Carousel */}
       <div className="mb-16">
-        <h3 className="text-2xl font-bold text-gray-800 mb-8 text-center">
-          Featured Collections
-        </h3>
+
         <div className="relative max-w-6xl mx-auto">
           <div className="overflow-hidden rounded-2xl shadow-2xl">
             <div

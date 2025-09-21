@@ -3,16 +3,18 @@ import useAuth from "../Hooks/useAuth";
 import useAxios from "../Hooks/useAxios";
 import useCart from "../Hooks/useCart";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
 
 const Cart2 = () => {
   //   const { cart, setCart } = useAuth();
   const [cart, isLoading, refetch] = useCart([]);
   const axiosSecure = useAxios();
   const [order, setOrder] = useState([]);
-  const { user } = useAuth();
-
+  const { user , handleGoogle } = useAuth();
+  const navigate = useNavigate()
+ 
   // ✅ Subtotal = sum of (price × quantity)
   const subtotal = cart
     .reduce((total, item) => total + item.price * item.quantity, 0)
@@ -64,6 +66,86 @@ const Cart2 = () => {
       );
     }
   };
+
+    // function handleGoogleLogin() {
+    //   handleGoogle()
+    //     .then(() => {
+    //       axiosSecure.post('/users')
+    //       Swal.fire({ 
+    //         title: "Logged In Successfully!", 
+    //         text: "Welcome to Tannous Jewelry",
+    //         icon: "success",
+    //         background: "#1a1a1a",
+    //         color: "#fff",
+    //         confirmButtonColor: "#d4af37"
+    //       });
+
+    //       navigate("/");
+    //     })
+    //     .catch(() => {
+    //       Swal.fire({ 
+    //         title: "Google Sign-in Failed", 
+    //         text: "Please try again",
+    //         icon: "error",
+    //         background: "#1a1a1a",
+    //         color: "#fff",
+    //         confirmButtonColor: "#d4af37"
+    //       });
+    //     });
+    // }
+
+
+  function handleGoogleLogin() {
+  handleGoogle()
+    .then((result) => {
+      const loggedUser = result.user;
+
+      // ✅ Prepare user data
+      const userInfo = {
+        name: loggedUser.displayName,
+        email: loggedUser.email,
+        photo: loggedUser.photoURL,
+      };
+
+      // ✅ Post to backend (only insert if not exists)
+      axiosSecure.post("/users", userInfo)
+        .then((res) => {
+          if (res.data.insertedId || res.data.message === "User already exists") {
+            Swal.fire({ 
+              title: "Logged In Successfully!", 
+              text: "Welcome to Tannous Jewelry",
+              icon: "success",
+              background: "#1a1a1a",
+              color: "#fff",
+              confirmButtonColor: "#d4af37"
+            });
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          console.error("Error saving user:", err);
+          Swal.fire({ 
+            title: "Error saving user!", 
+            text: "Please try again later",
+            icon: "error",
+            background: "#1a1a1a",
+            color: "#fff",
+            confirmButtonColor: "#d4af37"
+          });
+        });
+    })
+    .catch(() => {
+      Swal.fire({ 
+        title: "Google Sign-in Failed", 
+        text: "Please try again",
+        icon: "error",
+        background: "#1a1a1a",
+        color: "#fff",
+        confirmButtonColor: "#d4af37"
+      });
+    });
+}
+
 
   return (
     <div className="min-h-screen bg-white py-8 px-4">
@@ -124,11 +206,20 @@ const Cart2 = () => {
             )}
           </div>
 
+
+
           {/* Order Summary */}
           <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 h-fit sticky top-6">
+
+          <div>
+            <p className="text-black">Register Frist</p>
+          </div>
+
             <h3 className="text-xl font-semibold mb-6 pb-3 border-b border-slate-200 text-slate-800">
               Order Summary
             </h3>
+
+            
 
             <div className="space-y-4 mb-6">
               <div className="flex justify-between">
@@ -176,11 +267,9 @@ const Cart2 = () => {
               </Link>
             )}
 
-            {cart.length > 0 && (
-              <button className="w-full mt-4 border border-slate-300 text-slate-700 py-3 rounded-lg font-medium hover:bg-slate-50 transition">
-                <Link className="/collection">Continue Shopping</Link>
-              </button>
-            )}
+
+            <button className="w-full mt-4 border border-slate-300 text-slate-700 py-3 rounded-lg font-medium hover:bg-slate-50 transition flex justify-center items-center gap-2"
+             onClick={()=>handleGoogleLogin()}><FaGoogle></FaGoogle> Google Login</button>
           </div>
         </div>
       </div>
