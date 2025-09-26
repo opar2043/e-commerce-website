@@ -1,4 +1,4 @@
-# e-commerce web stripe
+# e-commerce web stripe js
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
