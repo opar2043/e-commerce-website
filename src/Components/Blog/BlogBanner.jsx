@@ -68,7 +68,7 @@ const BlogBanner = () => {
               <h3 className="text-lg font-semibold mb-4 text-[#191919]">
                 {blog.name}
               </h3>
-              <p className="text-gray-700 text-sm mb-6">
+              <p className="text-gray-700 text-md mb-6">
                 {blog.blog.substring(0, 80)}...
               </p>
 

@@ -201,7 +201,7 @@ const Contact = () => {
         </section>
 
         {/* Houston Store */}
-        <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 rounded-3xl">
+        {/* <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto bg-gradient-to-r from-amber-50 via-yellow-50 to-amber-50 rounded-3xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Houston Location</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-amber-500 to-yellow-500 mx-auto mb-4"></div>
@@ -209,7 +209,7 @@ const Contact = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Map */}
+           
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl">
                 <iframe
@@ -230,7 +230,7 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Houston Contact Info */}
+           \
             <div className="space-y-6">
               <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-lg border-l-4 border-amber-500">
                 <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center shadow-lg">
@@ -266,7 +266,7 @@ const Contact = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
 
 

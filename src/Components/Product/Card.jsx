@@ -180,7 +180,7 @@ const Card = ({ product }) => {
 
   return (
     <Link to={`/product/${_id}`}>
-    <div className="group relative bg-white border-4 border-[#f19225] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ">
+    <div className="group relative bg-white border-4 border-[#76614B] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ">
 
         
         {/* Image Container */}
@@ -238,13 +238,13 @@ const Card = ({ product }) => {
         {/* Product Information */}
         <div className="p-6 bg-white">
           {/* Product Name */}
-          <h3 className="font-bold text-lg text-gray-800 mb-2 line-clamp-2 group-hover:text-amber-600 transition-colors">
+          <h3 className="font-bold text-xl text-gray-800 mb-2 line-clamp-2 group-hover:text-amber-600 transition-colors">
             {name}
           </h3>
           
           {/* Short Description */}
           {shortDescription && (
-            <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+            <p className="text-gray-600 text-md mb-3 line-clamp-2">
               {shortDescription}
             </p>
           )}
@@ -254,7 +254,7 @@ const Card = ({ product }) => {
             {/* Weight */}
             <div className="flex items-center gap-1 text-gray-700">
               <FaBalanceScale className="text-amber-500 text-sm" />
-              <span className="text-sm font-medium">{weight}g</span>
+              <span className="text-md font-medium">{weight}g</span>
             </div>
             
             {/* Rating Stars */}

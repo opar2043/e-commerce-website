@@ -72,12 +72,12 @@ const slides = [
 
             {/* Text + Button */}
             <div className="relative z-10 max-w-2xl px-6">
-<h2 className="text-xl md:text-4xl font-semibold text-[#E4C496] 
+<h2 className="text-xl md:text-5xl font-semibold text-[#E4C496] 
                [text-shadow:_0_2px_8px_rgb(254_202_162_/_50%)]
                 transition-all duration-300 mb-4">
   {slide.title}
 </h2>
-              <p className="text-lg sm:text-xl text-gray-200 mb-6 font-light">
+              <p className="text-lg md:text-2xl text-gray-200 mb-6 font-light">
                 {slide.description}
               </p>
 <Link to={"/collection"}>

@@ -15,7 +15,8 @@ import {
   FaChevronRight,
   FaHeart
 } from 'react-icons/fa';
-
+import master from "../../assets/master-card.png"
+import visa from "../../assets/visa.png"
 const Footer = () => {
   const [emailSubscription, setEmailSubscription] = useState('');
   const [subscriptionStatus, setSubscriptionStatus] = useState('');
@@ -348,8 +349,12 @@ const Footer = () => {
               </a>
             </div>
             
-            <div className="text-xs text-gray-500">
-              Powered By
+            <div className="text-xs text-gray-500 flex justify-center items-center gap-3">
+              <p>Powered By</p>
+              <div className='flex gap-2'>
+                <img src={visa} alt="visa" className='w-12 h-8' />
+                <img src={master} alt="master" className='w-12 h-8' />
+              </div>
             </div>
           </div>
         </div>

@@ -4,6 +4,8 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../Home/Footer'
 import Loading from '../Shared/Loading'
 import { FaWhatsapp } from 'react-icons/fa'
+import CartSidebar from '../Home/CartSidebar'
+import Cart2 from '../ProductCart/Cart2'
 
 const Root = () => {
   const [loading, setLoading] = useState(false) // default false
@@ -17,7 +19,8 @@ const Root = () => {
       ) : (
         <Outlet />
       )}
-
+ {/* <CartSidebar></CartSidebar> */}
+ <Cart2></Cart2>
         <div className="fixed bottom-10 right-8">
         <button className="btn w-11 h-11 text-xs bg-green-500 hover:bg-white hover:text-green-400 hover:border-0 text-white rounded-full border border-green-500">
           <div className="text-3xl">

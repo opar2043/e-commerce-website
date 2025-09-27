@@ -26,7 +26,8 @@ const Cart = () => {
       return total + itemPrice  }, 0)
     .toFixed(2);
 
-    
+
+
 
   // ✅ Shipping = flat $10 (can change to weight-based if needed)
   const shipping = cart.length === 0 ? 0 : 10.0;

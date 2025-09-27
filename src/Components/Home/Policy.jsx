@@ -161,7 +161,7 @@ const Policy = () => {
         </div>
 
         {/* Additional Guarantees Section */}
-        <div className="bg-[#f7992e] rounded-3xl p-12 text-white relative overflow-hidden">
+        <div className="bg-[#f89c33] rounded-3xl p-12 text-white relative overflow-hidden">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="w-full h-full" style={{

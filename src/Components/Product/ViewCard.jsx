@@ -20,14 +20,21 @@ const ViewCard = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { setCart , setWish , wish , user } = useAuth();
+  const { setCart, cart , setWish , wish, user, setIsCartSidebarOpen } = useAuth();
   // const [cart] = useCart([]);
   const [price, setPrice] = useState(0);
   const [metal, isLoading] = useMetal([]);
   const [products] = useProducts([]);
+  const [, , refetch] = useCart([])
   const axiosSecure = useAxios()
   // Find the product
   const product = products.find((p) => p._id === id);
+
+    
+
+  const addToCart = () => {
+    setCart([...cart, product]); 
+  };
 
   // Convert weight to number for calculations
   const productWeight = product ? parseFloat(product.weight) : 0;
@@ -85,31 +92,83 @@ const ViewCard = () => {
     }
   };
 
-  function handleAddToCart(e) {
-    e.preventDefault();
 
-    const productToAdd = {
-      id: product._id,
-      name: product.name,
-      category: product.category,
-      image: product.images[0],
-      price: totalPrice,
-      weight: product.weight,
-      quantity: quantity,
-    };
 
-    setCart((prev) => [...prev, productToAdd]);
+  // function handleAddToCart(e) {
+  //   e.preventDefault();
+
+  //   const productToAdd = {
+  //     id: product._id,
+  //     name: product.name,
+  //     category: product.category,
+  //     image: product.images[0],
+  //     price: totalPrice,
+  //     weight: product.weight,
+  //     quantity: quantity,
+  //   };
+
+  //   setCart((prev) => [...prev, productToAdd]);
+
+  // fetch("https://gold-web-server.vercel.app/cart", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify(productToAdd),
+  // })
+
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     if (data.insertedId) {
+  //       setWish((prev) => [...prev, productToAdd]);
+  //       Swal.fire({
+  //         position: "top-end",
+  //         icon: "success",
+  //         title: "Added to Your Cart",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.error("Error adding to wish:", err);
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: "Something went wrong while add to cart!",
+  //     });
+  //   });
+  // }
+
+
+function handleAddToCart(e) {
+  e.preventDefault();
+
+  const productToAdd = {
+    id: product._id,
+    name: product.name,
+    category: product.category,
+    image: product.images[0],
+    price: totalPrice,
+    weight: product.weight,
+    quantity: quantity,
+  };
+
+  // Don't update local state here - let the backend be the source of truth
+  // setCart([...cart, productToAdd]); // Remove this line
 
   fetch("https://gold-web-server.vercel.app/cart", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(productToAdd),
   })
-
     .then((res) => res.json())
     .then((data) => {
       if (data.insertedId) {
-        setWish((prev) => [...prev, productToAdd]);
+        // Refetch cart data from backend to sync with latest data
+        refetch();
+        
+        // Open the cart sidebar after successful addition
+        setIsCartSidebarOpen(true);
+        
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -120,15 +179,14 @@ const ViewCard = () => {
       }
     })
     .catch((err) => {
-      console.error("Error adding to wish:", err);
+      console.error("Error adding to cart:", err);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Something went wrong while add to cart!",
+        text: "Something went wrong while adding to cart!",
       });
     });
-  }
-
+}
 
 function handleWish(product) {
   const productToWish = {
@@ -237,7 +295,7 @@ function handleCart(product) {
                 {isFavorite ? (
                   <RiHeartFill className="w-6 h-6 text-red-500" />
                 ) : (
-                  <RiHeartLine className="w-6 h-6 text-gray-600" />
+                  <RiHeartLine className="w-6 h-6 text-gray-700" />
                 )}
               </button>
             </div>
@@ -291,20 +349,20 @@ function handleCart(product) {
               </h3>
               <div className="bg-gray-50 p-4 rounded-lg">
                  <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-600">Size:</span>
+                  <span className="text-gray-700">Size:</span>
                   <span className="font-semibold text-black/80">
                     {product.size || "21 cm"}
                   </span>
                 </div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-600">Weight:</span>
+                  <span className="text-gray-700">Weight:</span>
                   <span className="font-semibold text-black/80">
                     {product.weight}g
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Price per gram:</span>
+                  <span className="text-gray-700">Price per gram:</span>
                   <span className="font-semibold text-black/80">
                     ${product.category === "Gold" && goldRate.toFixed(2)}
                     {product.category === "Silver" && silverRate.toFixed(2)}
@@ -313,7 +371,7 @@ function handleCart(product) {
                   </span>
                 </div>
                 <div className="flex justify-between items-center mt-2">
-                  <span className="text-gray-600">Total Price:</span>
+                  <span className="text-gray-700">Total Price:</span>
                   <span className="text-lg font-bold text-[#D99B55]">
                     ${price.toFixed(2)}
                   </span>
@@ -339,7 +397,7 @@ function handleCart(product) {
             <div className="pt-4 border-t border-gray-200">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <span className="block text-sm text-gray-600">
+                  <span className="block text-sm text-gray-700">
                     Order Total
                   </span>
                   <div className="flex items-baseline mt-1">
@@ -351,14 +409,14 @@ function handleCart(product) {
                 <div className="flex items-center space-x-3">
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
-                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                      className="px-3 py-2 text-gray-700 hover:bg-gray-100"
                       onClick={decreaseQuantity}
                     >
                       -
                     </button>
                     <span className="px-4 py-2 text-black">{quantity}</span>
                     <button
-                      className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                      className="px-3 py-2 text-gray-700 hover:bg-gray-100"
                       onClick={increaseQuantity}
                     >
                       +
@@ -379,7 +437,9 @@ function handleCart(product) {
 
 
                 <button
-  onClick={handleAddToCart}
+  
+  onClick={handleAddToCart }
+  // onClick={addToCart }
   className={`flex-1 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center
     ${
       product.isAvailable

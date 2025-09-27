@@ -17,12 +17,16 @@ import useCart from "../Hooks/useCart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { handleLogout, user } = useAuth() || {};
+  const { handleLogout, user , setIsCartSidebarOpen } = useAuth() || {};
   const [wish] = useWish([]);
   const [metal] = useMetal([]);
   const { admin } = useAdmin();
   const [cart] = useCart();
   const navigate = useNavigate();
+
+   function handleOpen(){
+    setIsCartSidebarOpen(true)
+   }
 
   const logOut = () => {
     handleLogout()
@@ -56,7 +60,7 @@ const Navbar = () => {
       {/* Wishlist */}
       <NavLink to="/wish" className="relative px-3 py-2 hover:text-[#FEB564]">
         <FaHeart />
-        <span className="absolute -top-2 -right-2 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
+        <span className="absolute -top-2 -right-2 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 md:flex md:items-center justify-center shadow hidden">
           {wish?.length || 0}
         </span>
       </NavLink>
@@ -73,12 +77,12 @@ const Navbar = () => {
   return (
     <div>
       {/* 🔹 Upper Navbar (Gold Prices) */}
-      <div className="bg-[#faac54] px-4 py-1 md:px-8 flex justify-center items-center text-slate-950">
+      <div className="bg-[#76614B] px-4 py-1 md:px-8 flex justify-center items-center text-slate-950">
         <div className="flex gap-6 text-xs md:text-sm py-1">
           {metal?.map((met) => (
-            <div key={met.metal} className="flex gap-1 items-center">
-              <span className="font-semibold">{met.metal.toUpperCase()}:</span>
-              <span>${met.price.toFixed(2)}</span>
+            <div key={met.metal} className="flex gap-2 items-center">
+              <span className="font-semibold text-white ">{met.metal.toUpperCase()} </span>
+              <span className="text-[#FCA139] font-bold text-lg"> ${met.price.toFixed(2)}</span>
             </div>
           ))}
         </div>
@@ -95,13 +99,25 @@ const Navbar = () => {
         </button>
 
         {/* Left: Brand */}
-        <div className="text-white text-xl md:text-3xl font-semibold tracking-wide">
+        <div className="text-white text-xl md:text-3xl font-semibold tracking-wide flex gap-4">
+
           <Link to="/">Tannous Jewelry</Link>
+                               <button
+            onClick={handleOpen}
+            className="relative flex items-center text-white hover:text-[#FEB564] transition-colors duration-300 md:hidden"
+          >
+           
+              <FiShoppingCart size={24} />
+            
+            <span className="absolute -top-2 -right-3 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
+              {cart?.length || 0}
+            </span>
+          </button>
         </div>
 
         {/* Center: NavLinks (Desktop) */}
         <div className="hidden lg:flex">
-          <ul className="flex items-center gap-6 text-sm text-white/90">
+          <ul className="flex items-center gap-6 text-md text-white/90">
             {NavLinks}
           </ul>
         </div>
@@ -109,15 +125,17 @@ const Navbar = () => {
         {/* Right: Cart + Logout/Login */}
         <div className="hidden lg:flex items-center gap-4">
           {/* Cart */}
-          <NavLink
-            to="/cart"
+          <button
+            onClick={handleOpen}
             className="relative flex items-center text-white hover:text-[#FEB564] transition-colors duration-300"
           >
-            <FiShoppingCart size={24} />
+           
+              <FiShoppingCart size={24} />
+            
             <span className="absolute -top-2 -right-3 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
               {cart?.length || 0}
             </span>
-          </NavLink>
+          </button>
 
           {/* Logout / Login */}
         

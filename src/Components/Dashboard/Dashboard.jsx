@@ -79,6 +79,14 @@ const Dashboard = () => {
                 <MdShoppingCart size={20} /> Orders
               </Link>
             </li>
+            <li>
+              <Link
+                to="/dashboard/userdata"
+                className="flex items-center gap-2 text-gray-700 hover:bg-[#D99B55] hover:text-white rounded-lg px-4 py-2 transition-all duration-200"
+              >
+                <MdShoppingCart size={20} /> Billing Detail
+              </Link>
+            </li>
           </ul>
         </div>
 
