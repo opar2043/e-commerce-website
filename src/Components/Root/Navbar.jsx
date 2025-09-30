@@ -17,16 +17,16 @@ import useCart from "../Hooks/useCart";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { handleLogout, user , setIsCartSidebarOpen } = useAuth() || {};
+  const { handleLogout, user, setIsCartSidebarOpen } = useAuth() || {};
   const [wish] = useWish([]);
   const [metal] = useMetal([]);
   const { admin } = useAdmin();
   const [cart] = useCart();
   const navigate = useNavigate();
 
-   function handleOpen(){
-    setIsCartSidebarOpen(true)
-   }
+  function handleOpen() {
+    setIsCartSidebarOpen(true);
+  }
 
   const logOut = () => {
     handleLogout()
@@ -75,21 +75,25 @@ const Navbar = () => {
   );
 
   return (
-    <div>
+    <div className="fixed top-0 left-0 w-full z-50">
       {/* 🔹 Upper Navbar (Gold Prices) */}
-      <div className="bg-[#76614B] px-4 py-1 md:px-8 flex justify-center items-center text-slate-950">
-        <div className="flex gap-6 text-xs md:text-sm py-1">
+      <div className="bg-[#76614B] px-4 py-0.5 md:px-8 flex justify-center items-center text-slate-950">
+        <div className="flex gap-6 text-xs md:text-sm py-0.5">
           {metal?.map((met) => (
             <div key={met.metal} className="flex gap-2 items-center">
-              <span className="font-semibold text-white ">{met.metal.toUpperCase()} </span>
-              <span className="text-[#FCA139] font-bold text-lg"> ${met.price.toFixed(2)}</span>
+              <span className="font-semibold text-white ">
+                {met.metal.toUpperCase()}
+              </span>
+              <span className="text-[#FCA139] font-bold text-lg">
+                ${met.price.toFixed(2)}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
       {/* 🔹 Lower Navbar */}
-      <div className="bg-black px-4 md:px-10 py-3 flex justify-between items-center">
+      <div className="bg-black px-4 md:px-10 py-1 flex justify-between items-center">
         {/* Mobile Menu Button */}
         <button
           className="lg:hidden text-white"
@@ -100,15 +104,12 @@ const Navbar = () => {
 
         {/* Left: Brand */}
         <div className="text-white text-xl md:text-3xl font-semibold tracking-wide flex gap-4">
-
           <Link to="/">Tannous Jewelry</Link>
-                               <button
+          <button
             onClick={handleOpen}
             className="relative flex items-center text-white hover:text-[#FEB564] transition-colors duration-300 md:hidden"
           >
-           
-              <FiShoppingCart size={24} />
-            
+            <FiShoppingCart size={24} />
             <span className="absolute -top-2 -right-3 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
               {cart?.length || 0}
             </span>
@@ -129,33 +130,28 @@ const Navbar = () => {
             onClick={handleOpen}
             className="relative flex items-center text-white hover:text-[#FEB564] transition-colors duration-300"
           >
-           
-              <FiShoppingCart size={24} />
-            
+            <FiShoppingCart size={24} />
             <span className="absolute -top-2 -right-3 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
               {cart?.length || 0}
             </span>
           </button>
 
           {/* Logout / Login */}
-        
-  {user ? (
-    <button
-      onClick={logOut}
-      className="flex flex-col items-center justify-center w-12 h-12 border border-white rounded-full hover:bg-white hover:text-black transition"
-    >
-      <FiLogOut size={22} />
-      <span className="text-[10px] ">Logout</span>
-    </button>
-  ) : (
-    <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>
-      <button className="flex flex-col items-center justify-center w-12 h-12 border border-white rounded-full hover:bg-white hover:text-black transition">
-        <FiUser size={22} />
-      </button>
-    </NavLink>
-  )}
-
-
+          {user ? (
+            <button
+              onClick={logOut}
+              className="flex flex-col items-center justify-center w-12 h-12 border border-white rounded-full hover:bg-white hover:text-black transition"
+            >
+              <FiLogOut size={22} />
+              <span className="text-[10px] ">Logout</span>
+            </button>
+          ) : (
+            <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>
+              <button className="flex flex-col items-center justify-center w-12 h-12 border border-white rounded-full hover:bg-white hover:text-black transition">
+                <FiUser size={22} />
+              </button>
+            </NavLink>
+          )}
         </div>
       </div>
 

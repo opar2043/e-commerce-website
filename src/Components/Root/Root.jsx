@@ -13,23 +13,30 @@ const Root = () => {
   return (
     <div>
       <Navbar />
-      
-      {loading ? (
-        <Loading />
-      ) : (
-        <Outlet />
-      )}
- {/* <CartSidebar></CartSidebar> */}
- <Cart2></Cart2>
+
+      {/* 🔹 Add top padding so content clears the fixed navbar */}
+      <div className="pt-[70px]">
+        {loading ? (
+          <Loading />
+        ) : (
+          <Outlet />
+        )}
+
+        {/* <CartSidebar /> */}
+        <Cart2 />
+
+        {/* WhatsApp button */}
         <div className="fixed bottom-10 right-8">
-        <button className="btn w-11 h-11 text-xs bg-green-500 hover:bg-white hover:text-green-400 hover:border-0 text-white rounded-full border border-green-500">
-          <div className="text-3xl">
-            <a href="">
-              <FaWhatsapp></FaWhatsapp>
-            </a>
-          </div>
-        </button>
+          <button className="btn w-11 h-11 text-xs bg-green-500 hover:bg-white hover:text-green-400 hover:border-0 text-white rounded-full border border-green-500">
+            <div className="text-3xl">
+              <a href="">
+                <FaWhatsapp />
+              </a>
+            </div>
+          </button>
+        </div>
       </div>
+
       <Footer />
     </div>
   )
