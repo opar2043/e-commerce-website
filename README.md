@@ -1,19 +1,75 @@
-# e-commerce web
+# 💍 Tannous Jewelry – E-Commerce Web App  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An elegant **gold e-commerce platform** built with the **MERN stack + Stripe**, offering secure online shopping for jewelry with a seamless user experience.  
 
-Currently, two official plugins are available:
+🌐 **Live Demo:** [Tannous Jewelry](https://charming-marshmallow-c237cd.netlify.app/)  
+🖥️ **Backend API:** [Gold Web Server](https://gold-web-server.vercel.app/)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📑 Table of Contents  
+- [Introduction](#introduction)  
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Installation](#installation)  
+- [Configuration](#configuration)  
+- [Usage](#usage)  
+- [Screenshots](#screenshots)  
+- [Troubleshooting](#troubleshooting)  
+- [Contributors](#contributors)  
+- [License](#license)  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check 
-Mashallah2043@ out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
 
+## 📖 Introduction  
 
-https://charming-marshmallow-c237cd.netlify.app/
+**Tannous Jewelry** is a modern **e-commerce platform** designed to sell gold jewelry online.  
+It includes features like product management, order handling, and secure payment processing via **Stripe**.  
 
-https://gold-web-server.vercel.app/
+The system provides:  
+- A **customer-facing storefront** to browse and purchase jewelry.  
+- An **admin dashboard** to manage products, orders, and users.  
+- Secure backend services for payment and data storage.  
+
+---
+
+## ✨ Features  
+
+- User authentication & authorization  
+- Browse jewelry collections  
+- Add, edit, and delete products (Admin only)  
+- Secure Stripe payment integration  
+- Order confirmation system  
+- Admin dashboard for management  
+- Responsive UI with **Tailwind CSS**  
+
+---
+
+## 🛠 Tech Stack  
+
+**Frontend:**  
+- React (Vite + HMR)  
+- Tailwind CSS  
+- Axios  
+
+**Backend:**  
+- Node.js  
+- Express.js  
+- MongoDB (Mongoose)  
+- Stripe API  
+
+**Deployment:**  
+- Frontend: Netlify  
+- Backend: Vercel  
+
+---
+
+## ⚙️ Installation  
+
+Clone the repository:  
+
+```bash
+git clone https://github.com/your-username/tannous-jewelry.git
+cd tannous-jewelry
+
 
