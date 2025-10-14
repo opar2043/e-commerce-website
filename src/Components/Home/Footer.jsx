@@ -18,6 +18,7 @@ import {
 import master from "../../assets/master-card.png"
 import visa from "../../assets/visa.png"
 import gold from "../../assets/gold15.jpg"
+
 const Footer = () => {
   const [emailSubscription, setEmailSubscription] = useState('');
   const [subscriptionStatus, setSubscriptionStatus] = useState('');
@@ -35,20 +36,16 @@ const Footer = () => {
 
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white">
-      {/* Newsletter Section */}
-
-
       <div className="lg:grid lg:grid-cols-5">
-        {/* Enhanced Image Section */}
+        {/* Image Section */}
         <div className="relative block h-64 lg:col-span-2 lg:h-full">
           <img
-            src= {gold} 
+            src={gold}
             alt="Tannous Jewelry Arabic Gold Collection"
             className="absolute inset-0 h-full w-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-transparent"></div>
-          
-          {/* Overlay Content */}
+
           <div className="absolute inset-0 flex flex-col justify-center px-8">
             <div className="mb-6">
               <h3 className="text-3xl font-serif font-bold text-white mb-2">
@@ -62,8 +59,7 @@ const Footer = () => {
                 Crafting Excellence Since 1985
               </p>
             </div>
-            
-            {/* Certifications */}
+
             <div className="flex gap-4">
               <div className="flex items-center gap-2 bg-black bg-opacity-50 px-3 py-2 rounded-lg">
                 <FaCertificate className="text-amber-400" />
@@ -77,18 +73,17 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Enhanced Content Section */}
+        {/* Content Section */}
         <div className="px-6 py-8 sm:px-8 lg:col-span-3 lg:px-12">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             
-            {/* Contact Information */}
+            {/* Contact Info */}
             <div>
               <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-amber-400">
                 <FaPhone />
                 <span>Contact Us</span>
               </h3>
               
-              {/* Terrytown Location */}
               <div className="mb-6 p-4 bg-gray-800 rounded-lg">
                 <h4 className="font-semibold text-amber-300 mb-3">Main Store - Terrytown, LA</h4>
                 <div className="space-y-2 text-sm text-gray-300">
@@ -100,13 +95,9 @@ const Footer = () => {
                     <FaMapMarkerAlt className="text-amber-400 text-xs mt-1" />
                     <span>1180 Terry Pkwy Suite A<br />Terrytown, LA 70056</span>
                   </div>
-
                 </div>
               </div>
 
-
-
-              {/* Business Hours */}
               <div className="space-y-2 text-sm text-gray-300">
                 <div className="flex items-center gap-2">
                   <FaClock className="text-amber-400" />
@@ -129,122 +120,62 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Services & Collections */}
+            {/* Services */}
             <div>
               <h3 className="text-xl font-bold mb-6 text-amber-400">Our Services</h3>
               <ul className="space-y-3 text-sm text-gray-300">
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
+                {[
+                  "Custom Arabic Jewelry Design",
+                  "Arabic Calligraphy Engraving",
+                  "Gold Jewelry Appraisal",
+                  "Jewelry Repair & Restoration",
+                  "Wedding Jewelry Sets",
+                  "Investment Gold Consultation"
+                ].map((service, i) => (
+                  <li key={i} className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer">
                     <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Custom Arabic Jewelry Design
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Arabic Calligraphy Engraving
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Gold Jewelry Appraisal
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Jewelry Repair & Restoration
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Wedding Jewelry Sets
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Investment Gold Consultation
-                  </a>
-                </li>
+                    {service}
+                  </li>
+                ))}
               </ul>
-
-
             </div>
 
-            {/* Company & Social Media */}
+            {/* About & Socials */}
             <div>
               <h3 className="text-xl font-bold mb-6 text-amber-400">About Tannous</h3>
               <ul className="space-y-3 text-sm text-gray-300 mb-8">
-                <li>
-                  <a href="/about" className="flex items-center gap-2 transition hover:text-amber-400 group">
+                {[
+                  "Our Story & Heritage",
+                  "Visit Our Stores",
+                  "Authenticity Guarantee",
+                  "Customer Reviews",
+                  "Jewelry Care Guide"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer">
                     <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Our Story & Heritage
-                  </a>
-                </li>
-                <li>
-                  <a href="/contact" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Visit Our Stores
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Authenticity Guarantee
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Customer Reviews
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="flex items-center gap-2 transition hover:text-amber-400 group">
-                    <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
-                    Jewelry Care Guide
-                  </a>
-                </li>
+                    {item}
+                  </li>
+                ))}
               </ul>
 
-              {/* Social Media */}
               <div>
                 <h4 className="text-lg font-semibold mb-4 text-amber-400">Follow Our Journey</h4>
                 <div className="flex gap-4 mb-6">
-                  <a
-                    href="#"
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 text-white transition-all hover:scale-110 hover:shadow-lg group"
-                    aria-label="Facebook"
-                  >
-                    <FaFacebookF className="text-lg group-hover:scale-110 transition-transform" />
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 text-white transition-all hover:scale-110 hover:shadow-lg group"
-                    aria-label="Instagram"
-                  >
-                    <FaInstagram className="text-lg group-hover:scale-110 transition-transform" />
-                  </a>
-                  <a
-                    href="https://wa.me/15042521732"
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-600 text-white transition-all hover:scale-110 hover:shadow-lg group"
-                    aria-label="WhatsApp"
-                  >
-                    <FaWhatsapp className="text-lg group-hover:scale-110 transition-transform" />
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 text-white transition-all hover:scale-110 hover:shadow-lg group"
-                    aria-label="Twitter"
-                  >
-                    <FaTwitter className="text-lg group-hover:scale-110 transition-transform" />
-                  </a>
+                  {[
+                    { icon: <FaFacebookF />, color: "from-amber-500 to-amber-600" },
+                    { icon: <FaInstagram />, color: "from-pink-500 to-purple-600" },
+                    { icon: <FaWhatsapp />, color: "from-green-500 to-green-600" },
+                    { icon: <FaTwitter />, color: "from-blue-500 to-blue-600" }
+                  ].map((social, i) => (
+                    <div
+                      key={i}
+                      className={`flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br ${social.color} text-white transition-all hover:scale-110 hover:shadow-lg group cursor-pointer`}
+                    >
+                      <span className="text-lg group-hover:scale-110 transition-transform">{social.icon}</span>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Trust Badges */}
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-sm">
                     <FaAward className="text-amber-400" />
@@ -266,8 +197,6 @@ const Footer = () => {
           {/* Bottom Section */}
           <div className="mt-12 pt-8 border-t border-gray-700">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-
-
               <div className="text-center lg:text-left">
                 <p className="text-sm text-gray-400 mb-2">
                   &copy; {currentYear} Tannous Jewelry. All rights reserved.
@@ -277,27 +206,12 @@ const Footer = () => {
                 </p>
               </div>
 
-              <ul className="flex flex-wrap gap-6 text-xs">
-                <li>
-                  <a href="#" className="text-gray-400 transition hover:text-amber-400">
-                    Terms & Conditions
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 transition hover:text-amber-400">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 transition hover:text-amber-400">
-                    Returns & Exchanges
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-400 transition hover:text-amber-400">
-                    Shipping Information
-                  </a>
-                </li>
+              <ul className="flex flex-wrap gap-6 text-xs text-gray-400">
+                {["Terms & Conditions", "Privacy Policy", "Returns & Exchanges", "Shipping Information"].map((item, i) => (
+                  <li key={i} className="transition hover:text-amber-400 cursor-pointer">
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -310,20 +224,20 @@ const Footer = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-4 text-sm text-gray-400">
               <span>Call us now:</span>
-              <a href="tel:+15042521732" className="text-amber-400 font-semibold hover:text-amber-300">
+              <span className="text-amber-400 font-semibold hover:text-amber-300 cursor-pointer">
                 (504) 252-1732
-              </a>
+              </span>
               <span className="hidden sm:inline">|</span>
-              <a href="https://wa.me/15042521732" className="text-green-400 font-semibold hover:text-green-300">
+              <span className="text-green-400 font-semibold hover:text-green-300 cursor-pointer">
                 WhatsApp Us
-              </a>
+              </span>
             </div>
-            
+
             <div className="text-xs text-gray-500 flex justify-center items-center gap-3">
               <p>Powered By</p>
-              <div className='flex gap-2'>
-                <img src={visa} alt="visa" className='w-12 h-8' />
-                <img src={master} alt="master" className='w-12 h-8' />
+              <div className="flex gap-2">
+                <img src={visa} alt="visa" className="w-12 h-8" />
+                <img src={master} alt="master" className="w-12 h-8" />
               </div>
             </div>
           </div>

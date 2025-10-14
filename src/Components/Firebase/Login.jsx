@@ -1,7 +1,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { RiVipCrownLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import img from "../../assets/footer.webp"
+import img from "../../assets/gold14.jpg"
 import Swal from "sweetalert2";
 import { useRef } from "react";
 import useAuth from "../Hooks/useAuth";
@@ -145,7 +145,7 @@ const Login = () => {
               <div className="w-full border-t border-gray-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">Or </span>
             </div>
           </div>
 

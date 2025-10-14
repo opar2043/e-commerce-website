@@ -6,7 +6,7 @@ import {
   FiMenu,
   FiX,
   FiLogOut,
-  FiChevronDown
+  FiChevronDown,
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
@@ -44,7 +44,7 @@ const Navbar = () => {
   const navLinkStyle =
     "relative px-3 py-2 transition-all duration-300 hover:text-[#FEB564] before:content-[''] before:absolute before:w-0 hover:before:w-full before:h-[2px] before:bg-[#FEB564] before:bottom-0 before:left-0 before:rounded-full before:transition-all before:duration-300";
 
- const NavLinks = (
+  const NavLinks = (
     <>
       <NavLink to="/" className={navLinkStyle}>
         Home
@@ -55,19 +55,19 @@ const Navbar = () => {
         <NavLink to="/collection" className={navLinkStyle}>
           Collection
         </NavLink>
-        <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md mt-1  z-50">
+        <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-lg mt-1  z-50">
           <ul className="py-2 px-4 text-gray-700 flex gap-3">
-{metal &&
-        metal.map((cat, index) => (
-          <li key={index}>
-            <NavLink
-              to={`/collection/${cat.metal}`}
-              className="block px-4 py-2 duration-150 text-black hover:bg-orange-100"
-            >
-              {cat.metal}
-            </NavLink>
-          </li>
-        ))}
+            {metal &&
+              metal.map((cat, index) => (
+                <li key={index}>
+                  <NavLink
+                    to={`/collection/${cat.metal}`}
+                    className="block px-4 py-2 rounded duration-150 text-black hover:bg-orange-100"
+                  >
+                    {cat.metal}
+                  </NavLink>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
@@ -95,7 +95,6 @@ const Navbar = () => {
       )}
     </>
   );
-
 
   return (
     <div className="fixed top-0 left-0 w-full z-50">

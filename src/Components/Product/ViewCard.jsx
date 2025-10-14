@@ -20,20 +20,19 @@ const ViewCard = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const { setCart, cart , setWish , wish, user, setIsCartSidebarOpen } = useAuth();
+  const { setCart, cart, setWish, wish, user, setIsCartSidebarOpen } =
+    useAuth();
   // const [cart] = useCart([]);
   const [price, setPrice] = useState(0);
   const [metal, isLoading] = useMetal([]);
   const [products] = useProducts([]);
-  const [, , refetch] = useCart([])
-  const axiosSecure = useAxios()
+  const [, , refetch] = useCart([]);
+  const axiosSecure = useAxios();
   // Find the product
   const product = products.find((p) => p._id === id);
 
-    
-
   const addToCart = () => {
-    setCart([...cart, product]); 
+    setCart([...cart, product]);
   };
 
   // Convert weight to number for calculations
@@ -65,7 +64,7 @@ const ViewCard = () => {
   }, [product, goldRate, silverRate, platinumRate, diamondRate, productWeight]);
 
   const totalPrice = price * quantity;
-  
+
   if (isLoading || !product) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -93,157 +92,107 @@ const ViewCard = () => {
   };
 
 
+  function handleAddToCart(e) {
+    e.preventDefault();
 
-  // function handleAddToCart(e) {
-  //   e.preventDefault();
+    const productToAdd = {
+      id: product._id,
+      name: product.name,
+      category: product.category,
+      image: product.images[0],
+      price: totalPrice,
+      weight: product.weight,
+      quantity: quantity,
+    };
 
-  //   const productToAdd = {
-  //     id: product._id,
-  //     name: product.name,
-  //     category: product.category,
-  //     image: product.images[0],
-  //     price: totalPrice,
-  //     weight: product.weight,
-  //     quantity: quantity,
-  //   };
+    // Don't update local state here - let the backend be the source of truth
+    // setCart([...cart, productToAdd]); // Remove this line
 
-  //   setCart((prev) => [...prev, productToAdd]);
-
-  // fetch("https://gold-web-server.vercel.app/cart", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json" },
-  //   body: JSON.stringify(productToAdd),
-  // })
-
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     if (data.insertedId) {
-  //       setWish((prev) => [...prev, productToAdd]);
-  //       Swal.fire({
-  //         position: "top-end",
-  //         icon: "success",
-  //         title: "Added to Your Cart",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.error("Error adding to wish:", err);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Oops...",
-  //       text: "Something went wrong while add to cart!",
-  //     });
-  //   });
-  // }
-
-
-function handleAddToCart(e) {
-  e.preventDefault();
-
-  const productToAdd = {
-    id: product._id,
-    name: product.name,
-    category: product.category,
-    image: product.images[0],
-    price: totalPrice,
-    weight: product.weight,
-    quantity: quantity,
-  };
-
-  // Don't update local state here - let the backend be the source of truth
-  // setCart([...cart, productToAdd]); // Remove this line
-
-  fetch("https://gold-web-server.vercel.app/cart", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(productToAdd),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.insertedId) {
-        // Refetch cart data from backend to sync with latest data
-        refetch();
-        
-        // Open the cart sidebar after successful addition
-        setIsCartSidebarOpen(true);
-        
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Added to Your Cart",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+    fetch("https://gold-web-server.vercel.app/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productToAdd),
     })
-    .catch((err) => {
-      console.error("Error adding to cart:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong while adding to cart!",
-      });
-    });
-}
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          // Refetch cart data from backend to sync with latest data
+          refetch();
 
-function handleWish(product) {
-  const productToWish = {
-    id: product._id,
-    name: product.name,
-    category: product.category,
-    image: product.images[0],
-    price: price.toFixed(2),
-    weight: product.weight,
-    size: product.size || "21 cm",
-    quantity: quantity,
+          // Open the cart sidebar after successful addition
+          setIsCartSidebarOpen(true);
 
-    
-  };
-
-  fetch("https://gold-web-server.vercel.app/wish", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(productToWish),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.insertedId) {
-        setWish((prev) => [...prev, productToWish]);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Added to Your Cart",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error adding to cart:", err);
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Added to Wishlist!",
-          showConfirmButton: false,
-          timer: 1500,
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong while adding to cart!",
         });
-      }
-    })
-    .catch((err) => {
-      console.error("Error adding to wish:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong while adding to wishlist!",
       });
-    });
-}
+  }
 
-function handleCart(product) {
-  const productToWish = {
-    id: product._id,
-    name: product.name,
-    category: product.category,
-    image: product.images[0],
-    price: price.toFixed(2),
-    weight: product.weight,
-    size: product.size || "21 cm",
-    quantity: product.quantity,
-  };
+  function handleWish(product) {
+    const productToWish = {
+      id: product._id,
+      name: product.name,
+      category: product.category,
+      image: product.images[0],
+      price: price.toFixed(2),
+      weight: product.weight,
+      size: product.size || "21 cm",
+      quantity: quantity,
+    };
 
+    fetch("https://gold-web-server.vercel.app/wish", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(productToWish),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          setWish((prev) => [...prev, productToWish]);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Added to Wishlist!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error adding to wish:", err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong while adding to wishlist!",
+        });
+      });
+  }
 
-}
+  function handleCart(product) {
+    const productToWish = {
+      id: product._id,
+      name: product.name,
+      category: product.category,
+      image: product.images[0],
+      price: price.toFixed(2),
+      weight: product.weight,
+      size: product.size || "21 cm",
+      quantity: product.quantity,
+    };
+  }
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
@@ -252,21 +201,12 @@ function handleCart(product) {
         <nav className="flex mb-8" aria-label="Breadcrumb">
           <ol className="flex items-center space-x-2">
             <li>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="text-gray-500 hover:text-[#D99B55] transition-colors"
               >
                 Home
-              </a>
-            </li>
-            <li className="flex items-center">
-              <span className="mx-2 text-gray-400">/</span>
-              <a
-                href="/products"
-                className="text-gray-500 hover:text-[#D99B55] transition-colors"
-              >
-                Products
-              </a>
+              </Link>
             </li>
             <li className="flex items-center">
               <span className="mx-2 text-gray-400">/</span>
@@ -348,7 +288,7 @@ function handleCart(product) {
                 Product Details
               </h3>
               <div className="bg-gray-50 p-4 rounded-lg">
-                 <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-2">
                   <span className="text-gray-700">Size:</span>
                   <span className="font-semibold text-black/80">
                     {product.size || "21 cm"}
@@ -426,45 +366,32 @@ function handleCart(product) {
               </div>
 
               <div className="flex space-x-4">
-                {/* <button
-                  onClick={handleAddToCart}
-                  className="flex-1 bg-[#D99B55] hover:bg-[#C68A4A] text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center"
-                  disabled={!product.isAvailable}
-                >
-                  <RiShoppingCartLine className="w-5 h-5 mr-2" />
-                  Add to Cart
-                </button> */}
-
-
                 <button
-  
-  onClick={handleAddToCart }
-  // onClick={addToCart }
-  className={`flex-1 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center
+                  onClick={handleAddToCart}
+                  // onClick={addToCart }
+                  className={`flex-1 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center
     ${
       product.isAvailable
         ? "bg-[#D99B55] hover:bg-[#C68A4A] text-white"
         : "bg-gray-400 cursor-not-allowed text-gray-100"
     }`}
-  disabled={!product.isAvailable}
->
-  <RiShoppingCartLine className="w-5 h-5 mr-2" />
-  {product.isAvailable ? "Add to Cart" : "Stock Out"}
-</button>
+                  disabled={!product.isAvailable}
+                >
+                  <RiShoppingCartLine className="w-5 h-5 mr-2" />
+                  {product.isAvailable ? "Add to Cart" : "Stock Out"}
+                </button>
 
-                  <button
-                  onClick={()=>handleWish(product)}
-                  className="px-4 py-3 border-2 border-[#D99B55] text-[#D99B55] font-medium rounded-lg hover:bg-[#D99B55]/10 transition-colors">
-                    <FaHeart></FaHeart>
-                  </button>
+                <button
+                  onClick={() => handleWish(product)}
+                  className="px-4 py-3 border-2 border-[#D99B55] text-[#D99B55] font-medium rounded-lg hover:bg-[#D99B55]/10 transition-colors"
+                >
+                  <FaHeart></FaHeart>
+                </button>
                 <Link to={"/collection"}>
                   <button className="px-4 py-3 border-2 border-[#D99B55] text-[#D99B55] font-medium rounded-lg hover:bg-[#D99B55]/10 transition-colors">
                     All Collection
                   </button>
                 </Link>
-                
-
-               
               </div>
             </div>
 

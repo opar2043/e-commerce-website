@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import useAxios from '../Hooks/useAxios';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../Hooks/useAuth';
-
+import gold from "../../assets/gold3.jpg"    // this will bgimg
 const Register = () => {
    const { handleRegister } = useAuth();
   const axiosSecure = useAxios();
@@ -50,19 +50,14 @@ const Register = () => {
     <div className="min-h-screen flex items-center justify-center bg-white px-4 py-10">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-0 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
 
-        {/* Illustration/Image Section */}
+        {/* use background Image Section */}
         <div className="hidden md:flex bg-gradient-to-br from-[#f8f4ed] to-[#f1e6d3] items-center justify-center p-8">
           <div className="text-center">
             <div className="w-full max-w-xs mx-auto mb-8">
-              <svg viewBox="0 0 500 500" className="w-full h-auto">
-                <path fill="#d99b55" d="M0,250a250,250 0 1,0 500,0a250,250 0 1,0 -500,0" />
-                <path fill="#fff" d="M150,200h200v150H150V200z" />
-                <circle fill="#d99b55" cx="250" cy="150" r="50" />
-                <path fill="none" stroke="#d99b55" strokeWidth="10" d="M200,350h100" />
-              </svg>
+              <img src={gold} alt="Gold" className="rounded-lg shadow-lg" /> 
             </div>
-            <h3 className="text-2xl font-semibold text-slate-800 mb-2">Join Our Community</h3>
-            <p className="text-slate-600">Create an account to access exclusive features and content.</p>
+            <h3 className="text-2xl font-semibold text-slate-800 mb-2">Join Tannous Jewelry</h3>
+            <p className="text-slate-600">Be a Happy Customer!</p>
           </div>
         </div>
 

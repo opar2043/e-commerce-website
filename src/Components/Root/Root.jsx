@@ -6,6 +6,7 @@ import Loading from '../Shared/Loading'
 import { FaWhatsapp } from 'react-icons/fa'
 import CartSidebar from '../Home/CartSidebar'
 import Cart2 from '../ProductCart/Cart2'
+import ScrollToTop from '../Home/ScrollToTop'
 
 const Root = () => {
   const [loading, setLoading] = useState(false) // default false
@@ -23,6 +24,7 @@ const Root = () => {
         )}
 
         {/* <CartSidebar /> */}
+         <ScrollToTop />
         <Cart2 />
 
         {/* WhatsApp button */}
