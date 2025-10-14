@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaAddressBook, FaPhone, FaTelegram, FaClock, FaMapMarkerAlt, FaWhatsapp, FaInstagram, FaFacebook, FaStar, FaGem } from "react-icons/fa";
-
+import backgroundImage from "../../assets/gold3.jpg"
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -52,35 +52,46 @@ const Contact = () => {
       <div className="bg-gradient-to-b from-amber-50 to-white text-gray-800 font-sans min-h-screen">
         
         {/* Hero Section */}
-        <section className="relative py-16 px-4 md:px-8 bg-gradient-to-r from-[#ffb056] via-[#f59426] to-[#ffb157] text-white overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="w-full h-full" style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundSize: '60px 60px'
-            }}></div>
-          </div>
-          
-          <div className="max-w-6xl mx-auto text-center relative z-10">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Visit Our Jewelry Stores</h1>
-            <p className="text-xl text-yellow-100 mb-8 max-w-2xl mx-auto">
-              Experience authentic Arabic gold jewelry at our Terrytown and Houston locations. Expert craftsmanship awaits you.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2 bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                <FaGem className="text-yellow-300" />
-                <span>Authentic Gold Jewelry</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                <FaStar className="text-yellow-300" />
-                <span>40+ Years Experience</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                <FaMapMarkerAlt className="text-yellow-300" />
-                <span>Two Convenient Locations</span>
-              </div>
-            </div>
-          </div>
-        </section>
+{/* Hero Section */}
+<section
+  className="relative flex flex-col items-center justify-center text-center py-16 px-6 bg-gradient-to-b from-black/80 to-black/60 text-white overflow-hidden"
+>
+  <div
+    className="absolute inset-0 z-0"
+    style={{
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      filter: "brightness(0.4)",
+    }}
+  ></div>
+
+  <div className="relative z-10 max-w-4xl mx-auto">
+    <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-wide">
+      Visit Our Jewelry Stores
+    </h1>
+    <p className="text-lg md:text-xl text-amber-100 mb-8 leading-relaxed">
+      Discover timeless Arabic gold jewelry crafted with passion and
+      precision — at our Terrytown and Houston locations.
+    </p>
+
+    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
+        <FaGem className="text-yellow-300" />
+        <span className="text-sm font-medium">Authentic Gold Jewelry</span>
+      </div>
+      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
+        <FaStar className="text-yellow-300" />
+        <span className="text-sm font-medium">40+ Years Experience</span>
+      </div>
+      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
+        <FaMapMarkerAlt className="text-yellow-300" />
+        <span className="text-sm font-medium">Two Locations</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 
         {/* Main Store - Terrytown, LA */}
         <section className="py-16 px-4 md:px-8 max-w-7xl mx-auto">

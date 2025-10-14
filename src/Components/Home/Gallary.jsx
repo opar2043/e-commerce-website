@@ -1,92 +1,4 @@
-// import React from "react";
-// import img1 from "../../assets/gold1.webp";
-// import img2 from "../../assets/gold2.webp";
-// import img3 from "../../assets/gold3.webp";
-// import img4 from "../../assets/gold4.webp";
-// import img5 from "../../assets/gold5.webp";
-// import img6 from "../../assets/gold6.webp";
-// import Title from "../Shared/Title";
-// import { Link } from "react-router-dom";
 
-// const Gallery = () => {
-//   const goldItems = [
-//     {
-//       id: 1,
-//       src: img1,
-//       title: "Gold Bars",
-//       description: "24K pure gold investment bars",
-//     },
-//     {
-//       id: 2,
-//       src: img2,
-//       title: "Gold Coins",
-//       description: "Collectible limited edition coins",
-//     },
-//     {
-//       id: 3,
-//       src: img3,
-//       title: "Gold Jewelry",
-//       description: "Handcrafted golden accessories",
-//     },
-//     {
-//       id: 4,
-//       src: img4,
-//       title: "Gold Crown",
-//       description: "Royalty inspired designs",
-//     },
-//     {
-//       id: 5,
-//       src: img5,
-//       title: "Gold Ring",
-//       description: "Elegant wedding bands",
-//     },
-//     {
-//       id: 6,
-//       src: img6,
-//       title: "Gold Necklace",
-//       description: "Statement luxury pieces",
-//     },
-//   ];
-
-//   return (
-//     <div className="px-3 md:px-6 min-h-screen mt-10">
-//       <Title
-//         head={"Our Collection"}
-//         para={"Explore our exquisite collection of gold items"}
-//       ></Title>
-
-//       {/* Gallery Grid */}
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full ">
-//         {goldItems.slice(0, 3).map((item) => (
-//           <div
-//             key={item.id}
-//             className="group relative overflow-hidden aspect-square"
-//           >
-//             {/* Replace the gradient with your actual images */}
-//             <div
-//               className="h-full w-full absolute bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-//               style={{ backgroundImage: `url(${item.src})` }}
-//             ></div>
-
-//             {/* Hover overlay */}
-//             <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"></div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Centered Button */}
-//       <div className="flex justify-center items-center my-12">
-// <Link to={"/collection"}>
-//          <button className="px-8 py-3 border border-black text-black font-semibold text-lg hover:bg-black hover:text-white transition-all duration-300 ">
-//           VIEW COLLECTION
-//         </button>
-// </Link>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Gallery;
 
 import React, { useState, useEffect } from "react";
 import {
@@ -99,6 +11,13 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+import gold9 from "../../assets/gold9.jpg";
+import gold10 from "../../assets/gold10.jpg";
+import gold12 from "../../assets/gold12.jpg";
+import gold13  from "../../assets/gold13.jpg";
+import gold14 from "../../assets/gold14.jpg";
+import gold15 from "../../assets/gold16.jpg";
+
 const Gallery = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -107,7 +26,7 @@ const Gallery = () => {
   const goldItems = [
     {
       id: 1,
-      src: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold9,
       title: "22K Arabic Gold Necklaces",
       description:
         "Traditional Lebanese designs with authentic Arabic calligraphy",
@@ -118,7 +37,7 @@ const Gallery = () => {
     },
     {
       id: 2,
-      src: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold10,
       title: "Gold Investment Coins",
       description: "Collectible limited edition Middle Eastern gold coins",
       category: "Coins",
@@ -128,7 +47,7 @@ const Gallery = () => {
     },
     {
       id: 3,
-      src: "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold12,
       title: "Bridal Gold Jewelry Sets",
       description: "Complete bridal sets with traditional Arabic patterns",
       category: "Bridal Sets",
@@ -138,7 +57,7 @@ const Gallery = () => {
     },
     {
       id: 4,
-      src: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold13,
       title: "Islamic Calligraphy Rings",
       description: "Personalized rings with Quranic verses and Arabic names",
       category: "Rings",
@@ -148,7 +67,7 @@ const Gallery = () => {
     },
     {
       id: 5,
-      src: "https://images.unsplash.com/photo-1630019852942-f89202989a59?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold14,
       title: "Traditional Gold Bracelets",
       description: "Handcrafted Lebanese gold bracelets with intricate details",
       category: "Bracelets",
@@ -158,7 +77,7 @@ const Gallery = () => {
     },
     {
       id: 6,
-      src: "https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      src: gold15,
       title: "Damascus Pattern Pendants",
       description:
         "Sterling silver pendants with traditional Damascus patterns",

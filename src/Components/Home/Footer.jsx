@@ -17,6 +17,7 @@ import {
 } from 'react-icons/fa';
 import master from "../../assets/master-card.png"
 import visa from "../../assets/visa.png"
+import gold from "../../assets/gold15.jpg"
 const Footer = () => {
   const [emailSubscription, setEmailSubscription] = useState('');
   const [subscriptionStatus, setSubscriptionStatus] = useState('');
@@ -35,44 +36,13 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white">
       {/* Newsletter Section */}
-      {/* <div className="bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600 py-12">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <FaGem className="text-3xl text-white" />
-            <h3 className="text-2xl md:text-3xl font-bold text-white">Stay Connected with Tannous</h3>
-          </div>
-          <p className="text-amber-100 mb-6 max-w-2xl mx-auto">
-            Subscribe to receive exclusive offers, new collection updates, and jewelry care tips from our master craftsmen.
-          </p>
-          
-          <form onSubmit={handleSubscription} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              value={emailSubscription}
-              onChange={(e) => setEmailSubscription(e.target.value)}
-              placeholder="Enter your email address"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
-              required
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors font-semibold"
-            >
-              Subscribe
-            </button>
-          </form>
-          
-          {subscriptionStatus && (
-            <p className="mt-4 text-amber-100 font-medium">{subscriptionStatus}</p>
-          )}
-        </div>
-      </div> */}
+
 
       <div className="lg:grid lg:grid-cols-5">
         {/* Enhanced Image Section */}
         <div className="relative block h-64 lg:col-span-2 lg:h-full">
           <img
-            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            src= {gold} 
             alt="Tannous Jewelry Arabic Gold Collection"
             className="absolute inset-0 h-full w-full object-cover"
           />

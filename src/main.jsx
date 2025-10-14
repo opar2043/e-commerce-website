@@ -28,6 +28,7 @@ import Payment from "./Components/ProductCart/Payment";
 import Confirm from "./Components/ProductCart/Confirm";
 import CartSidebar from "./Components/Home/CartSidebar";
 import UserData from "./Components/Dashboard/Order/userData";
+import CategoryCard from "./Components/Product/CategoryCard";
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/collection",
         element: <AllProduct></AllProduct>,
+      },
+      {
+        path: "/collection/:metal",
+        element: <CategoryCard></CategoryCard>,
       },
       {
         path: "/about",

@@ -180,7 +180,7 @@ const Card = ({ product }) => {
 
   return (
     <Link to={`/product/${_id}`}>
-    <div className="group relative bg-white border-4 border-[#76614B] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ">
+    <div className="group relative bg-white border-4 border-[#C7A94D] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ">
 
         
         {/* Image Container */}
@@ -257,13 +257,6 @@ const Card = ({ product }) => {
               <span className="text-md font-medium">{weight}g</span>
             </div>
             
-            {/* Rating Stars */}
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <FaStar key={i} className="text-yellow-400 text-sm" />
-              ))}
-              <span className="text-xs text-gray-500 ml-1">(4.9)</span>
-            </div>
           </div>
 
           {/* Pricing */}

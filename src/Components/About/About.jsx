@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaGem, FaAward, FaUsers, FaHandHoldingHeart, FaShippingFast, FaHeadset, FaStar, FaQuoteLeft } from "react-icons/fa";
-// import { Link } from 'react-router-dom';
+import gold from "../../assets/gold3.jpg"
 
 const About = () => {
   const [isVisible, setIsVisible] = useState({});
@@ -144,7 +144,7 @@ const About = () => {
                 <div className="absolute -inset-4 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-2xl opacity-20 blur-lg"></div>
                 <div className="relative bg-white p-8 rounded-2xl shadow-2xl">
                   <img 
-                    src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    src= {gold} 
                     alt="Arabic Gold Jewelry Craftsmanship at Tannous Jewelry" 
                     className="rounded-xl shadow-lg w-full h-80 object-cover"
                   />

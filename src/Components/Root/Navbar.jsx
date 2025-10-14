@@ -6,6 +6,7 @@ import {
   FiMenu,
   FiX,
   FiLogOut,
+  FiChevronDown
 } from "react-icons/fi";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
@@ -20,6 +21,7 @@ const Navbar = () => {
   const { handleLogout, user, setIsCartSidebarOpen } = useAuth() || {};
   const [wish] = useWish([]);
   const [metal] = useMetal([]);
+  console.log(metal);
   const { admin } = useAdmin();
   const [cart] = useCart();
   const navigate = useNavigate();
@@ -42,14 +44,34 @@ const Navbar = () => {
   const navLinkStyle =
     "relative px-3 py-2 transition-all duration-300 hover:text-[#FEB564] before:content-[''] before:absolute before:w-0 hover:before:w-full before:h-[2px] before:bg-[#FEB564] before:bottom-0 before:left-0 before:rounded-full before:transition-all before:duration-300";
 
-  const NavLinks = (
+ const NavLinks = (
     <>
       <NavLink to="/" className={navLinkStyle}>
         Home
       </NavLink>
-      <NavLink to="/collection" className={navLinkStyle}>
-        Collection
-      </NavLink>
+
+      {/* Dropdown on hover for Collection */}
+      <div className="relative group ">
+        <NavLink to="/collection" className={navLinkStyle}>
+          Collection
+        </NavLink>
+        <div className="absolute left-0 top-full hidden group-hover:block bg-white shadow-lg rounded-md mt-1  z-50">
+          <ul className="py-2 px-4 text-gray-700 flex gap-3">
+{metal &&
+        metal.map((cat, index) => (
+          <li key={index}>
+            <NavLink
+              to={`/collection/${cat.metal}`}
+              className="block px-4 py-2 duration-150 text-black hover:bg-orange-100"
+            >
+              {cat.metal}
+            </NavLink>
+          </li>
+        ))}
+          </ul>
+        </div>
+      </div>
+
       <NavLink to="/about" className={navLinkStyle}>
         About
       </NavLink>
@@ -60,7 +82,7 @@ const Navbar = () => {
       {/* Wishlist */}
       <NavLink to="/wish" className="relative px-3 py-2 hover:text-[#FEB564]">
         <FaHeart />
-        <span className="absolute -top-2 -right-2 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 md:flex md:items-center justify-center shadow hidden">
+        <span className="absolute -top-2 -right-2 bg-amber-700 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow">
           {wish?.length || 0}
         </span>
       </NavLink>
@@ -73,6 +95,7 @@ const Navbar = () => {
       )}
     </>
   );
+
 
   return (
     <div className="fixed top-0 left-0 w-full z-50">

@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import useMetal from '../Hooks/useMetal';
 import useProducts from '../Hooks/useProducts';
 import Card from './Card';
-import backgroundImage from "../../assets/gold15.jpg"
+import backgroundImage from "../../assets/gold15.jpg";
 
-const AllProduct = () => {
+const CategoryCard = () => {
+  const { metal } = useParams();
   const [products] = useProducts();
-  const [metal] = useMetal();
-  
+  const [metalData] = useMetal();
+
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('all');
   const [priceRange, setPriceRange] = useState([0, 50000]);
   const [weightRange, setWeightRange] = useState([0, 2000]);
   const [sortOption, setSortOption] = useState('default');
@@ -20,9 +21,9 @@ const AllProduct = () => {
   const [showFeaturedOnly, setShowFeaturedOnly] = useState(false);
 
   // Get metal prices
-  const goldPrice = metal.find(m => m?.metal === 'Gold')?.price || 68.50;
-  const silverPrice = metal.find(m => m?.metal === 'Silver')?.price || 0.95;
-  const platinumPrice = metal.find(m => m?.metal === 'Platinum')?.price || 32.10;
+  const goldPrice = metalData.find(m => m?.metal === 'Gold')?.price || 68.50;
+  const silverPrice = metalData.find(m => m?.metal === 'Silver')?.price || 0.95;
+  const platinumPrice = metalData.find(m => m?.metal === 'Platinum')?.price || 32.10;
 
   // Calculate price for a product
   const calculatePrice = (product) => {
@@ -37,14 +38,16 @@ const AllProduct = () => {
     return product.weight * goldPrice;
   };
 
-  // Get unique categories
-  const categories = useMemo(() => {
-    return ['all', ...new Set(products.map(product => product.category))];
-  }, [products]);
+  // Filter products by category from URL parameter
+  const categoryProducts = useMemo(() => {
+    return products.filter(product => 
+      product.category?.toLowerCase() === metal?.toLowerCase()
+    );
+  }, [products, metal]);
 
-  // Enhanced filtering logic - THIS IS THE FIX
+  // Enhanced filtering logic
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = [...products]; // Make a copy
+    let filtered = [...categoryProducts]; // Start with category filtered products
 
     // Search filter
     if (searchTerm.trim()) {
@@ -53,11 +56,6 @@ const AllProduct = () => {
         product.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.shortDescription?.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    }
-
-    // Category filter
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(product => product.category === selectedCategory);
     }
 
     // Weight filter - only apply if range has been changed from default
@@ -113,7 +111,7 @@ const AllProduct = () => {
     }
 
     return filtered;
-  }, [products, searchTerm, selectedCategory, weightRange, priceRange, sortOption, showAvailableOnly, showFeaturedOnly, goldPrice, silverPrice, platinumPrice]);
+  }, [categoryProducts, searchTerm, weightRange, priceRange, sortOption, showAvailableOnly, showFeaturedOnly, goldPrice, silverPrice, platinumPrice]);
 
   // Update filtered products when dependencies change
   useEffect(() => {
@@ -121,7 +119,6 @@ const AllProduct = () => {
   }, [filteredAndSortedProducts]);
 
   const clearAllFilters = () => {
-    setSelectedCategory('all');
     setPriceRange([0, 50000]);
     setWeightRange([0, 2000]);
     setSortOption('default');
@@ -131,7 +128,6 @@ const AllProduct = () => {
   };
 
   const activeFiltersCount = [
-    selectedCategory !== 'all',
     priceRange[0] > 0 || priceRange[1] < 50000,
     weightRange[0] > 0 || weightRange[1] < 2000,
     searchTerm.trim(),
@@ -141,26 +137,23 @@ const AllProduct = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-      {/* Header Section */} 
-<div
-  className="relative py-16 bg-center bg-cover"
-  style={{ backgroundImage: `url(${backgroundImage})` }}
->
-  {/* Overlay for readability */}
-  <div className="absolute inset-0 bg-black/40"></div>
+      {/* Header Section */}
+      <div
+        className="relative py-16 bg-center bg-cover"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
 
-  <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
-    <div className="flex items-center justify-center gap-3 mb-4">
-     
-      <h1 className="text-4xl md:text-5xl font-bold">Our Jewelry Collection</h1>
-      
-    </div>
-    <p className="text-xl text-amber-100 max-w-2xl mx-auto">
-      Discover authentic Arabic gold and silver jewelry crafted with traditional techniques and modern elegance
-    </p>
-  </div>
-</div>
-
+        <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold capitalize">{metal} Jewelry</h1>
+          </div>
+          <p className="text-xl text-amber-100 max-w-2xl mx-auto">
+            Browse our exquisite collection of {metal} jewelry pieces
+          </p>
+        </div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Search and Controls Bar */}
@@ -173,7 +166,7 @@ const AllProduct = () => {
               </svg>
               <input
                 type="text"
-                placeholder="Search jewelry by name, category, or description..."
+                placeholder="Search jewelry by name or description..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"
@@ -296,32 +289,6 @@ const AllProduct = () => {
                 </div>
               </div>
 
-              {/* Category Filter */}
-              <div className="mb-6">
-                <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                  <span className="text-amber-600">🏷️</span>
-                  Category
-                </h3>
-                <div className="space-y-2 max-h-48 overflow-y-auto">
-                  {categories.map(category => (
-                    <label key={category} className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                      <input
-                        type="radio"
-                        name="category"
-                        value={category}
-                        checked={selectedCategory === category}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="w-4 h-4 text-amber-600 focus:ring-amber-500"
-                      />
-                      <span className="text-gray-700 capitalize">{category}</span>
-                      <span className="text-gray-400 text-sm ml-auto">
-                        ({products.filter(p => category === 'all' || p.category === category).length})
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
               {/* Price Range Filter */}
               <div className="mb-6">
                 <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
@@ -415,27 +382,17 @@ const AllProduct = () => {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
               <div>
                 <p className="text-gray-700 font-medium">
-                  Showing {filteredProducts.length} of {products.length} products
+                  Showing {filteredProducts.length} of {categoryProducts.length} products
                 </p>
                 <p className="text-gray-500 text-sm">
                   {searchTerm && `Results for "${searchTerm}"`}
-                  {selectedCategory !== 'all' && ` in ${selectedCategory}`}
+                  <span className="capitalize"> in {metal}</span>
                 </p>
               </div>
-              
+
               {/* Active Filters Display */}
               {activeFiltersCount > 0 && (
                 <div className="flex flex-wrap gap-2 mt-3 md:mt-0">
-                  {selectedCategory !== 'all' && (
-                    <span className="inline-flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm">
-                      {selectedCategory}
-                      <button onClick={() => setSelectedCategory('all')}>
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
-                    </span>
-                  )}
                   {showAvailableOnly && (
                     <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
                       Available Only
@@ -463,7 +420,7 @@ const AllProduct = () => {
             {/* Products Grid/List */}
             {filteredProducts.length > 0 ? (
               <div className={
-                viewMode === 'grid' 
+                viewMode === 'grid'
                   ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                   : "space-y-6"
               }>
@@ -477,7 +434,7 @@ const AllProduct = () => {
                 <span className="text-6xl text-gray-300 block mb-6">💎</span>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">No Products Found</h3>
                 <p className="text-gray-600 mb-8 max-w-md mx-auto">
-                  We couldn't find any products matching your criteria. Try adjusting your filters or search terms.
+                  We couldn't find any {metal} products matching your criteria. Try adjusting your filters or search terms.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
@@ -498,10 +455,8 @@ const AllProduct = () => {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 };
 
-export default AllProduct;
+export default CategoryCard;

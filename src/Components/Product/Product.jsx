@@ -7,6 +7,7 @@ import Loading from "../Shared/Loading";
 const Product = () => {
   // const [products, setProducts] = useState([]);
   const [products , isLoading , refetch] = useProducts([]);
+  console.log(products);
 
   if (isLoading) {
     return <Loading></Loading>
@@ -15,11 +16,6 @@ const Product = () => {
   return (
     <div className="py-10 bg-gray-50">
       {/* Section Title */}
-      {/* <Title
-        head={"Product"}
-        head2={"Details"}
-        para={"Explore the details of the selected product"}
-      /> */}
 
       {/* Product Grid */}
       <div className="max-w-7xl mx-auto grid gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">

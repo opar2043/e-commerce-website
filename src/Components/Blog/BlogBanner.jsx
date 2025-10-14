@@ -1,9 +1,9 @@
 import { FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
 import banner from "../../assets/blog.jpg";
-import blog1 from "../../assets/gold1.webp";
-import blog2 from "../../assets/footer.webp";
-import blog3 from "../../assets/gold3.webp";
-import blog4 from "../../assets/gold4.webp";
+import blog1 from "../../assets/gold1.jpg";
+import blog2 from "../../assets/gold2.jpg";
+import blog3 from "../../assets/gold3.jpg";
+import blog4 from "../../assets/gold4.jpg";
 import { Link } from "react-router-dom";
 
 const BlogBanner = () => {
@@ -23,10 +23,10 @@ const BlogBanner = () => {
       blog: "Selecting a gold necklace can be tricky, especially with so many designs and purity levels available. This guide helps you understand karats, weight, and styles so you can pick the perfect necklace that matches your personality and occasion.",
       writer: "Tannous Jewelry",
       image: blog2,
-    },
+  },
     {
       id: 3,
-      name: "Why Gold is the Best Investment in 2025",
+      name: "Why Gold is the Best Investment ",
       date: "2025-09-05",
       blog: "Beyond beauty, gold is one of the safest investments in the world. In 2025, with market uncertainty, gold continues to shine as a secure asset. We explain why buying gold jewelry or coins is a smart choice for your financial future.",
       writer: "Tannous Jewelry",
