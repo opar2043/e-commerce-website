@@ -7,6 +7,7 @@ import Product from '../Product/Product'
 import BlogBanner from '../Blog/BlogBanner'
 import Title from '../Shared/Title'
 
+
 const Home = () => {
   return (
     <div>
@@ -18,6 +19,7 @@ const Home = () => {
       <Gallary></Gallary>
       <Banner2></Banner2>
       <Policy></Policy>
+ 
     </div>
   )
 }

@@ -94,7 +94,7 @@ const BlogBanner = () => {
         />
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 text-center text-white p-8 max-w-md">
-          <h2 className="text-6xl font-serif mb-2 italic">Arrabic Style</h2>
+          <h2 className="text-6xl font-serif mb-2 italic">Arabic Style</h2>
           <p className="text-3xl font-light mb-8 italic">Antique Jewellery</p>
           <button className="">
             <Link

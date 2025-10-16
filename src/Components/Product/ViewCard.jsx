@@ -14,6 +14,7 @@ import useProducts from "../Hooks/useProducts";
 import { FaHeart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
 import useAxios from "../Hooks/useAxios";
+import ReactImageMagnify from "react-image-magnify";
 
 const ViewCard = () => {
   const { id } = useParams();
@@ -90,7 +91,6 @@ const ViewCard = () => {
       setQuantity((prev) => prev - 1);
     }
   };
-
 
   function handleAddToCart(e) {
     e.preventDefault();
@@ -217,36 +217,56 @@ const ViewCard = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Product Images */}
-          <div className="space-y-4">
-            {/* Main Image */}
-            <div className="relative overflow-hidden rounded-lg border-2 border-[#D99B55] p-2 bg-gray-50 aspect-square">
-              <img
-                src={product.images[selectedImage]}
-                alt={product.name}
-                className="w-full h-full object-contain transition-transform duration-500 hover:scale-105"
-              />
+          <div className="relative w-full flex flex-col gap-4">
+            <div className="relative border-2 border-[#D99B55] rounded-xl bg-white p-4 flex items-center justify-center">
+              <div className="w-full max-w-md mx-auto">
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: product.name,
+                      isFluidWidth: true,
+                      src: product.images[selectedImage],
+                    },
+                    largeImage: {
+                      src: product.images[selectedImage],
+                      width: 1200,
+                      height: 1200,
+                    },
+                    enlargedImageContainerDimensions: {
+                      width: "130%",
+                      height: "100%",
+                    },
+                    enlargedImageContainerStyle: {
+                      zIndex: 9999,
+                      background: "#fff",
+                      borderRadius: "10px",
+                    },
+                    isHintEnabled: true,
+                    lensStyle: { backgroundColor: "rgba(255,255,255,0.2)" },
+                  }}
+                />
+              </div>
+
+              {/* Favorite Button */}
               <button
-                onClick={toggleFavorite}
-                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors"
-                aria-label={
-                  isFavorite ? "Remove from favorites" : "Add to favorites"
-                }
+                onClick={() => setIsFavorite(!isFavorite)}
+                className="absolute top-5 right-5 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-all"
               >
                 {isFavorite ? (
-                  <RiHeartFill className="w-6 h-6 text-red-500" />
+                  <RiHeartFill className="text-red-500 w-6 h-6" />
                 ) : (
-                  <RiHeartLine className="w-6 h-6 text-gray-700" />
+                  <RiHeartLine className="text-gray-700 w-6 h-6" />
                 )}
               </button>
             </div>
 
-            {/* Thumbnail Images */}
-            <div className="grid grid-cols-4 gap-3">
+            {/* ✅ Thumbnails */}
+            <div className="flex justify-center gap-3 flex-wrap">
               {product.images.map((image, index) => (
                 <button
                   key={index}
-                  onClick={() => handleImageSelect(index)}
-                  className={`rounded-md border-2 overflow-hidden aspect-square p-1 transition-all ${
+                  onClick={() => setSelectedImage(index)}
+                  className={`border-2 rounded-md overflow-hidden w-20 h-20 p-1 transition-all ${
                     selectedImage === index
                       ? "border-[#D99B55] scale-105"
                       : "border-gray-200 hover:border-[#D99B55]"
@@ -254,8 +274,8 @@ const ViewCard = () => {
                 >
                   <img
                     src={image}
-                    alt={`${product.name} view ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    alt={`thumb-${index}`}
+                    className="w-full h-full object-cover rounded-md"
                   />
                 </button>
               ))}

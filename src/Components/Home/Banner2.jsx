@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Banner from "../../assets/banner5.jpg";
 import { FaGem } from "react-icons/fa";
-
+import ReactImageMagnify from "react-image-magnify";
+import img from "../../assets/gold2.jpg"
 const Banner2 = () => {
   const [loaded, setLoaded] = useState(false);
   
@@ -18,6 +19,8 @@ const Banner2 = () => {
   return (
     <div className="flex flex-col md:flex-row w-full min-h-[350px] overflow-hidden font-['Cormorant_Garamond'] my-6 md:mb-12">
       {/* Content Section */}
+
+
       <div 
         className="relative flex-1 bg-[#fca94b] p-8 md:p-12 flex flex-col justify-center items-start overflow-hidden min-h-[300px]"
         style={{
@@ -72,6 +75,9 @@ const Banner2 = () => {
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#FEB564]/30 to-transparent"></div>
       </div>
+
+
+
     </div>
   );
 };

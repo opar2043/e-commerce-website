@@ -16,7 +16,7 @@ const Root = () => {
       <Navbar />
 
       {/* 🔹 Add top padding so content clears the fixed navbar */}
-      <div className="pt-[70px]">
+      <div className="pt-[70px] ">
         {loading ? (
           <Loading />
         ) : (
