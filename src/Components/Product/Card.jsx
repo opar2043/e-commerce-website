@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import { 
   BsFillEyeFill, 
   BsHeart, 
@@ -14,6 +13,7 @@ import {
   FaTags 
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import useMetal from "../Hooks/useMetal";
 
 const Card = ({ product }) => {
   const { _id, name, images, weight, category, shortDescription, isAvailable } = product;
@@ -21,14 +21,13 @@ const Card = ({ product }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [metal] = useMetal(); 
 
-  // Mock metal prices - replace with your actual hook data
-  const metalPrices = {
-    gold: 68.50,
-    silver: 0.95,
-    platinum: 32.10,
-    diamond: 150.00
-  };
+  // Convert useMetal hook data to metalPrices object
+  const metalPrices = metal.reduce((acc, item) => {
+    acc[item.metal.toLowerCase()] = item.price;
+    return acc;
+  }, {});
 
   // Calculate price based on category and weight
   const calculatePrice = () => {
@@ -41,8 +40,8 @@ const Card = ({ product }) => {
       basePrice = weight * metalPrices.silver;
     } else if (categoryLower.includes('platinum')) {
       basePrice = weight * metalPrices.platinum;
-    } else if (categoryLower.includes('diamond')) {
-      basePrice = weight * metalPrices.diamond;
+    } else if (categoryLower.includes('coins')) {
+      basePrice = weight * metalPrices.coins;
     } else {
       basePrice = weight * metalPrices.gold; // Default to gold pricing
     }

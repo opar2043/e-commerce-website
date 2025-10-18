@@ -23,46 +23,47 @@ const ViewCard = () => {
   const [quantity, setQuantity] = useState(1);
   const { setCart, cart, setWish, wish, user, setIsCartSidebarOpen } =
     useAuth();
-  // const [cart] = useCart([]);
   const [price, setPrice] = useState(0);
   const [metal, isLoading] = useMetal([]);
   const [products] = useProducts([]);
   const [, , refetch] = useCart([]);
   const axiosSecure = useAxios();
+  
   // Find the product
   const product = products.find((p) => p._id === id);
-
-  const addToCart = () => {
-    setCart([...cart, product]);
-  };
 
   // Convert weight to number for calculations
   const productWeight = product ? parseFloat(product.weight) : 0;
 
-  // Safe access to metal prices
-  const goldRate = metal.find((m) => m?.metal === "Gold")?.price || 0;
-  const silverRate = metal.find((m) => m?.metal === "Silver")?.price || 0;
-  const platinumRate = metal.find((m) => m?.metal === "Platinum")?.price || 0;
-  const diamondRate = metal.find((m) => m?.metal === "Diamond")?.price || 0;
+  // Convert useMetal hook data to metalPrices object
+  const metalPrices = metal.reduce((acc, item) => {
+    acc[item.metal.toLowerCase()] = item.price;
+    return acc;
+  }, {});
 
-  // Calculate prices based on category
+  // Calculate prices based on category dynamically
   useEffect(() => {
     if (!product) return;
 
+    const categoryLower = product.category?.toLowerCase() || '';
     let calculatedPrice = 0;
 
-    if (product.category === "Gold") {
-      calculatedPrice = goldRate * productWeight;
-    } else if (product.category === "Silver") {
-      calculatedPrice = silverRate * productWeight;
-    } else if (product.category === "Platinum") {
-      calculatedPrice = platinumRate * productWeight;
-    } else if (product.category === "Diamond") {
-      calculatedPrice = diamondRate * productWeight;
+    if (categoryLower.includes('gold')) {
+      calculatedPrice = (metalPrices.gold || 0) * productWeight;
+    } else if (categoryLower.includes('silver')) {
+      calculatedPrice = (metalPrices.silver || 0) * productWeight;
+    } else if (categoryLower.includes('platinum')) {
+      calculatedPrice = (metalPrices.platinum || 0) * productWeight;
+    } else if (categoryLower.includes('coins')) {
+      calculatedPrice = (metalPrices.coins || 0) * productWeight;
+    } else if (categoryLower.includes('diamond')) {
+      calculatedPrice = (metalPrices.diamond || 0) * productWeight;
+    } else {
+      calculatedPrice = (metalPrices.gold || 0) * productWeight; // Default to gold
     }
 
     setPrice(calculatedPrice);
-  }, [product, goldRate, silverRate, platinumRate, diamondRate, productWeight]);
+  }, [product, metalPrices, productWeight]);
 
   const totalPrice = price * quantity;
 
@@ -92,6 +93,19 @@ const ViewCard = () => {
     }
   };
 
+  // Helper function to get price per gram
+  const getPricePerGram = () => {
+    const categoryLower = product.category?.toLowerCase() || '';
+    
+    if (categoryLower.includes('gold')) return metalPrices.gold || 0;
+    if (categoryLower.includes('silver')) return metalPrices.silver || 0;
+    if (categoryLower.includes('platinum')) return metalPrices.platinum || 0;
+    if (categoryLower.includes('coins')) return metalPrices.coins || 0;
+    if (categoryLower.includes('diamond')) return metalPrices.diamond || 0;
+    
+    return metalPrices.gold || 0; // Default
+  };
+
   function handleAddToCart(e) {
     e.preventDefault();
 
@@ -105,9 +119,6 @@ const ViewCard = () => {
       quantity: quantity,
     };
 
-    // Don't update local state here - let the backend be the source of truth
-    // setCart([...cart, productToAdd]); // Remove this line
-
     fetch("https://gold-web-server.vercel.app/cart", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -116,10 +127,7 @@ const ViewCard = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
-          // Refetch cart data from backend to sync with latest data
           refetch();
-
-          // Open the cart sidebar after successful addition
           setIsCartSidebarOpen(true);
 
           Swal.fire({
@@ -179,19 +187,6 @@ const ViewCard = () => {
           text: "Something went wrong while adding to wishlist!",
         });
       });
-  }
-
-  function handleCart(product) {
-    const productToWish = {
-      id: product._id,
-      name: product.name,
-      category: product.category,
-      image: product.images[0],
-      price: price.toFixed(2),
-      weight: product.weight,
-      size: product.size || "21 cm",
-      quantity: product.quantity,
-    };
   }
 
   return (
@@ -260,7 +255,7 @@ const ViewCard = () => {
               </button>
             </div>
 
-            {/* ✅ Thumbnails */}
+            {/* Thumbnails */}
             <div className="flex justify-center gap-3 flex-wrap">
               {product.images.map((image, index) => (
                 <button
@@ -324,10 +319,7 @@ const ViewCard = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700">Price per gram:</span>
                   <span className="font-semibold text-black/80">
-                    ${product.category === "Gold" && goldRate.toFixed(2)}
-                    {product.category === "Silver" && silverRate.toFixed(2)}
-                    {product.category === "Platinum" && platinumRate.toFixed(2)}
-                    {product.category === "Diamond" && diamondRate.toFixed(2)}
+                    ${getPricePerGram().toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center mt-2">
@@ -388,7 +380,6 @@ const ViewCard = () => {
               <div className="flex space-x-4">
                 <button
                   onClick={handleAddToCart}
-                  // onClick={addToCart }
                   className={`flex-1 font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center
     ${
       product.isAvailable
