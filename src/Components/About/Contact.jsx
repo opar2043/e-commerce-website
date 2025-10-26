@@ -42,6 +42,7 @@ const Contact = () => {
     { day: "Holidays", hours: "By Appointment" }
   ];
 
+  
   return (
     <>
       {/* SEO Meta Tags */}

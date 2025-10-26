@@ -98,6 +98,7 @@ const AddProduct = () => {
         icon: "success",
       });
       console.log("Saved Product:", data.data);
+       frm.reset();
     } catch (err) {
       console.error(err);
       Swal.fire({
@@ -105,6 +106,8 @@ const AddProduct = () => {
         icon: "error",
       });
     }
+
+   
   };
 
   return (

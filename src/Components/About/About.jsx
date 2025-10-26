@@ -74,9 +74,6 @@ const About = () => {
                 isVisible['hero-section'] ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
               }`}
             >
-              <h1 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-700 mb-6">
-                تنوس للمجوهرات
-              </h1>
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-800 mb-8">
                 Tannous Jewelry
               </h2>

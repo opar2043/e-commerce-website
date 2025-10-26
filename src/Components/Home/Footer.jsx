@@ -48,9 +48,7 @@ const Footer = () => {
 
           <div className="absolute inset-0 flex flex-col justify-center px-8">
             <div className="mb-6">
-              <h3 className="text-3xl font-serif font-bold text-white mb-2">
-                تنوس للمجوهرات
-              </h3>
+
               <h4 className="text-2xl font-serif font-light text-amber-400 mb-3">
                 Tannous Jewelry
               </h4>
