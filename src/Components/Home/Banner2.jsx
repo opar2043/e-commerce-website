@@ -15,7 +15,22 @@ const Banner2 = () => {
     console.log("Shop Now clicked!");
   };
 
-  // Animation variants
+  // Unified bottom-to-top animation variants
+  const bottomToTopVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 50 
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -23,55 +38,6 @@ const Banner2 = () => {
       transition: {
         staggerChildren: 0.15,
         delayChildren: 0.2,
-      },
-    },
-  };
-
-  const contentVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
-  const priceCircleVariants = {
-    hidden: { scale: 0, rotate: -180 },
-    visible: {
-      scale: 1,
-      rotate: 0,
-      transition: {
-        duration: 0.8,
-        ease: "backOut",
-        delay: 0.4,
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: 0.6,
-      },
-    },
-  };
-
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 1.1 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 1.2,
-        ease: [0.22, 1, 0.36, 1],
       },
     },
   };
@@ -101,11 +67,24 @@ const Banner2 = () => {
     },
   };
 
+  const imageVariants = {
+    hidden: { opacity: 0, scale: 1.1 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
   return (
     <motion.div
       className="flex flex-col md:flex-row w-full min-h-[350px] overflow-hidden font-['Cormorant_Garamond'] my-6 md:mb-12"
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
       variants={containerVariants}
     >
       {/* Content Section */}
@@ -165,74 +144,68 @@ const Banner2 = () => {
         <div className="relative z-10 w-full">
           {/* Content and price in a row */}
           <div className="flex flex-col md:flex-row justify-between items-start w-full mb-6">
-            <motion.div className="flex-1 max-w-md" variants={contentVariants}>
+            <div className="flex-1 max-w-md">
+              {/* Subtitle - Bottom to Top */}
               <motion.h2
                 className="text-lg md:text-xl font-medium text-amber-900 mb-4 italic"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               >
                 Looking For the Latest
               </motion.h2>
+
+              {/* Main Heading - Bottom to Top */}
               <motion.h3
                 className="text-xl md:text-4xl font-semibold text-gray-900 mb-2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
               >
                 Trending Collection
               </motion.h3>
+
+              {/* Description - Bottom to Top */}
               <motion.p
                 className="text-lg text-amber-950 mb-8 leading-relaxed"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
               >
                 Discover our exquisite summer jewelry collection, designed to add a touch of elegance to your warm-weather style. Handcrafted with precision and care.
               </motion.p>
-            </motion.div>
+            </div>
 
-            {/* Price Circle - positioned to the right on desktop */}
+            {/* Price Circle - Bottom to Top */}
             <motion.div
               className="flex flex-col items-center justify-center rounded-full bg-[#181818] text-white p-4 w-24 h-24 md:w-28 md:h-28 md:ml-6"
-              variants={priceCircleVariants}
+              initial={{ opacity: 0, y: 50, scale: 0.8 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
               whileHover={{ 
                 scale: 1.1,
                 rotate: 5,
                 transition: { duration: 0.3 },
               }}
             >
-              <motion.div
-                initial={{ scale: 0, rotate: -180 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                <FaGem className="text-amber-300 mb-1 text-sm md:text-base" />
-              </motion.div>
-              <motion.p
-                className="text-xs md:text-sm"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7 }}
-              >
-                Start From
-              </motion.p>
-              <motion.p
-                className="text-xl md:text-2xl font-bold"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-              >
-                $200
-              </motion.p>
+              <FaGem className="text-amber-300 mb-1 text-sm md:text-base" />
+              <p className="text-xs md:text-sm">Start From</p>
+              <p className="text-xl md:text-2xl font-bold">$200</p>
             </motion.div>
           </div>
           
-          {/* Button positioned below the content */}
+          {/* Button - Bottom to Top */}
           <motion.button
             onClick={handleShopNow}
             className="px-6 py-2 border border-slate-950 text-slate-950 font-semibold hover:bg-white hover:text-black transition-all duration-300"
-            variants={buttonVariants}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
             whileHover={{ 
               scale: 1.05,
               borderWidth: "2px",

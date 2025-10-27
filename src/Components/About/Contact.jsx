@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaAddressBook, FaPhone, FaTelegram, FaClock, FaMapMarkerAlt, FaWhatsapp, FaInstagram, FaFacebook, FaStar, FaGem } from "react-icons/fa";
 import backgroundImage from "../../assets/gold3.jpg"
+import { motion } from "framer-motion";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -55,43 +56,96 @@ const Contact = () => {
         {/* Hero Section */}
 {/* Hero Section */}
 <section
-  className="relative flex flex-col items-center justify-center text-center py-16 px-6 bg-gradient-to-b from-black/80 to-black/60 text-white overflow-hidden"
->
-  <div
-    className="absolute inset-0 z-0"
-    style={{
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      filter: "brightness(0.4)",
-    }}
-  ></div>
+      className="relative flex flex-col items-center justify-center text-center py-16 px-6 bg-gradient-to-b from-black/80 to-black/60 text-white overflow-hidden"
+    >
+      {/* Background Image */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "brightness(0.4)",
+        }}
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
 
-  <div className="relative z-10 max-w-4xl mx-auto">
-    <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-wide">
-      Visit Our Jewelry Stores
-    </h1>
-    <p className="text-lg md:text-xl text-amber-100 mb-8 leading-relaxed">
-      Discover timeless Arabic gold jewelry crafted with passion and
-      precision — at our Terrytown and Houston locations.
-    </p>
+      <div className="relative z-10 max-w-4xl mx-auto">
+        {/* Main Heading - Bottom to Top */}
+        <motion.h1
+          className="text-4xl md:text-6xl font-bold mb-4 tracking-wide"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        >
+          Visit Our Jewelry Stores
+        </motion.h1>
 
-    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
-        <FaGem className="text-yellow-300" />
-        <span className="text-sm font-medium">Authentic Gold Jewelry</span>
+        {/* Description - Bottom to Top */}
+        <motion.p
+          className="text-lg md:text-xl text-amber-100 mb-8 leading-relaxed"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+        >
+          Discover timeless Arabic gold jewelry crafted with passion and
+          precision — at our Terrytown and Houston locations.
+        </motion.p>
+
+        {/* Feature Badges - Bottom to Top with Stagger */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-4 md:gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.5,
+              },
+            },
+          }}
+        >
+          {[
+            { icon: <FaGem className="text-yellow-300" />, text: "Authentic Gold Jewelry" },
+            { icon: <FaStar className="text-yellow-300" />, text: "40+ Years Experience" },
+            { icon: <FaMapMarkerAlt className="text-yellow-300" />, text: "Two Locations" }
+          ].map((badge, index) => (
+            <motion.div
+              key={index}
+              className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.5,
+                    ease: "easeOut",
+                  },
+                },
+              }}
+              whileHover={{ 
+                scale: 1.05,
+                backgroundColor: "rgba(255, 255, 255, 0.25)",
+                transition: { duration: 0.1 }
+              }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {badge.icon}
+              <span className="text-sm font-medium">{badge.text}</span>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
-        <FaStar className="text-yellow-300" />
-        <span className="text-sm font-medium">40+ Years Experience</span>
-      </div>
-      <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full shadow-sm hover:bg-white/20 transition">
-        <FaMapMarkerAlt className="text-yellow-300" />
-        <span className="text-sm font-medium">Two Locations</span>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 
         {/* Main Store - Terrytown, LA */}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   FaPhone, 
   FaClock, 
@@ -15,9 +16,9 @@ import {
   FaChevronRight,
   FaHeart
 } from 'react-icons/fa';
-import master from "../../assets/master-card.png"
-import visa from "../../assets/visa.png"
-import gold from "../../assets/gold15.jpg"
+import master from "../../assets/master-card.png";
+import visa from "../../assets/visa.png";
+import gold from "../../assets/gold15.jpg";
 
 const Footer = () => {
   const [emailSubscription, setEmailSubscription] = useState('');
@@ -34,6 +35,44 @@ const Footer = () => {
 
   const currentYear = new Date().getFullYear();
 
+  // Bottom-to-top animation variants
+  const bottomToTopVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: 30 
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-b from-gray-900 to-black text-white">
       <div className="lg:grid lg:grid-cols-5">
@@ -48,17 +87,38 @@ const Footer = () => {
 
           <div className="absolute inset-0 flex flex-col justify-center px-8">
             <div className="mb-6">
-
-              <h4 className="text-2xl font-serif font-light text-amber-400 mb-3">
+              {/* Brand Title - Bottom to Top */}
+              <motion.h4
+                className="text-2xl font-serif font-light text-amber-400 mb-3"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
                 Tannous Jewelry
-              </h4>
-              <p className="text-amber-200 text-lg leading-relaxed">
+              </motion.h4>
+
+              {/* Description - Bottom to Top */}
+              <motion.p
+                className="text-amber-200 text-lg leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+              >
                 Authentic Arabic Gold Jewelry<br />
                 Crafting Excellence Since 1985
-              </p>
+              </motion.p>
             </div>
 
-            <div className="flex gap-4">
+            {/* Badges - Bottom to Top */}
+            <motion.div
+              className="flex gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            >
               <div className="flex items-center gap-2 bg-black bg-opacity-50 px-3 py-2 rounded-lg">
                 <FaCertificate className="text-amber-400" />
                 <span className="text-xs text-white">Certified Gold</span>
@@ -67,7 +127,7 @@ const Footer = () => {
                 <FaShieldAlt className="text-amber-400" />
                 <span className="text-xs text-white">Authentic</span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -76,13 +136,26 @@ const Footer = () => {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             
             {/* Contact Info */}
-            <div>
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-amber-400">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={containerVariants}
+            >
+              {/* Heading - Bottom to Top */}
+              <motion.h3
+                className="text-xl font-bold mb-6 flex items-center gap-2 text-amber-400"
+                variants={itemVariants}
+              >
                 <FaPhone />
                 <span>Contact Us</span>
-              </h3>
+              </motion.h3>
               
-              <div className="mb-6 p-4 bg-gray-800 rounded-lg">
+              {/* Store Info Box - Bottom to Top */}
+              <motion.div
+                className="mb-6 p-4 bg-gray-800 rounded-lg"
+                variants={itemVariants}
+              >
                 <h4 className="font-semibold text-amber-300 mb-3">Main Store - Terrytown, LA</h4>
                 <div className="space-y-2 text-sm text-gray-300">
                   <div className="flex items-center gap-2">
@@ -94,9 +167,13 @@ const Footer = () => {
                     <span>1180 Terry Pkwy Suite A<br />Terrytown, LA 70056</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="space-y-2 text-sm text-gray-300">
+              {/* Business Hours - Bottom to Top */}
+              <motion.div
+                className="space-y-2 text-sm text-gray-300"
+                variants={itemVariants}
+              >
                 <div className="flex items-center gap-2">
                   <FaClock className="text-amber-400" />
                   <span className="font-medium">Business Hours:</span>
@@ -115,12 +192,24 @@ const Footer = () => {
                     <span>12:00 PM - 5:00 PM</span>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Services */}
-            <div>
-              <h3 className="text-xl font-bold mb-6 text-amber-400">Our Services</h3>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={containerVariants}
+            >
+              {/* Heading - Bottom to Top */}
+              <motion.h3
+                className="text-xl font-bold mb-6 text-amber-400"
+                variants={itemVariants}
+              >
+                Our Services
+              </motion.h3>
+              
               <ul className="space-y-3 text-sm text-gray-300">
                 {[
                   "Custom Arabic Jewelry Design",
@@ -130,17 +219,33 @@ const Footer = () => {
                   "Wedding Jewelry Sets",
                   "Investment Gold Consultation"
                 ].map((service, i) => (
-                  <li key={i} className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer">
+                  <motion.li
+                    key={i}
+                    className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer"
+                    variants={itemVariants}
+                  >
                     <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
                     {service}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
 
             {/* About & Socials */}
-            <div>
-              <h3 className="text-xl font-bold mb-6 text-amber-400">About Tannous</h3>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={containerVariants}
+            >
+              {/* Heading - Bottom to Top */}
+              <motion.h3
+                className="text-xl font-bold mb-6 text-amber-400"
+                variants={itemVariants}
+              >
+                About Tannous
+              </motion.h3>
+              
               <ul className="space-y-3 text-sm text-gray-300 mb-8">
                 {[
                   "Our Story & Heritage",
@@ -149,51 +254,77 @@ const Footer = () => {
                   "Customer Reviews",
                   "Jewelry Care Guide"
                 ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer">
+                  <motion.li
+                    key={i}
+                    className="flex items-center gap-2 transition hover:text-amber-400 group cursor-pointer"
+                    variants={itemVariants}
+                  >
                     <FaChevronRight className="text-xs group-hover:translate-x-1 transition-transform" />
                     {item}
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
 
               <div>
-                <h4 className="text-lg font-semibold mb-4 text-amber-400">Follow Our Journey</h4>
-                <div className="flex gap-4 mb-6">
+                {/* Social Heading - Bottom to Top */}
+                <motion.h4
+                  className="text-lg font-semibold mb-4 text-amber-400"
+                  variants={itemVariants}
+                >
+                  Follow Our Journey
+                </motion.h4>
+                
+                {/* Social Icons - Bottom to Top */}
+                <motion.div
+                  className="flex gap-4 mb-6"
+                  variants={itemVariants}
+                >
                   {[
                     { icon: <FaFacebookF />, color: "from-amber-500 to-amber-600" },
                     { icon: <FaInstagram />, color: "from-pink-500 to-purple-600" },
                     { icon: <FaWhatsapp />, color: "from-green-500 to-green-600" },
                     { icon: <FaTwitter />, color: "from-blue-500 to-blue-600" }
                   ].map((social, i) => (
-                    <div
+                    <motion.div
                       key={i}
                       className={`flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br ${social.color} text-white transition-all hover:scale-110 hover:shadow-lg group cursor-pointer`}
+                      whileHover={{ scale: 1.15, rotate: 5 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <span className="text-lg group-hover:scale-110 transition-transform">{social.icon}</span>
-                    </div>
+                      <span className="text-lg">{social.icon}</span>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
 
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm">
-                    <FaAward className="text-amber-400" />
-                    <span className="text-gray-300">40+ Years of Excellence</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <FaCertificate className="text-amber-400" />
-                    <span className="text-gray-300">Certified Gold Dealer</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <FaShieldAlt className="text-amber-400" />
-                    <span className="text-gray-300">Lifetime Authenticity Guarantee</span>
-                  </div>
-                </div>
+                {/* Trust Badges - Bottom to Top */}
+                <motion.div className="space-y-3">
+                  {[
+                    { icon: <FaAward />, text: "40+ Years of Excellence" },
+                    { icon: <FaCertificate />, text: "Certified Gold Dealer" },
+                    { icon: <FaShieldAlt />, text: "Lifetime Authenticity Guarantee" }
+                  ].map((badge, i) => (
+                    <motion.div
+                      key={i}
+                      className="flex items-center gap-3 text-sm"
+                      variants={itemVariants}
+                    >
+                      <span className="text-amber-400">{badge.icon}</span>
+                      <span className="text-gray-300">{badge.text}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-12 pt-8 border-t border-gray-700">
+          <motion.div
+            className="mt-12 pt-8 border-t border-gray-700"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="text-center lg:text-left">
                 <p className="text-sm text-gray-400 mb-2">
@@ -212,12 +343,18 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Bottom Contact Bar */}
-      <div className="bg-black py-4">
+      <motion.div
+        className="bg-black py-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-4 text-sm text-gray-400">
@@ -240,7 +377,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </footer>
   );
 };

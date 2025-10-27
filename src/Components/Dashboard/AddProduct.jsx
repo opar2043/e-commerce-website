@@ -3,7 +3,7 @@ import { RiAddLine, RiCloseLine } from "react-icons/ri";
 import useAxios from "../Hooks/useAxios";
 import Swal from "sweetalert2";
 
-const img_hosting = "f00f7709983a82bfc1ca5153ef794386";
+const img_hosting =   `${import.meta.env.VITE_IMG}`;
 const img_api_key = `https://api.imgbb.com/1/upload?key=${img_hosting}`;
 
 const AddProduct = () => {

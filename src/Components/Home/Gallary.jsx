@@ -191,42 +191,67 @@ const Gallery = () => {
   return (
     <div className="px-4 md:px-8 min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Enhanced Title Section */}
-      <motion.div
-        className="text-center mb-16 max-w-4xl mx-auto"
-        initial="hidden"
-        animate="visible"
-        variants={headerVariants}
-      >
-        <div className="flex items-center justify-center gap-3 my-6">
-          <motion.div variants={gemVariants}>
-            <FaGem className="text-3xl text-amber-600" />
-          </motion.div>
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold text-gray-800"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Our Exquisite Collection
-          </motion.h2>
-          <motion.div variants={gemVariants}>
-            <FaGem className="text-3xl text-amber-500" />
-          </motion.div>
-        </div>
+<motion.div
+      className="text-center mb-16 max-w-4xl mx-auto"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={headerVariants}
+    >
+      <div className="flex items-center justify-center gap-3 my-6">
+        {/* Left Gem Icon - Bottom to Top */}
         <motion.div
-          className="w-24 h-1 bg-gradient-to-r from-[#ffb056] via-[#f59426] to-[#ffb157] mx-auto mb-6"
-          variants={lineVariants}
-        />
-        <motion.p
-          className="text-xl text-gray-600 leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={{ opacity: 0, y: 50, rotate: -180 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
         >
-          Discover authentic Arabic gold jewelry crafted with 40+ years of expertise. Each piece
-          reflects our commitment to traditional Middle Eastern artistry and modern elegance.
-        </motion.p>
-      </motion.div>
+          <FaGem className="text-3xl text-amber-600" />
+        </motion.div>
+
+        {/* Heading - Bottom to Top */}
+        <motion.h2
+          className="text-4xl md:text-5xl font-bold text-gray-800"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
+          Our Exquisite Collection
+        </motion.h2>
+
+        {/* Right Gem Icon - Bottom to Top */}
+        <motion.div
+          initial={{ opacity: 0, y: 50, rotate: 180 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+        >
+          <FaGem className="text-3xl text-amber-500" />
+        </motion.div>
+      </div>
+
+      {/* Decorative Line - Bottom to Top with scale */}
+      <motion.div
+        className="w-24 h-1 bg-gradient-to-r from-[#ffb056] via-[#f59426] to-[#ffb157] mx-auto mb-6"
+        initial={{ opacity: 0, scaleX: 0, y: 30 }}
+        whileInView={{ opacity: 1, scaleX: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+      />
+
+      {/* Description - Bottom to Top */}
+      <motion.p
+        className="text-xl text-gray-600 leading-relaxed"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+      >
+        Discover authentic Arabic gold jewelry crafted with 40+ years of expertise. Each piece
+        reflects our commitment to traditional Middle Eastern artistry and modern elegance.
+      </motion.p>
+    </motion.div>
 
       {/* Featured Carousel */}
       <motion.div

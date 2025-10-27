@@ -15,7 +15,8 @@ import { FaHeart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
 import useAxios from "../Hooks/useAxios";
 import ReactImageMagnify from "react-image-magnify";
-
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 const ViewCard = () => {
   const { id } = useParams();
   const [selectedImage, setSelectedImage] = useState(0);
@@ -28,7 +29,7 @@ const ViewCard = () => {
   const [products] = useProducts([]);
   const [, , refetch] = useCart([]);
   const axiosSecure = useAxios();
-  
+
   // Find the product
   const product = products.find((p) => p._id === id);
 
@@ -45,18 +46,18 @@ const ViewCard = () => {
   useEffect(() => {
     if (!product) return;
 
-    const categoryLower = product.category?.toLowerCase() || '';
+    const categoryLower = product.category?.toLowerCase() || "";
     let calculatedPrice = 0;
 
-    if (categoryLower.includes('gold')) {
+    if (categoryLower.includes("gold")) {
       calculatedPrice = (metalPrices.gold || 0) * productWeight;
-    } else if (categoryLower.includes('silver')) {
+    } else if (categoryLower.includes("silver")) {
       calculatedPrice = (metalPrices.silver || 0) * productWeight;
-    } else if (categoryLower.includes('platinum')) {
+    } else if (categoryLower.includes("platinum")) {
       calculatedPrice = (metalPrices.platinum || 0) * productWeight;
-    } else if (categoryLower.includes('coins')) {
+    } else if (categoryLower.includes("coins")) {
       calculatedPrice = (metalPrices.coins || 0) * productWeight;
-    } else if (categoryLower.includes('diamond')) {
+    } else if (categoryLower.includes("diamond")) {
       calculatedPrice = (metalPrices.diamond || 0) * productWeight;
     } else {
       calculatedPrice = (metalPrices.gold || 0) * productWeight; // Default to gold
@@ -95,14 +96,14 @@ const ViewCard = () => {
 
   // Helper function to get price per gram
   const getPricePerGram = () => {
-    const categoryLower = product.category?.toLowerCase() || '';
-    
-    if (categoryLower.includes('gold')) return metalPrices.gold || 0;
-    if (categoryLower.includes('silver')) return metalPrices.silver || 0;
-    if (categoryLower.includes('platinum')) return metalPrices.platinum || 0;
-    if (categoryLower.includes('coins')) return metalPrices.coins || 0;
-    if (categoryLower.includes('diamond')) return metalPrices.diamond || 0;
-    
+    const categoryLower = product.category?.toLowerCase() || "";
+
+    if (categoryLower.includes("gold")) return metalPrices.gold || 0;
+    if (categoryLower.includes("silver")) return metalPrices.silver || 0;
+    if (categoryLower.includes("platinum")) return metalPrices.platinum || 0;
+    if (categoryLower.includes("coins")) return metalPrices.coins || 0;
+    if (categoryLower.includes("diamond")) return metalPrices.diamond || 0;
+
     return metalPrices.gold || 0; // Default
   };
 
@@ -130,12 +131,17 @@ const ViewCard = () => {
           refetch();
           setIsCartSidebarOpen(true);
 
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Added to Your Cart",
-            showConfirmButton: false,
-            timer: 1500,
+          // Swal.fire({
+          //   position: "top-end",
+          //   icon: "success",
+          //   title: "Added to Your Cart",
+          //   showConfirmButton: false,
+          //   timer: 1500,
+          // });
+
+          toast.success("🛒 Added to cart!", {
+            position: "top-center",
+            duration: 2000,
           });
         }
       })
@@ -170,12 +176,17 @@ const ViewCard = () => {
       .then((data) => {
         if (data.insertedId) {
           setWish((prev) => [...prev, productToWish]);
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Added to Wishlist!",
-            showConfirmButton: false,
-            timer: 1500,
+          // Swal.fire({
+          //   position: "top-end",
+          //   icon: "success",
+          //   title: "Added to Wishlist!",
+          //   showConfirmButton: false,
+          //   timer: 1500,
+          // });
+
+          toast.success("❤ Added to Wish List!", {
+            position: "top-center",
+            duration: 2000,
           });
         }
       })
@@ -280,9 +291,15 @@ const ViewCard = () => {
           {/* Product Details */}
           <div className="space-y-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <motion.h1
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                className="text-3xl font-bold text-gray-900 mb-2"
+              >
                 {product.name}
-              </h1>
+              </motion.h1>
               <p className="text-gray-700">{product.shortDescription}</p>
             </div>
 
@@ -298,52 +315,120 @@ const ViewCard = () => {
             </div>
 
             {/* Product Weight and Price */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.17, ease: "easeOut" }}
+            >
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 Product Details
               </h3>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="flex justify-between items-center mb-2">
+
+              <motion.div
+                className="bg-gray-50 p-4 rounded-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              >
+                {/* Size */}
+                <motion.div
+                  className="flex justify-between items-center mb-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                >
                   <span className="text-gray-700">Size:</span>
                   <span className="font-semibold text-black/80">
                     {product.size || "21 cm"}
                   </span>
-                </div>
-                <div className="flex justify-between items-center mb-2">
+                </motion.div>
+
+                {/* Weight */}
+                <motion.div
+                  className="flex justify-between items-center mb-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4, ease: "easeOut" }}
+                >
                   <span className="text-gray-700">Weight:</span>
                   <span className="font-semibold text-black/80">
                     {product.weight}g
                   </span>
-                </div>
+                </motion.div>
 
-                <div className="flex justify-between items-center">
+                {/* Price per gram */}
+                <motion.div
+                  className="flex justify-between items-center"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+                >
                   <span className="text-gray-700">Price per gram:</span>
                   <span className="font-semibold text-black/80">
                     ${getPricePerGram().toFixed(2)}
                   </span>
-                </div>
-                <div className="flex justify-between items-center mt-2">
+                </motion.div>
+
+                {/* Total Price */}
+                <motion.div
+                  className="flex justify-between items-center mt-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+                >
                   <span className="text-gray-700">Total Price:</span>
                   <span className="text-lg font-bold text-[#D99B55]">
                     ${price.toFixed(2)}
                   </span>
-                </div>
-                <div className="mt-2 text-sm text-gray-500">
+                </motion.div>
+
+                {/* Price Note */}
+                <motion.div
+                  className="mt-2 text-sm text-gray-500"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
+                >
                   Price calculated based on current{" "}
                   {product.category.toLowerCase()} rate
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
 
-            {/* Description */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            {/* Description Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            >
+              <motion.h3
+                className="text-lg font-semibold text-gray-900 mb-3"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
+              >
                 Description
-              </h3>
-              <p className="text-gray-700 leading-relaxed">
+              </motion.h3>
+
+              <motion.p
+                className="text-gray-700 leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+              >
                 {product.description}
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
 
             {/* Add to Cart */}
             <div className="pt-4 border-t border-gray-200">

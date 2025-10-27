@@ -1,7 +1,4 @@
 
-
-
-
 import { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../Firebase/AuthProvider";
 const CartSidebar = () => {

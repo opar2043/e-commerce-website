@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { 
   FaShieldAlt, 
   FaCreditCard, 
@@ -12,25 +13,6 @@ import {
 
 const Policy = () => {
   const [activePolicy, setActivePolicy] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const section = document.getElementById('policy-section');
-    if (section) {
-      observer.observe(section);
-    }
-
-    return () => observer.disconnect();
-  }, []);
 
   const policies = [
     {
@@ -102,11 +84,64 @@ const Policy = () => {
     }
   ];
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const headerVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const statsVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div id="policy-section" className="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <div className="py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Enhanced Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerVariants}
+          className="text-center mb-16"
+        >
           <div className="flex items-center justify-center gap-3 mb-4">
             <FaShieldAlt className="text-3xl text-amber-600" />
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800">Our Commitment</h2>
@@ -116,26 +151,36 @@ const Policy = () => {
             Your satisfaction and security are our top priorities. We've built our reputation on trust, 
             quality, and exceptional customer service for over four decades.
           </p>
-        </div>
+        </motion.div>
 
         {/* Main Policies Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+        >
           {policies.map((policy, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-gray-100 ${policy.hoverColor} transform hover:scale-105 cursor-pointer ${
-                isVisible ? 'animate-fade-in-up' : 'opacity-0'
-              }`}
-              style={{ animationDelay: `${index * 150}ms` }}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05, y: -5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className={`group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border-2 border-gray-100 ${policy.hoverColor} cursor-pointer`}
               onMouseEnter={() => setActivePolicy(index)}
             >
               {/* Icon Section */}
-              <div className={`relative mb-6 ${policy.bgColor} rounded-2xl p-4 w-20 h-20 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300`}>
+              <motion.div
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
+                className={`relative mb-6 ${policy.bgColor} rounded-2xl p-4 w-20 h-20 flex items-center justify-center mx-auto`}
+              >
                 <policy.icon className={`text-3xl ${policy.textColor}`} />
                 <div className="absolute inset-0 bg-gradient-to-br opacity-20 rounded-2xl" style={{
                   background: `linear-gradient(135deg, ${policy.color.split(' ')[1]}, ${policy.color.split(' ')[3]})`
                 }}></div>
-              </div>
+              </motion.div>
 
               {/* Content */}
               <div className="text-center">
@@ -146,22 +191,34 @@ const Policy = () => {
                 {/* Features List */}
                 <div className="space-y-2">
                   {policy.features.map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center gap-2 text-sm text-gray-700">
+                    <motion.div
+                      key={featureIndex}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: featureIndex * 0.1 }}
+                      className="flex items-center gap-2 text-sm text-gray-700"
+                    >
                       <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${policy.color}`}></div>
                       <span>{feature}</span>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Hover Effect Overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br ${policy.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity duration-300`}></div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Additional Guarantees Section */}
-        <div className="bg-[#f89c33] rounded-3xl p-12 text-white relative overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+          className="bg-[#f89c33] rounded-3xl p-12 text-white relative overflow-hidden"
+        >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="w-full h-full" style={{
@@ -171,29 +228,56 @@ const Policy = () => {
           </div>
 
           <div className="relative z-10">
-            <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 The Tannous Promise
               </h3>
               <p className="text-xl text-amber-100 max-w-3xl mx-auto">
                 Four decades of trust, authenticity, and craftsmanship excellence
               </p>
-            </div>
+            </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={containerVariants}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            >
               {guarantees.map((guarantee, index) => (
-                <div key={index} className="text-center group">
-                  <div className="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05 }}
+                  className="text-center group"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-white bg-opacity-20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+                  >
                     <guarantee.icon className="text-2xl text-white" />
-                  </div>
+                  </motion.div>
                   <h4 className="text-lg font-bold text-white mb-2">{guarantee.title}</h4>
                   <p className="text-amber-100 text-sm leading-relaxed">{guarantee.description}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* CTA Section */}
-            <div className="text-center mt-12 pt-8 border-t border-white border-opacity-20">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-center mt-12 pt-8 border-t border-white border-opacity-20"
+            >
               <h4 className="text-2xl font-bold text-white mb-4">
                 Questions About Our Policies?
               </h4>
@@ -201,53 +285,53 @@ const Policy = () => {
                 Our customer service team is here to help with any questions or concerns.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/contact" className="px-6 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-amber-100 transition-colors">
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="/contact"
+                  className="px-6 py-3 bg-white text-amber-600 font-semibold rounded-lg hover:bg-amber-100 transition-colors"
+                >
                   Contact Us
-                </a>
-                <a href="tel:+15042521732" className="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-amber-600 transition-colors">
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="tel:+15042521732"
+                  className="px-6 py-3 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-amber-600 transition-colors"
+                >
                   Call (504) 252-1732
-                </a>
+                </motion.a>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Trust Indicators */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div className="group">
-            <div className="text-3xl md:text-4xl font-bold text-amber-600 mb-2 group-hover:scale-110 transition-transform">40+</div>
-            <div className="text-gray-600 font-medium">Years in Business</div>
-          </div>
-          <div className="group">
-            <div className="text-3xl md:text-4xl font-bold text-amber-600 mb-2 group-hover:scale-110 transition-transform">1000+</div>
-            <div className="text-gray-600 font-medium">Happy Customers</div>
-          </div>
-          <div className="group">
-            <div className="text-3xl md:text-4xl font-bold text-amber-600 mb-2 group-hover:scale-110 transition-transform">100%</div>
-            <div className="text-gray-600 font-medium">Authentic Gold</div>
-          </div>
-          <div className="group">
-            <div className="text-3xl md:text-4xl font-bold text-amber-600 mb-2 group-hover:scale-110 transition-transform">24/7</div>
-            <div className="text-gray-600 font-medium">Customer Support</div>
-          </div>
-        </div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
+        >
+          {[
+            { value: "40+", label: "Years in Business" },
+            { value: "1000+", label: "Happy Customers" },
+            { value: "100%", label: "Authentic Gold" },
+            { value: "24/7", label: "Customer Support" }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              variants={statsVariants}
+              whileHover={{ scale: 1.1 }}
+              className="group"
+            >
+              <div className="text-3xl md:text-4xl font-bold text-amber-600 mb-2">{stat.value}</div>
+              <div className="text-gray-600 font-medium">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
-        }
-      `}</style>
     </div>
   );
 };

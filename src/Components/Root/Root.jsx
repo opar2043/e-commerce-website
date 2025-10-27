@@ -7,6 +7,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import CartSidebar from '../Home/CartSidebar'
 import Cart2 from '../ProductCart/Cart2'
 import ScrollToTop from '../Home/ScrollToTop'
+import { Toaster } from 'react-hot-toast'
 
 const Root = () => {
   const [loading, setLoading] = useState(false) // default false
@@ -38,7 +39,10 @@ const Root = () => {
           </button>
         </div>
       </div>
-
+<Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
       <Footer />
     </div>
   )

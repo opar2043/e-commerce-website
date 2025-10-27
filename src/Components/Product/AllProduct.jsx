@@ -3,7 +3,7 @@ import useMetal from '../Hooks/useMetal';
 import useProducts from '../Hooks/useProducts';
 import Card from './Card';
 import backgroundImage from "../../assets/gold15.jpg"
-
+import { motion } from "framer-motion";
 const AllProduct = () => {
   const [products] = useProducts();
   const [metal] = useMetal();
@@ -142,24 +142,44 @@ const AllProduct = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header Section */} 
-<div
-  className="relative py-16 bg-center bg-cover"
-  style={{ backgroundImage: `url(${backgroundImage})` }}
->
-  {/* Overlay for readability */}
-  <div className="absolute inset-0 bg-black/40"></div>
+    <div
+      className="relative py-16 bg-center bg-cover"
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
+      {/* Overlay for readability */}
+      <motion.div
+        className="absolute inset-0 bg-black/40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      />
 
-  <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
-    <div className="flex items-center justify-center gap-3 mb-4">
-     
-      <h1 className="text-4xl md:text-5xl font-bold">Our Jewelry Collection</h1>
-      
+      <div className="relative max-w-7xl mx-auto px-4 text-center text-white">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          {/* Heading - Bottom to Top */}
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          >
+            Our Jewelry Collection
+          </motion.h1>
+        </div>
+
+        {/* Description - Bottom to Top */}
+        <motion.p
+          className="text-xl text-amber-100 max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        >
+          Discover authentic Arabic gold and silver jewelry crafted with traditional techniques and modern elegance
+        </motion.p>
+      </div>
     </div>
-    <p className="text-xl text-amber-100 max-w-2xl mx-auto">
-      Discover authentic Arabic gold and silver jewelry crafted with traditional techniques and modern elegance
-    </p>
-  </div>
-</div>
 
 
       <div className="max-w-7xl mx-auto px-4 py-8">
